@@ -18,7 +18,9 @@ let phaserConfig = {
                 y : 0
             }
         }
-    }
+    },
+    pixelArt: true,   // Fix blurry lines between tiles
+    roundPixels: true,   // Fix blurry lines between tiles
 };
 
 

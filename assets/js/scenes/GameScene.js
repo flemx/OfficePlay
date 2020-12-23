@@ -37,7 +37,7 @@ class GameScene extends Phaser.Scene {
 
     createPlayer(){
         // Set player, scale larger and enable bounds
-        this.player = new Player(this,32,32,'characters',0);
+        this.player = new Player(this,224,224,'characters',0);
     }
 
     createChest(){
@@ -96,11 +96,12 @@ class GameScene extends Phaser.Scene {
         });
     }
 
-    addCollisions(){
-        // Add interaction to items
-        this.physics.add.collider(this.player,this.wall)
-        this.physics.add.overlap(this.player,this.chests, this.collectChest, null, this);
-    }
+    addCollisions() {
+        // check for collisions between player and the tiled blocked layer
+        this.physics.add.collider(this.player, this.blockedLayer);
+        // check for overlaps between player and chest game objects
+        this.physics.add.overlap(this.player, this.chests, this.collectChest, null, this);
+      }
 
     createMap() {
         // create the tile map
@@ -113,6 +114,13 @@ class GameScene extends Phaser.Scene {
         // create blocked layer
         this.blockedLayer = this.map.createStaticLayer('blocked', this.tiles, 0, 0);    // New c
         this.blockedLayer.setScale(2);
+        this.blockedLayer.setCollisionByExclusion([-1]);
+        // update the world bounds
+        this.physics.world.bounds.width = this.map.widthInPixels * 2;
+        this.physics.world.bounds.height = this.map.heightInPixels * 2;
+
+        // limit the camera to the size of our map, remove black areas
+        this.cameras.main.setBounds(0, 0, this.map.widthInPixels * 2, this.map.heightInPixels * 2);
       }
 
 
