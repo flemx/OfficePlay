@@ -25,7 +25,9 @@ class BootScene extends Phaser.Scene {
         this.load.image('button1','images/ui/blue_button01.png');
         this.load.image('button2','images/ui/blue_button02.png');
         // load the map tileset image
-        this.load.image('background', 'level/background-extruded.png');  
+        // Load office maps
+        this.load.image('background', 'level/Tileset_32x32_8.png'); 
+        this.load.image('furniture', 'level/Office_interiors_32x32.png'); 
     }
 
     loadSpriteSheets(){
@@ -46,7 +48,7 @@ class BootScene extends Phaser.Scene {
 
     loadTileMap() {
         // map made with Tiled in JSON format
-        this.load.tilemapTiledJSON('map', 'level/large_level.json');
+        this.load.tilemapTiledJSON('map', 'level/office.json');
       }
 
 

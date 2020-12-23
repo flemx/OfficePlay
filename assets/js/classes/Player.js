@@ -14,7 +14,7 @@ class Player extends Phaser.Physics.Arcade.Image{
         // Enable physics
         this.scene.physics.world.enable(this);
         // Scale our player
-        this.setScale(2);
+        this.setScale(2.6);
         // Collide with our world bounds
         this.setCollideWorldBounds(true);
         // Add the player to our existing scene
