@@ -20,7 +20,7 @@ class GameScene extends Phaser.Scene {
         this.createPlayer();
         this.createNPC();
         this.createMap();  
-        //this.createAudio();
+        this.createAudio();
         this.createInput();
         this.addCollisions();
     }
@@ -30,6 +30,8 @@ class GameScene extends Phaser.Scene {
     }
 
     createAudio(){
+        this.backgroundAudio = this.sound.add('background1',{loop: true});
+        this.backgroundAudio.play();
     }
 
 

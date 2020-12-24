@@ -14,7 +14,7 @@ class TitleScene extends Phaser.Scene {
         this.titleText = this.add.text(
             this.scale.width / 2,
             this.scale.height / 2,
-            'MMORPG Game',
+            'Virtual Office',
             {
                 fontSize: '64px',
                 fill: '#fff'

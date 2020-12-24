@@ -46,11 +46,12 @@ class BootScene extends Phaser.Scene {
     }
 
     loadAudio(){
-        //pick most appropriate audio format supported by browser
+        //Relax background music
+        this.load.audio('background1', ['audio/background1.wav']);
     }
 
     create(){
-        this.scene.start('Game');
+        this.scene.start('Title');
 
     }
 
