@@ -5,10 +5,11 @@
 
 
 class Map {
-  constructor(scene, key, mapConfig) {
+  constructor(scene, key, mapConfig, player) {
     this.scene = scene; // the scene this map belongs to
     this.key = key; // Tiled JSON file key name
     this.mapConfig = mapConfig; // Map config with layers and images
+    this.player = player;
     this.createMap();
   }
 
@@ -22,7 +23,12 @@ createMap() {
         let tiles = this.map.addTilesetImage(item.tilesetImage); 
       
         // add layer
-        this.map.createStaticLayer(item.layer, tiles, 0, 0).setScale(1.6);   
+        let layer = this.map.createStaticLayer(item.layer, tiles, 0, 0);
+        // Increase scale
+        layer.setScale(1.5);
+        // Set collisions by proprty 
+        layer.setCollisionByProperty({ collides: true });
+        this.addCollisions(layer);
     }
 
     // update the world bounds
@@ -31,5 +37,10 @@ createMap() {
   
     // limit the camera to the size of our map
     this.scene.cameras.main.setBounds(0, 0, this.map.widthInPixels * 2, this.map.heightInPixels * 2);    // New code
+  }
+
+  addCollisions(layer) {
+    // check for collisions between player and the specified layer
+    this.scene.physics.add.collider(this.player, layer);
   }
 }

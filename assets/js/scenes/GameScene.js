@@ -17,9 +17,9 @@ class GameScene extends Phaser.Scene {
     }
 
     create(){
-        this.createMap();  // Load first
-        this.createAudio();
         this.createPlayer();
+        this.createMap();  
+        //this.createAudio();
         this.createInput();
         this.addCollisions();
     }
@@ -29,13 +29,13 @@ class GameScene extends Phaser.Scene {
     }
 
     createAudio(){
-        this.goldPickupAudio = this.sound.add('goldSound',{loop: false});
     }
 
 
     createPlayer(){
         // Set player, scale larger and enable bounds
-        this.player = new Player(this,224,224,'characters',0);
+        //this.player = new Player(this,224,224,'characters',0);
+        this.player = new Player(this,224,224,"atlas", "misa-front");
     }
 
 
@@ -49,6 +49,7 @@ class GameScene extends Phaser.Scene {
             'left': Phaser.Input.Keyboard.KeyCodes.A,
             'right': Phaser.Input.Keyboard.KeyCodes.D
         });
+    
     }
 
     createMap() {
@@ -70,7 +71,7 @@ class GameScene extends Phaser.Scene {
         
 
         // create map
-        this.map = new Map(this, 'map', mapCOnfig);
+        this.map = new Map(this, 'map', mapCOnfig, this.player);
       }
 
     addCollisions() {

@@ -12,6 +12,8 @@ class BootScene extends Phaser.Scene {
     preload(){
         // load images
         this.loadImages();
+        // Load player animations
+        this.loadPlayer();
         // load spritesheets
         this.loadSpriteSheets();
         // load audio
@@ -30,6 +32,10 @@ class BootScene extends Phaser.Scene {
         this.load.image('furniture', 'level/Office_interiors_32x32.png'); 
     }
 
+    loadPlayer(){
+        this.load.atlas("atlas", "https://www.mikewesthad.com/phaser-3-tilemap-blog-posts/post-1/assets/atlas/atlas.png", "https://www.mikewesthad.com/phaser-3-tilemap-blog-posts/post-1/assets/atlas/atlas.json");
+    }
+
     loadSpriteSheets(){
         // Load image as array of sprites devided by size
         this.load.spritesheet('items','images/items.png',{frameWidth: 32, frameHeight: 32});
@@ -38,7 +44,6 @@ class BootScene extends Phaser.Scene {
 
     loadAudio(){
         //pick most appropriate audio format supported by browser
-        this.load.audio('goldSound', ['audio/Pickup.wav']);
     }
 
     create(){
