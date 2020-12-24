@@ -18,6 +18,7 @@ class GameScene extends Phaser.Scene {
 
     create(){
         this.createPlayer();
+        this.createNPC();
         this.createMap();  
         //this.createAudio();
         this.createInput();
@@ -52,6 +53,22 @@ class GameScene extends Phaser.Scene {
     
     }
 
+    createNPC(){
+        this.officeHelpNpc = new NPC(this, 285, 75, 'office-help');
+      //   //241,75
+      //  let npc = this.add.sprite(241, 75, 'office-help');
+      //  this.anims.create({
+      //      key : "ideNpc",
+      //      frameRate : 6,
+      //      frames : this.anims.generateFrameNumbers('office-help', {start: 0,end: 5}),
+      //      repeat : -1
+      //  });
+      //  npc.setScale(1.3);
+      //  npc.play("ideNpc");
+      //   mysprite.frame = 0;
+
+    }
+
     createMap() {
         // setup map configuration
         let mapCOnfig = [
@@ -66,13 +83,23 @@ class GameScene extends Phaser.Scene {
             {
                 tilesetImage : 'furniture',
                 layer : "furniture2"
+            },
+            {
+                tilesetImage : 'furniture',
+                layer : "above"
+            },
+            {
+                tilesetImage : 'interiors',
+                layer : "interiors1"
             }
         ]
         
 
         // create map
-        this.map = new Map(this, 'map', mapCOnfig, this.player);
+        this.map = new Map(this, 'map', mapCOnfig, this.player, this.officeHelpNpc);
       }
+
+   
 
     addCollisions() {
         // check for collisions between player and the tiled blocked layer

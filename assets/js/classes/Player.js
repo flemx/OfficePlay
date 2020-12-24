@@ -55,7 +55,7 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         // have the camera follow the player
         this.scene.cameras.main.startFollow(this); 
         //Make sure player is visible by putting layer on top
-        this.setDepth(10);
+        this.setDepth(5);
     }
 
 

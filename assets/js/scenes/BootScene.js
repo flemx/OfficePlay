@@ -29,7 +29,10 @@ class BootScene extends Phaser.Scene {
         // load the map tileset image
         // Load office maps
         this.load.image('background', 'level/Tileset_32x32_8.png'); 
-        this.load.image('furniture', 'level/Office_interiors_32x32.png'); 
+        this.load.image('furniture', 'level/Office_interiors_32x32.png');
+        this.load.image('interiors', 'level/Interiors_32x32.png'); 
+        // Load NPC
+        this.load.spritesheet('office-help', 'level/npc-conference.png', {frameWidth: 32, frameHeight: 48});
     }
 
     loadPlayer(){

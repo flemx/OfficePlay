@@ -5,17 +5,21 @@
 
 
 class Map {
-  constructor(scene, key, mapConfig, player) {
+  constructor(scene, key, mapConfig, player, npc) {
     this.scene = scene; // the scene this map belongs to
     this.key = key; // Tiled JSON file key name
     this.mapConfig = mapConfig; // Map config with layers and images
     this.player = player;
+    this.npc = npc;
     this.createMap();
+
+    // Set collision on NPC's
+    this.addCollisions(this.npc);
   }
 
 createMap() {
     // create the tile map
-    this.map = this.scene.make.tilemap({ key: this.key });    // New code
+    this.map = this.scene.make.tilemap({ key: this.key });   
         
     // loop through map configruation to load all layers
     for(let item of this.mapConfig){
@@ -29,18 +33,23 @@ createMap() {
         // Set collisions by proprty 
         layer.setCollisionByProperty({ collides: true });
         this.addCollisions(layer);
+
+        if(item.layer === 'above'){
+          layer.setDepth(11);
+        }
     }
 
     // update the world bounds
-    this.scene.physics.world.bounds.width = this.map.widthInPixels * 2;    // New code
-    this.scene.physics.world.bounds.height = this.map.heightInPixels * 2;    // New code
+    this.scene.physics.world.bounds.width = this.map.widthInPixels * 2;   
+    this.scene.physics.world.bounds.height = this.map.heightInPixels * 2;   
   
     // limit the camera to the size of our map
-    this.scene.cameras.main.setBounds(0, 0, this.map.widthInPixels * 2, this.map.heightInPixels * 2);    // New code
+    //this.scene.cameras.main.setBounds(0, 0, this.map.widthInPixels * 2, this.map.heightInPixels * 2);   
   }
 
   addCollisions(layer) {
     // check for collisions between player and the specified layer
-    this.scene.physics.add.collider(this.player, layer);
+   this.scene.physics.add.collider(this.player, layer);
+
   }
 }
