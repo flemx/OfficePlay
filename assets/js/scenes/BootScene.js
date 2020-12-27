@@ -20,6 +20,10 @@ class BootScene extends Phaser.Scene {
         this.loadAudio();
         // load tilemap
         this.loadTileMap();    // New code
+
+        // Load plugins
+        let testUrl = 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexmovetoplugin.min.js';
+        this.load.plugin('rexmovetoplugin', testUrl, true);
     }
 
     loadImages(){

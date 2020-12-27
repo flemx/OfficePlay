@@ -11,6 +11,7 @@ class Map {
     this.mapConfig = mapConfig; // Map config with layers and images
     this.player = player;
     this.npc = npc;
+    this.graph = {};
     this.createMap();
 
     // Set collision on NPC's
@@ -25,7 +26,6 @@ createMap() {
     for(let item of this.mapConfig){
         // add the tileset image
         let tiles = this.map.addTilesetImage(item.tilesetImage); 
-      
         // add layer
         let layer = this.map.createStaticLayer(item.layer, tiles, 0, 0);
         // Increase scale
@@ -37,14 +37,19 @@ createMap() {
         if(item.layer === 'above'){
           layer.setDepth(11);
         }
+        console.log('this.map:', this.map);
+        console.log('layer:', layer);
     }
-
     // update the world bounds
     this.scene.physics.world.bounds.width = this.map.widthInPixels * 2;   
     this.scene.physics.world.bounds.height = this.map.heightInPixels * 2;   
   
     // limit the camera to the size of our map
     //this.scene.cameras.main.setBounds(0, 0, this.map.widthInPixels * 2, this.map.heightInPixels * 2);   
+  }
+
+  generateGraph(){
+
   }
 
   addCollisions(layer) {

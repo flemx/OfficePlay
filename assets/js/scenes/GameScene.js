@@ -56,7 +56,7 @@ class GameScene extends Phaser.Scene {
     }
 
     createNPC(){
-        this.officeHelpNpc = new NPC(this, 285, 75, 'office-help');
+      this.officeHelpNpc = new NPC(this, 285, 75, 'office-help');
       //   //241,75
       //  let npc = this.add.sprite(241, 75, 'office-help');
       //  this.anims.create({

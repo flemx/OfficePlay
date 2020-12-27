@@ -97,6 +97,10 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         } else {
           this.anims.stop();
         }
+    }
 
+    moveTo(){
+        //this.scene.physics.moveTo(this, this.x + 10, this.y, 200);
+        //game.scene.keys.Game.map.map.layers.filter(layer => layer.name === 'furniture1')[0];
     }
 }
