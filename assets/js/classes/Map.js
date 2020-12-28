@@ -39,8 +39,8 @@ createMap() {
         if(item.layer === 'above'){
           layer.setDepth(11);
         }
-        console.log('this.map:', this.map);
-        console.log('layer:', layer);
+        // console.log('this.map:', this.map);
+        // console.log('layer:', layer);
     }
     // update the world bounds
     this.scene.physics.world.bounds.width = this.map.widthInPixels * 2;   

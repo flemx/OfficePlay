@@ -14,7 +14,7 @@ class PathFinder {
 
 
     /**
-     *  Return a graph from all the map tile layers
+     *  Return a graph from all the map tile layers with all possible movements
      * @param {*} Tilemap 
      */
     generateGraph(Tilemap){
@@ -26,7 +26,7 @@ class PathFinder {
         for(let y = 0; y < Tilemap.height; y++){
             for(let x = 0; x < Tilemap.width; x++){
                 let vertexName = `x${x}y${y}`;
-                coordinates[vertexName] = {x:Tilemap.layers[0].data[y][x].pixelX,y:Tilemap.layers[0].data[y][x].pixelY};
+                coordinates[vertexName] = {x:Tilemap.layers[0].data[y][x].getCenterX(),y:Tilemap.layers[0].data[y][x].getCenterY()};
                 let edges = [];
                 
 
@@ -252,6 +252,7 @@ class Dijkstra{
         }
   
     return path.concat(smallest).reverse();
+    //return path.reverse();
      
     }
 

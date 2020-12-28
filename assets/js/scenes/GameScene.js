@@ -21,12 +21,14 @@ class GameScene extends Phaser.Scene {
         this.createNPC();
         this.createMap();  
         this.createAudio();
-        this.createInput();
         this.addCollisions();
+        this.createInput();
+        
     }
 
     update(){
-        this.player.update(this.cursors);
+        //this.player.update(this.cursors,this.walkTest);
+        this.player.update();
     }
 
     createAudio(){
@@ -38,7 +40,7 @@ class GameScene extends Phaser.Scene {
     createPlayer(){
         // Set player, scale larger and enable bounds
         //this.player = new Player(this,224,224,'characters',0);
-        this.player = new Player(this,224,224,"atlas", "misa-front");
+        this.player = new Player(this,216,216,"atlas", "misa-front");
     }
 
 
@@ -53,22 +55,95 @@ class GameScene extends Phaser.Scene {
             'right': Phaser.Input.Keyboard.KeyCodes.D
         });
 
+
+        this.events.on('monsterMovement', (playerTo) => {
+            this.player.playerTo = playerTo;
+            this.walkTest = 'walk';
+            //this.physics.moveToObject(this.player, playerTo, 40);
+          });
+
+
+          
+
         this.input.on('pointerdown', (pointer)=> {
             let destination  =  this.map.map.getTileAtWorldXY(pointer.worldX,pointer.worldY,'background');
             let startPoint = this.map.map.getTileAtWorldXY(this.player.x,this.player.y,'background');
-            //console.log(this.map.map.getTileAtWorldXY(this.player.x,this.player.y,'background'));
-            //console.log(this.map.map.getTileAtWorldXY(pointer.worldX,pointer.worldY,'background'));
+            console.log(startPoint);
+            console.log(destination);
+            console.log('pointers: ', pointer);
+            console.log('player: ', this.player);
             let dk = new Dijkstra(this.map.graph);
             let path = dk.findPath(`x${startPoint.x}y${startPoint.y}`,`x${destination.x}y${destination.y}`);
+            this.player.path = [];
+            for(let coord of path){
+                this.player.path.push(
+                {
+                    x : this.map.coordinates[coord].x, 
+                    y : this.map.coordinates[coord].y
+                })
+            }
+            this.player.moveToCoord = this.player.path[0];
+            console.log('Log path');
+            for(let x of this.player.path){
+                console.log(x);
+            }
             
-            this.player.moveTo(this.map.coordinates[path[[1]]].x,this.map.coordinates[path[[1]]].y);
+            //debugger;
+            //this.player.path = path; 
+             
+            //debugger;
+            //this.player.moving = true;
+            //this.physics.moveTo(this.player, this.player.x + 40, this.player.y, 200);
+            //let clone = Object.assign(Object.create(Object.getPrototypeOf(this.player)), this.player);
+            //this.player.x = this.player.x + 32;
+            //clone.x = clone.x + 50;
+            //console.log(clone);
+            //this.events.emit('monsterMovement', { x: this.player.x = this.player.x + 50, y :  this.player.y});
+            //this.startW();
+            //let demoTween = this.add.tween(this.player).to({x:this.player.x + 50,y:this.player.y},1000);
+            //demoTween.start();
+            //this.events.emit('monsterMovement', clone);
+            //this.physics.moveToObject(this.player, clone, 40);
+            // var tweens = [];
+            // for(var i = 0; i < path.length-1; i++){
+            //     var ex = this.map.coordinates[path[[i+1]]].x;
+            //     var ey = this.map.coordinates[path[[i+1]]].y;
+            //     console.log(`Add: x${ex}, y${ey}`);
+            //     tweens.push({
+            //         targets: this.player,
+            //         x: {value: ex, duration: 200},
+            //         y: {value: ey, duration: 200}
+            //     });
+            // }
 
-            this.timer = 0;                  //  set your counter to 1
-            //this.startWalking(path);
+            // this.tweens.timeline({
+            //     tweens: tweens
+            // });
+
+
+            //debugger;
+            //this.player.moveTo.moveTo(this.map.coordinates[path[[1]]].x,this.map.coordinates[path[[1]]].y);
+            // debugger;
+            // this.timer = 0;                  //  set your counter to 1
+            // //this.startWalking(path);
+  
+            // var moveTo = this.plugins.get('rexmovetoplugin').add(this.player, {
+            //     speed: 400,
+            //     rotateToTarget: false
+            // });
+            // debugger;
+            // var touchX = pointer.x;
+            // var touchY = pointer.y;
+            //this.player.moveTo.moveTo(touchX, touchY);
             
         });
     
     }
+
+    async startW(){
+        this.player.body.setVelocityX(100);
+    }
+
 
     startWalking(path){
         setTimeout(()=> {   //  call a 3s setTimeout when the loop is called
