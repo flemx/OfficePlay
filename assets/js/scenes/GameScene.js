@@ -52,6 +52,11 @@ class GameScene extends Phaser.Scene {
             'left': Phaser.Input.Keyboard.KeyCodes.A,
             'right': Phaser.Input.Keyboard.KeyCodes.D
         });
+
+        this.input.on('pointerdown', (pointer)=> {
+            console.log(this.map.map.getTileAtWorldXY(pointer.worldX,pointer.worldY,'background'));
+            
+        });
     
     }
 
