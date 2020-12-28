@@ -19,41 +19,42 @@ class PathFinder {
      */
     generateGraph(Tilemap){
         let graph = {};
+        let coordinates = {};
        // debugger;
 
         // Generate vertexes from map dimensions
         for(let y = 0; y < Tilemap.height; y++){
             for(let x = 0; x < Tilemap.width; x++){
                 let vertexName = `x${x}y${y}`;
+                coordinates[vertexName] = {x:Tilemap.layers[0].data[y][x].pixelX,y:Tilemap.layers[0].data[y][x].pixelY};
                 let edges = [];
                 
 
-                // Create all possible naughbours with associated cost, where diagonally costs more
+                // Create all possible naughbours with associated cost
                 let naughbours = [
-                    {coordinates: {x: x - 1, y: y}, cost: 2}, // walk left
-                    {coordinates: {x: x, y: y + 1}, cost: 2}, // walk up
-                    {coordinates: {x: x + 1, y: y}, cost: 2}, // walk  right
-                    {coordinates: {x: x, y: y -1}, cost: 2},   // walk down
-                    {coordinates: {x: x - 1, y: y + 1}, cost: 2.5},  // walk diagonally left-up
-                    {coordinates: {x: x + 1, y: y + 1}, cost: 2.5},  // walk diagonally right-up
-                    {coordinates: {x: x - 1, y: y - 1}, cost: 2.5},  // walk diagonally left-down
-                    {coordinates: {x: x + 1, y: y - 1}, cost: 2.5}  // walk diagonally right-down
+                    {[`x${x-1}y${y}`]: { coor: {x: x - 1, y: y}, cost: 2}}, // walk left
+                    {[`x${x}y${y+1}`]: { coor: {x: x, y: y + 1}, cost: 2}}, // walk up
+                    {[`x${x+1}y${y}`]: { coor: {x: x + 1, y: y}, cost: 2}}, // walk  right
+                    {[`x${x}y${y-1}`]: { coor: {x: x, y: y -1}, cost: 2}},  // walk down
+                    {[`x${x-1}y${y+1}`]: { coor: {x: x - 1, y: y + 1}, cost: 2.5}},  // walk diagonally left-up
+                    {[`x${x+1}y${y+1}`]: { coor: {x: x + 1, y: y + 1}, cost: 2.5}},  // walk diagonally right-up
+                    {[`x${x-1}y${y-1}`]: { coor: {x: x - 1, y: y - 1}, cost: 2.5}},  // walk diagonally left-down
+                    {[`x${x+1}y${y-1}`]: { coor: {x: x + 1, y: y - 1}, cost: 2.5}}  // walk diagonally right-down
                 ]; 
-                //if(vertexName === 'x8y6') debugger;
                 // Loop through all possible naughbours and filter out paths with collisions  
                 for(let naughbour of naughbours){
                     let validPath = true;
                      if(
-                         naughbour.coordinates.y >= Tilemap.height ||
-                         naughbour.coordinates.y <= 0  ||
-                         naughbour.coordinates.x >= Tilemap.width || 
-                         naughbour.coordinates.x <= 0
+                         naughbour[Object.keys(naughbour)[0]].coor.y >= Tilemap.height ||
+                         naughbour[Object.keys(naughbour)[0]].coor.y <= 0  ||
+                         naughbour[Object.keys(naughbour)[0]].coor.x >= Tilemap.width || 
+                         naughbour[Object.keys(naughbour)[0]].coor.x <= 0
                         ){
                         validPath = false;
                      }else{
                         // find all the collision coordinates within the multiple tile layers
                         for(let layer of Tilemap.layers){
-                            if(layer.data[naughbour.coordinates.y][naughbour.coordinates.x].collides){
+                            if(layer.data[naughbour[Object.keys(naughbour)[0]].coor.y][naughbour[Object.keys(naughbour)[0]].coor.x].collides){
                                 validPath = false;
                             }
                         }
@@ -69,7 +70,7 @@ class PathFinder {
         
 
 
-        return graph;
+        return {graph: graph, coor: coordinates};
     }
     
 
@@ -85,7 +86,7 @@ class PriorityQueue{
   }
 
   enqueue(value, priority){
-      let newNode = new Node(value, priority);
+      let newNode = {value, priority};
       //console.log('Queue:', newNode);
       this.values.push(newNode);
       this.bubbleUp();
@@ -166,11 +167,92 @@ class PriorityQueue{
 }
 
 
-class Node{
-  constructor(value, priority){
-      this.value = value;
-      this.priority = priority;
-  }
+// class Node{
+// constructor(value, priority){
+//     this.value = value;
+//     this.priority = priority;
+// }
+// }
+
+
+class Dijkstra{
+
+    constructor(graph){
+        this.graph = graph;
+        //  Keep track of the distances from vstarting vertex to goal vertex
+        this.distances = {};
+        // Keep track of the paths
+        this.previous = {};
+        // Make a priority queue of the distances
+        this.prioQueue = new PriorityQueue();
+        
+    }
+    
+    // Construct the data structures to assist in the algorithm
+    init(start){
+        // Empty all data structures
+        this.distances = {};
+        this.previous = {};
+        this.prioQueue = new PriorityQueue();
+        // create array with vertexes
+        let vertexes = Object.keys(this.graph);
+        // prepare the data structures
+        for(let i = 0; i < vertexes.length ; i++){
+            let key = vertexes[i];
+            if(key === start){
+                this.distances[key] = 0;
+            }else{
+                this.distances[key] = Infinity;
+            }
+            this.prioQueue.enqueue(key,this.distances[key]);
+            this.previous[key] = null;            
+        }
+    }
+
+    findPath(start, goal){
+        //Initialise with new start
+        this.init(start); 
+        let smallest;
+        let path = [];
+
+        while(this.prioQueue.values.length)
+            {
+                smallest = this.prioQueue.dequeue().value;
+                if(smallest === goal){
+                    // Done and build path to return
+                    // console.log(this.distances);
+                    // console.log(this.previous);
+                    while(this.previous[smallest]){
+                        path.push(smallest);
+                        smallest = this.previous[smallest];
+                    }
+                    break;
+                }
+                if(smallest || this.distances[smallest] !== Infinity){
+                    for(let naughbour of this.graph[smallest]){
+                        // Find naughboring node
+                        let nextNode = this.graph[smallest].filter(
+                            v => Object.keys(v)[0] === Object.keys(naughbour)[0]
+                        )[0];
+                        // Calculate new distance to neighboring node
+                        let candidate = this.distances[smallest] + nextNode[Object.keys(nextNode)[0]].cost;
+                        let nextNaughbor = Object.keys(nextNode)[0];
+                       
+                        if(candidate < this.distances[Object.keys(nextNode)[0]]){
+                            //update new smallest distance to neighbor
+                            this.distances[nextNaughbor] = candidate;
+                            // Updating previous - how we got to neighbor
+                            this.previous[nextNaughbor] = smallest;
+                            // Enqueue in prio queue 
+                            this.prioQueue.enqueue(nextNaughbor, candidate);
+                        }
+                    }
+                }
+
+        }
+  
+    return path.concat(smallest).reverse();
+     
+    }
+
 }
-
-

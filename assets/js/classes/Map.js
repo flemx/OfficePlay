@@ -12,6 +12,7 @@ class Map {
     this.player = player;
     this.npc = npc;
     this.graph = {};
+    this.coordinates = {};
     this.createMap();
     this.generateGraph();
     // Set collision on NPC's
@@ -51,7 +52,9 @@ createMap() {
 
   generateGraph(){
       let path = new PathFinder();
-      console.log(path.generateGraph(this.map));
+      let graphResult = path.generateGraph(this.map);
+      this.coordinates = graphResult.coor;
+      this.graph = graphResult.graph;
   }
 
   addCollisions(layer) {

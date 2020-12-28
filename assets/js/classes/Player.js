@@ -71,7 +71,8 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         if (cursors.left.isDown) {
           this.body.setVelocityX(-speed);
         } else if (cursors.right.isDown) {
-          this.body.setVelocityX(speed);
+          //this.body.setVelocityX(speed);
+          this.scene.physics.moveTo(this, this.x + 10, this.y + 10, 200);
         }
       
         // Vertical movement
@@ -97,10 +98,11 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         } else {
           this.anims.stop();
         }
+
     }
 
-    moveTo(){
-        //this.scene.physics.moveTo(this, this.x + 10, this.y, 200);
-        //game.scene.keys.Game.map.map.layers.filter(layer => layer.name === 'furniture1')[0];
+    moveTo(x,y){
+        console.log(`Move player to: ${x} ${y}`);
+        this.scene.physics.moveTo(this, x, y, 200);
     }
 }

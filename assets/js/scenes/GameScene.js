@@ -54,10 +54,32 @@ class GameScene extends Phaser.Scene {
         });
 
         this.input.on('pointerdown', (pointer)=> {
-            console.log(this.map.map.getTileAtWorldXY(pointer.worldX,pointer.worldY,'background'));
+            let destination  =  this.map.map.getTileAtWorldXY(pointer.worldX,pointer.worldY,'background');
+            let startPoint = this.map.map.getTileAtWorldXY(this.player.x,this.player.y,'background');
+            //console.log(this.map.map.getTileAtWorldXY(this.player.x,this.player.y,'background'));
+            //console.log(this.map.map.getTileAtWorldXY(pointer.worldX,pointer.worldY,'background'));
+            let dk = new Dijkstra(this.map.graph);
+            let path = dk.findPath(`x${startPoint.x}y${startPoint.y}`,`x${destination.x}y${destination.y}`);
+            
+            this.player.moveTo(this.map.coordinates[path[[1]]].x,this.map.coordinates[path[[1]]].y);
+
+            this.timer = 0;                  //  set your counter to 1
+            //this.startWalking(path);
             
         });
     
+    }
+
+    startWalking(path){
+        setTimeout(()=> {   //  call a 3s setTimeout when the loop is called
+            //debugger;
+            this.player.moveTo(this.map.coordinates[path[[this.timer]]].x,this.map.coordinates[path[[this.timer]]].y);  //  your code here
+            this.timer++;                    //  increment the counter
+            if (this.time < path.length) {           //  if the counter < 10, call the loop function
+              this.startWalking(path);             //  ..  again which will trigger another 
+            }                       //  ..  setTimeout()
+          }, 500)
+        
     }
 
     createNPC(){
