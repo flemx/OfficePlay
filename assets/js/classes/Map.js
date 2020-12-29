@@ -31,7 +31,6 @@ createMap() {
         let tiles = this.map.addTilesetImage(item.tilesetImage); 
         // add layer
         let layer = this.map.createStaticLayer(item.layer, tiles, 0, 0);
-        console.log('MAP LAYER:', layer);
         // Increase scale
         layer.setScale(1.5);
         

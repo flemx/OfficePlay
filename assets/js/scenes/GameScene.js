@@ -12,8 +12,8 @@ class GameScene extends Phaser.Scene {
 
     init(){
         // Start Ui scene in parallel, placed on top
-        this.scene.launch('Ui');
-        this.score = 0;
+        //this.scene.launch('Ui');   // Not used for the moment
+        this.score = 0;  // Not used for the moment
     }
 
     create(){
@@ -38,49 +38,24 @@ class GameScene extends Phaser.Scene {
 
 
     createPlayer(){
-        // Set player, scale larger and enable bounds
-        //this.player = new Player(this,224,224,'characters',0);
+        // Spawn player at location 216,216
         this.player = new Player(this,216,216,"atlas", "misa-front");
     }
 
 
     createInput(){
-        // Listen to key presses
-        //this.cursors = this.input.keyboard.createCursorKeys();
-        //this.cursors = this.input.keyboard.addKeys('W,S,A,D');
-        this.cursors = this.input.keyboard.addKeys({
-            'up': Phaser.Input.Keyboard.KeyCodes.W,
-            'down': Phaser.Input.Keyboard.KeyCodes.S,
-            'left': Phaser.Input.Keyboard.KeyCodes.A,
-            'right': Phaser.Input.Keyboard.KeyCodes.D
-        });
-
-
-        this.events.on('monsterMovement', (playerTo) => {
-            this.player.playerTo = playerTo;
-            this.walkTest = 'walk';
-            //this.physics.moveToObject(this.player, playerTo, 40);
-          });
-
-
-          
-
+        // On mouse press retrieve the shortest path to destination
         this.input.on('pointerdown', (pointer)=> {
             let destination  =  this.map.map.getTileAtWorldXY(pointer.worldX,pointer.worldY,'background');
             let startPoint = this.map.map.getTileAtWorldXY(this.player.x,this.player.y,'background');
-            // console.log(startPoint);
-            // console.log(destination);
-            // console.log('pointers: ', pointer);
-            // console.log('player: ', this.player);
-            // console.log(this.map.illigals);
             let desVertex = `x${destination.x}y${destination.y}`;
             if(this.map.illigals[desVertex]){
-                console.log('Illigal destination!');
-                // console.log(desVertex);
-                // console.log(this.map.illigals[desVertex]);
+                console.log(`Coordinate ${desVertex} is an illigal destination!`);
             }else{
-                let dk = new Dijkstra(this.map.graph);
-                let path = dk.findPath(`x${startPoint.x}y${startPoint.y}`,`x${destination.x}y${destination.y}`);
+                // Call pathfinder algorithm 
+                let dk = new PathFinder();
+                let path = dk.findPath(`x${startPoint.x}y${startPoint.y}`,`x${destination.x}y${destination.y}`,this.map.graph);
+                console.log('The shortest path is: ', path);
                 this.player.path = [];
                 for(let coord of path){
                     this.player.path.push(
@@ -104,19 +79,8 @@ class GameScene extends Phaser.Scene {
   
 
     createNPC(){
+        // Spawn NPC with idle standing animation
       this.officeHelpNpc = new NPC(this, 285, 75, 'office-help');
-      //   //241,75
-      //  let npc = this.add.sprite(241, 75, 'office-help');
-      //  this.anims.create({
-      //      key : "ideNpc",
-      //      frameRate : 6,
-      //      frames : this.anims.generateFrameNumbers('office-help', {start: 0,end: 5}),
-      //      repeat : -1
-      //  });
-      //  npc.setScale(1.3);
-      //  npc.play("ideNpc");
-      //   mysprite.frame = 0;
-
     }
 
     createMap() {
@@ -157,7 +121,7 @@ class GameScene extends Phaser.Scene {
 
     addCollisions() {
         // check for collisions between player and the tiled blocked layer
-        //this.physics.add.collider(this.player, this.map.blockedLayer);
+        //this.physics.add.collider(this.player, this.map.blockedLayer);    // Disabled collision as with automatic mouse events no
     
       }
 

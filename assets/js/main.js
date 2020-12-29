@@ -1,4 +1,6 @@
-
+/**
+ *  Setup configuration and start Game instance
+ */
 
 let phaserConfig = {
     type: Phaser.AUTO,

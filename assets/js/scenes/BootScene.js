@@ -21,9 +21,6 @@ class BootScene extends Phaser.Scene {
         // load tilemap
         this.loadTileMap();    // New code
 
-        // Load plugins
-        let testUrl = 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexmovetoplugin.min.js';
-        this.load.plugin('rexmovetoplugin', testUrl, true);
     }
 
     loadImages(){
@@ -35,8 +32,7 @@ class BootScene extends Phaser.Scene {
         this.load.image('background', 'level/Tileset_32x32_8.png'); 
         this.load.image('furniture', 'level/Office_interiors_32x32.png');
         this.load.image('interiors', 'level/Interiors_32x32.png'); 
-        // Load NPC
-        this.load.spritesheet('office-help', 'level/npc-conference.png', {frameWidth: 32, frameHeight: 48});
+       
     }
 
     loadPlayer(){
@@ -45,8 +41,7 @@ class BootScene extends Phaser.Scene {
 
     loadSpriteSheets(){
         // Load image as array of sprites devided by size
-        this.load.spritesheet('items','images/items.png',{frameWidth: 32, frameHeight: 32});
-        this.load.spritesheet('characters','images/characters.png',{frameWidth: 32, frameHeight: 32});
+         this.load.spritesheet('office-help', 'level/npc-conference.png', {frameWidth: 32, frameHeight: 48}); // Load NPC
     }
 
     loadAudio(){

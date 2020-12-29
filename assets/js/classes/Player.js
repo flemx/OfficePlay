@@ -48,10 +48,7 @@ class Player extends Phaser.Physics.Arcade.Sprite{
             frameRate: 10,
             repeat: -1
         });
-    
 
-
-       
         // Scale our player
         this.setScale(1.5);
         // Collide with our world bounds
@@ -64,20 +61,11 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         this.setDepth(5);
 
 
-      this.moveTo = this.scene.plugins.get('rexmovetoplugin').add(this, {
-          speed: 400,
-          rotateToTarget: false
-      }).on('complete', function(){
-          console.log('Reach target');
-      })
-
-
     }
 
 
 
     update(){
-
         const speed = this.speed;
         const prevVelocity = this.body.velocity.clone();
       
@@ -111,23 +99,7 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         }
 
 
-        // if(this.path.length > 0){
-        // // this.scene.physics.moveTo(this, this.path[1].x, this.path[1].y, 160);
-        // //this.scene.physics.moveTo(this, 224, 224);
-        // let playerTile = this.scene.map.map.getTileAtWorldXY(this.x,this.y,'background');
-        // let nextTile = this.scene.map.map.getTileAtWorldXY(this.path[0].x,this.path[0].y,'background');
-        // //debugger;
-        //   if(playerTile.x === nextTile.x && playerTile.y === nextTile.y){
-        //    debugger;
-        //     console.log(playerTile.x === nextTile.x && playerTile.y === nextTile.y);
-        //     this.path.shift();
-        //     this.scene.physics.moveTo(this, this.path[0].x, this.path[0].y, 160);
-        //   }
-        //   debugger;
-        // }
-
-
-        let cursors = {
+        let moveState = {
           left : {isDown : moveX < 0},
           right : {isDown : moveX > 0},
           up : {isDown : moveY < 0},
@@ -135,17 +107,17 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         }
 
         // Horizontal movement
-        if (cursors.left.isDown) {
+        if (moveState.left.isDown) {
           this.body.setVelocityX(-speed);
-        } else if (cursors.right.isDown) {
+        } else if (moveState.right.isDown) {
           this.body.setVelocityX(speed);
           //this.scene.physics.moveTo(this, this.x + 10, this.y + 10, 200);
         }
       
         // Vertical movement
-        if (cursors.up.isDown) {
+        if (moveState.up.isDown) {
           this.body.setVelocityY(-speed);
-        } else if (cursors.down.isDown) {
+        } else if (moveState.down.isDown) {
           this.body.setVelocityY(speed);
         }
         // Normalize and scale the velocity so that player can't move faster along a diagonal
@@ -153,13 +125,13 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         
         //debugger;
         // Update the animation last and give left/right animations precedence over up/down animations
-        if (cursors.left.isDown) {
+        if (moveState.left.isDown) {
           this.anims.play("player-left-walk", true);
-        } else if (cursors.right.isDown) {
+        } else if (moveState.right.isDown) {
           this.anims.play("player-right-walk", true);
-        } else if (cursors.up.isDown) {
+        } else if (moveState.up.isDown) {
           this.anims.play("player-back-walk", true);
-        } else if (cursors.down.isDown) {
+        } else if (moveState.down.isDown) {
           this.anims.play("player-front-walk", true);
         } else {
           this.anims.stop();
@@ -167,8 +139,4 @@ class Player extends Phaser.Physics.Arcade.Sprite{
 
     }
 
-    // moveTo(x,y){
-    //     console.log(`Move player to: ${x} ${y}`);
-    //     this.scene.physics.moveTo(this, x, y, 200);
-    // }
 }
