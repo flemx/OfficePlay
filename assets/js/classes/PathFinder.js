@@ -59,6 +59,7 @@ class PathFinder {
                         ){
                         //validPath = false;
                         validPaths[i] = false;
+                        illigals[`x${naughbour[Object.keys(naughbour)[0]].coor.x}y${naughbour[Object.keys(naughbour)[0]].coor.y}`] = true;
                      }else{
                         // find all the collision coordinates within the multiple tile layers
                         for(let layer of Tilemap.layers){

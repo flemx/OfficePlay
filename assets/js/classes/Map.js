@@ -31,13 +31,15 @@ createMap() {
         let tiles = this.map.addTilesetImage(item.tilesetImage); 
         // add layer
         let layer = this.map.createStaticLayer(item.layer, tiles, 0, 0);
+        console.log('MAP LAYER:', layer);
         // Increase scale
         layer.setScale(1.5);
+        
         // Set collisions by proprty 
         layer.setCollisionByProperty({ collides: true });
         this.addCollisions(layer);
 
-        if(item.layer === 'above'){
+        if(item.layer.includes('above')){
           layer.setDepth(11);
         }
         // console.log('this.map:', this.map);

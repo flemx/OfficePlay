@@ -214,7 +214,11 @@ class GameScene extends Phaser.Scene {
             },
             {
                 tilesetImage : 'furniture',
-                layer : "above"
+                layer : "above1"
+            },
+            {
+                tilesetImage : 'furniture',
+                layer : "above2"
             },
             {
                 tilesetImage : 'interiors',
