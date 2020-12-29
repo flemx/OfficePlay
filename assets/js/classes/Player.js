@@ -13,8 +13,8 @@ class Player extends Phaser.Physics.Arcade.Sprite{
     
         this.scene = scene;
         this.speed = 250; // Velocity when moving our player
-        this.setSize(30, 40)
-        this.setOffset(0, 24);
+        this.setSize(32, 32)
+        this.setOffset(0, 32);
 
         this.path = [];
         this.playerPos = {};

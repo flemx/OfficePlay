@@ -13,6 +13,7 @@ class Map {
     this.npc = npc;
     this.graph = {};
     this.coordinates = {};
+    this.illigals = {};
     this.createMap();
     this.generateGraph();
     // Set collision on NPC's
@@ -55,11 +56,12 @@ createMap() {
       let graphResult = path.generateGraph(this.map);
       this.coordinates = graphResult.coor;
       this.graph = graphResult.graph;
+      this.illigals = graphResult.illigals;
   }
 
   addCollisions(layer) {
     // check for collisions between player and the specified layer
-   this.scene.physics.add.collider(this.player, layer);
+   //this.scene.physics.add.collider(this.player, layer);
 
   }
 }

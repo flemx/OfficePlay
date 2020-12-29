@@ -20,6 +20,7 @@ class PathFinder {
     generateGraph(Tilemap){
         let graph = {};
         let coordinates = {};
+        let illigals = {};
        // debugger;
 
         // Generate vertexes from map dimensions
@@ -29,48 +30,83 @@ class PathFinder {
                 coordinates[vertexName] = {x:Tilemap.layers[0].data[y][x].getCenterX(),y:Tilemap.layers[0].data[y][x].getCenterY()};
                 let edges = [];
                 
+                //x=7, y=6
+                // right-left = 8/5
 
                 // Create all possible naughbours with associated cost
                 let naughbours = [
                     {[`x${x-1}y${y}`]: { coor: {x: x - 1, y: y}, cost: 2}}, // walk left
-                    {[`x${x}y${y+1}`]: { coor: {x: x, y: y + 1}, cost: 2}}, // walk up
+                    {[`x${x}y${y+1}`]: { coor: {x: x, y: y + 1}, cost: 2}}, // walk down
                     {[`x${x+1}y${y}`]: { coor: {x: x + 1, y: y}, cost: 2}}, // walk  right
-                    {[`x${x}y${y-1}`]: { coor: {x: x, y: y -1}, cost: 2}},  // walk down
-                    {[`x${x-1}y${y+1}`]: { coor: {x: x - 1, y: y + 1}, cost: 2.5}},  // walk diagonally left-up
-                    {[`x${x+1}y${y+1}`]: { coor: {x: x + 1, y: y + 1}, cost: 2.5}},  // walk diagonally right-up
-                    {[`x${x-1}y${y-1}`]: { coor: {x: x - 1, y: y - 1}, cost: 2.5}},  // walk diagonally left-down
-                    {[`x${x+1}y${y-1}`]: { coor: {x: x + 1, y: y - 1}, cost: 2.5}}  // walk diagonally right-down
+                    {[`x${x}y${y-1}`]: { coor: {x: x, y: y -1}, cost: 2}},  // walk up
+                    {[`x${x-1}y${y+1}`]: { coor: {x: x - 1, y: y + 1}, cost: 2.5}},  // walk diagonally left-down
+                    {[`x${x+1}y${y+1}`]: { coor: {x: x + 1, y: y + 1}, cost: 2.5}},  // walk diagonally right-down
+                    {[`x${x-1}y${y-1}`]: { coor: {x: x - 1, y: y - 1}, cost: 2.5}},  // walk diagonally left-up
+                    {[`x${x+1}y${y-1}`]: { coor: {x: x + 1, y: y - 1}, cost: 2.5}}  // walk diagonally right-up
                 ]; 
                 // Loop through all possible naughbours and filter out paths with collisions  
-                for(let naughbour of naughbours){
-                    let validPath = true;
+                let validPaths = [true,true,true,true,true,true,true,true];  // Keep track of valid paths
+                for(let i = 0; i < naughbours.length; i++){
+                //for(let naughbour of naughbours){
+                    //let validPath = true;
+                    let naughbour = naughbours[i];
+                    //debugger;
                      if(
                          naughbour[Object.keys(naughbour)[0]].coor.y >= Tilemap.height ||
                          naughbour[Object.keys(naughbour)[0]].coor.y <= 0  ||
                          naughbour[Object.keys(naughbour)[0]].coor.x >= Tilemap.width || 
                          naughbour[Object.keys(naughbour)[0]].coor.x <= 0
                         ){
-                        validPath = false;
+                        //validPath = false;
+                        validPaths[i] = false;
                      }else{
                         // find all the collision coordinates within the multiple tile layers
                         for(let layer of Tilemap.layers){
-                            if(layer.data[naughbour[Object.keys(naughbour)[0]].coor.y][naughbour[Object.keys(naughbour)[0]].coor.x].collides){
-                                validPath = false;
+                            //debugger;
+                            let collideTile = layer.data[naughbour[Object.keys(naughbour)[0]].coor.y][naughbour[Object.keys(naughbour)[0]].coor.x];
+                            if(collideTile.collides){
+                                illigals[`x${collideTile.x}y${collideTile.y}`] = true;
+                                //validPath = false;
+                                validPaths[i] = false;
+                                // Make sure diagnal paths are not blocked by side collides
+                                if(i === 2){ 
+                                    validPaths[7] = false;
+                                    validPaths[5] = false;
+                                }
+                                if(i === 0) {
+                                    validPaths[6] = false; 
+                                    validPaths[4] = false;
+                                }
+                                if(i === 1) {
+                                    validPaths[4] = false; 
+                                    validPaths[5] = false;
+                                }
+                                if(i === 3) {
+                                    validPaths[6] = false; 
+                                    validPaths[7] = false;
+                                }
+
+                                //if(vertexName === 'x7y6' && i === 2) debugger;
                             }
+                            
                         }
+                        
                      }
                      
-                    if(validPath)  edges.push(naughbour);
-
-                   
+                   // if(validPath)  edges.push(naughbour);
                 }
-                graph[vertexName] = edges;
+                
+               // Add all valid edges (paths) to the vertex
+               for(let i = 0; i < validPaths.length; i++){
+                if(validPaths[i]) edges.push(naughbours[i]);
+            }
+            //debugger;
+             graph[vertexName] = edges;
+             //console.log(graph[vertexName]);
             }
         }
         
-
-
-        return {graph: graph, coor: coordinates};
+        return {graph: graph, coor: coordinates, illigals: illigals};
     }
     
 

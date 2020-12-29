@@ -72,21 +72,45 @@ class GameScene extends Phaser.Scene {
             console.log(destination);
             console.log('pointers: ', pointer);
             console.log('player: ', this.player);
-            let dk = new Dijkstra(this.map.graph);
-            let path = dk.findPath(`x${startPoint.x}y${startPoint.y}`,`x${destination.x}y${destination.y}`);
-            this.player.path = [];
-            for(let coord of path){
-                this.player.path.push(
-                {
-                    x : this.map.coordinates[coord].x, 
-                    y : this.map.coordinates[coord].y
-                })
+            // let dk = new Dijkstra(this.map.graph);
+            // let path = dk.findPath(`x${startPoint.x}y${startPoint.y}`,`x${destination.x}y${destination.y}`);
+            // this.player.path = [];
+            // for(let coord of path){
+            //     this.player.path.push(
+            //     {
+            //         x : this.map.coordinates[coord].x, 
+            //         y : this.map.coordinates[coord].y
+            //     })
+            // }
+            // this.player.moveToCoord = this.player.path[0];
+            // console.log(this.map.illigals);
+            // debugger;
+            console.log(this.map.illigals);
+            let desVertex = `x${destination.x}y${destination.y}`;
+            if(this.map.illigals[desVertex]){
+                console.log('Illigal destination!');
+                console.log(desVertex);
+                console.log(this.map.illigals[desVertex]);
+            }else{
+                let dk = new Dijkstra(this.map.graph);
+                let path = dk.findPath(`x${startPoint.x}y${startPoint.y}`,`x${destination.x}y${destination.y}`);
+                this.player.path = [];
+                for(let coord of path){
+                    this.player.path.push(
+                    {
+                        x : this.map.coordinates[coord].x, 
+                        y : this.map.coordinates[coord].y
+                    })
+                }
+                this.player.moveToCoord = this.player.path[0];
             }
-            this.player.moveToCoord = this.player.path[0];
-            console.log('Log path');
-            for(let x of this.player.path){
-                console.log(x);
-            }
+            
+
+            
+            // console.log('Log path');
+            // for(let x of this.player.path){
+            //     console.log(x);
+            // }
             
             //debugger;
             //this.player.path = path; 
