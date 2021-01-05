@@ -4,4 +4,4 @@ Test the app by installing dependencies with: 'npm install' and start with 'node
 The app will run locally on 'localhost:5000'
 
 A live demo is also available on below URL, please wait few seconds for server to start.
-https://stark-crag-22787.herokuapp.com/
+https://virtual-office-prototypev1.herokuapp.com/
