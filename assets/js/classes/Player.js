@@ -24,27 +24,28 @@ class Player extends Phaser.Physics.Arcade.Sprite{
 
         //Set animations
         let anims = this.scene.anims;
+
         anims.create({
             key: "player-left-walk",
-            frames: anims.generateFrameNames("atlas", { prefix: "misa-left-walk.", start: 0, end: 3, zeroPad: 3 }),
-            frameRate: 10,
+            frames: this.scene.anims.generateFrameNumbers("player-walk", {start: 12, end: 17 }),
+            frameRate: 6,
             repeat: -1
         });
         anims.create({
             key: "player-right-walk",
-            frames: anims.generateFrameNames("atlas", { prefix: "misa-right-walk.", start: 0, end: 3, zeroPad: 3 }),
+            frames: this.scene.anims.generateFrameNumbers("player-walk", {start: 0, end: 5 }),
             frameRate: 10,
             repeat: -1
         });
         anims.create({
             key: "player-front-walk",
-            frames: anims.generateFrameNames("atlas", { prefix: "misa-front-walk.", start: 0, end: 3, zeroPad: 3 }),
+            frames: this.scene.anims.generateFrameNumbers("player-walk", {start: 18, end: 23 }),
             frameRate: 10,
             repeat: -1
         });
         anims.create({
             key: "player-back-walk",
-            frames: anims.generateFrameNames("atlas", { prefix: "misa-back-walk.", start: 0, end: 3, zeroPad: 3 }),
+            frames: this.scene.anims.generateFrameNumbers("player-walk", {start: 6, end: 12 }),
             frameRate: 10,
             repeat: -1
         });

@@ -39,7 +39,8 @@ class GameScene extends Phaser.Scene {
 
     createPlayer(){
         // Spawn player at location 216,216
-        this.player = new Player(this,216,216,"atlas", "misa-front");
+        //this.player = new Player(this,216,216,"atlas", "misa-front");
+        this.player = new Player(this,216,216,"player-walk");
     }
 
 
