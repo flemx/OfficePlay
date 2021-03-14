@@ -36,7 +36,8 @@ class BootScene extends Phaser.Scene {
     }
 
     loadPlayer(){
-        this.load.spritesheet('player-walk', 'images/playerWalk.png', {frameWidth: 32, frameHeight: 64});
+        this.load.spritesheet('player-walk', 'images/characters/player1-run.png', {frameWidth: 32, frameHeight: 64});
+        this.load.spritesheet('player-idle', 'images/characters/player1-idle.png', {frameWidth: 32, frameHeight: 64});
     }
 
     loadSpriteSheets(){

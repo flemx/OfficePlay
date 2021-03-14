@@ -15,16 +15,36 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         this.speed = 250; // Velocity when moving our player
         this.setSize(32, 32)
         this.setOffset(0, 32);
-
+        this.lastMove = 'down';
         this.path = [];
         this.playerPos = {};
 
         // Keep track of next coord to move to
         this.moveToCoord;
 
+
+        // Setup all player animations
+        this.setPlayerAnims();
+ 
+        // Scale our player
+        this.setScale(1.5);
+        // Collide with our world bounds
+        this.setCollideWorldBounds(true);
+        // Add the player to our existing scene
+        this.scene.add.existing(this)
+        // have the camera follow the player
+        this.scene.cameras.main.startFollow(this); 
+        //Make sure player is visible by putting layer on top
+        this.setDepth(5);
+
+
+    }
+
+    setPlayerAnims(){
         //Set animations
         let anims = this.scene.anims;
 
+        // Walk animation
         anims.create({
             key: "player-left-walk",
             frames: this.scene.anims.generateFrameNumbers("player-walk", {start: 12, end: 17 }),
@@ -50,18 +70,32 @@ class Player extends Phaser.Physics.Arcade.Sprite{
             repeat: -1
         });
 
-        // Scale our player
-        this.setScale(1.5);
-        // Collide with our world bounds
-        this.setCollideWorldBounds(true);
-        // Add the player to our existing scene
-        this.scene.add.existing(this)
-        // have the camera follow the player
-        this.scene.cameras.main.startFollow(this); 
-        //Make sure player is visible by putting layer on top
-        this.setDepth(5);
-
-
+      // Idle animation
+      anims.create({
+        key: "player-left-idle",
+        frames: this.scene.anims.generateFrameNumbers("player-idle", {start: 12, end: 17 }),
+        frameRate: 8,
+        repeat: -1
+      });
+      anims.create({
+          key: "player-right-idle",
+          frames: this.scene.anims.generateFrameNumbers("player-idle", {start: 0, end: 5 }),
+          frameRate: 8,
+          repeat: -1
+      });
+      anims.create({
+          key: "player-front-idle",
+          frames: this.scene.anims.generateFrameNumbers("player-idle", {start: 18, end: 23 }),
+          frameRate: 8,
+          repeat: -1
+      });
+      anims.create({
+          key: "player-back-idle",
+          frames: this.scene.anims.generateFrameNumbers("player-idle", {start: 6, end: 11 }),
+          frameRate: 8,
+          repeat: -1
+      });
+      this.anims.play("player-front-idle", true);
     }
 
 
@@ -128,14 +162,32 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         // Update the animation last and give left/right animations precedence over up/down animations
         if (moveState.left.isDown) {
           this.anims.play("player-left-walk", true);
+          this.lastMove = 'left';
         } else if (moveState.right.isDown) {
           this.anims.play("player-right-walk", true);
+          this.lastMove = 'right';
         } else if (moveState.up.isDown) {
           this.anims.play("player-back-walk", true);
+          this.lastMove = 'back';
         } else if (moveState.down.isDown) {
           this.anims.play("player-front-walk", true);
+          this.lastMove = 'front';
         } else {
-          this.anims.stop();
+          //this.anims.stop();
+          if(this.lastMove == 'left'){
+            this.anims.play("player-left-idle", true);
+            console.log('move left');
+          }
+          if(this.lastMove == 'right'){
+            this.anims.play("player-right-idle", true);
+          }
+          if(this.lastMove == 'front'){
+            this.anims.play("player-front-idle", true);
+          }
+          if(this.lastMove == 'back'){
+            this.anims.play("player-back-idle", true);
+            console.log('move up');
+          }
         }
 
     }
