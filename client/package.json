@@ -4,7 +4,9 @@
   "description": "client side code for virtual office",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build" : "webpack --mode production",
+    "start" : "yarn build && webpack serve --mode development --open"
   },
   "author": "Damien Fleminks",
   "license": "ISC",

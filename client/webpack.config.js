@@ -2,7 +2,6 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
-    entry: './src/index.js',
     module: {
         rules: [
             {
@@ -11,5 +10,10 @@ module.exports = {
             }
           ]
     },
-    plugins: {},
+    plugins: [
+        new webpack.DefinePlugin({
+          'CANVAS_RENDERER': JSON.stringify(true),
+          'WEBGL_RENDERER': JSON.stringify(true),
+        }),
+      ],
   }
