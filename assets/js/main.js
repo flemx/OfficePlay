@@ -4,7 +4,7 @@
 
 let phaserConfig = {
     type: Phaser.AUTO,
-    width: 800,
+  width: 800,
     height: 600,
     scene: [
         BootScene,
@@ -30,3 +30,4 @@ let phaserConfig = {
 
 const game = new Phaser.Game(phaserConfig);
 
+  

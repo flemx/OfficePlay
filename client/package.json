@@ -5,12 +5,15 @@
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build" : "webpack --mode production",
-    "start" : "yarn build && webpack serve --mode development --open"
+    "build": "webpack --mode production",
+    "start": "yarn build && webpack serve --mode development --open"
   },
   "author": "Damien Fleminks",
   "license": "ISC",
   "devDependencies": {
+    "eslint": "^7.22.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
     "raw-loader": "^4.0.2",
     "webpack": "^5.26.2",
     "webpack-cli": "^4.5.0",
