@@ -1,4 +1,10 @@
-import 'phaser';
+import * as Phaser from 'phaser';
+
+
+function create() {
+  this.add.text(0, 0, 'hello world 5');
+}
+
 
 const config = {
   type: Phaser.AUTO,
@@ -9,11 +15,7 @@ const config = {
       console.log('this is the preload method');
     },
     create,
-  }
+  },
 };
 
 const game = new Phaser.Game(config);
-
-function create() {
-  this.add.text(0, 0, 'hello world 5');
-}
