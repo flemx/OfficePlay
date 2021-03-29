@@ -6,7 +6,6 @@ import * as Phaser from 'phaser';
 
 export default class BootScene extends Phaser.Scene {
   constructor() {
-    console.log('Load BootScene');
     super('Boot');
   }
 

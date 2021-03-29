@@ -10,6 +10,13 @@ import GameMap from '../classes/GameMap';
  */
 
 export default class GameScene extends Phaser.Scene {
+
+  // Defining properties with non-null assertion operator because they cannot be set in constructor
+  private player!: Player;
+  private backgroundAudio!: Phaser.Sound.BaseSound;
+  private gamemap!: GameMap;
+  private officeHelpNpc!: NPC;
+
   constructor() {
     super('Game');
   }
@@ -17,7 +24,6 @@ export default class GameScene extends Phaser.Scene {
   init() {
     // Start Ui scene in parallel, placed on top
     // this.scene.launch('Ui');   // Not used for the moment
-    this.score = 0; // Not used for the moment
   }
 
   create() {
@@ -46,7 +52,7 @@ export default class GameScene extends Phaser.Scene {
 
   createInput() {
     // On mouse press retrieve the shortest path to destination
-    this.input.on('pointerdown', (pointer) => {
+    this.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
       const destination = this.gamemap.tilemap.getTileAtWorldXY(pointer.worldX, pointer.worldY, 'background');
       const startPoint = this.gamemap.tilemap.getTileAtWorldXY(this.player.x, this.player.y, 'background');
       const desVertex = `x${destination.x}y${destination.y}`;

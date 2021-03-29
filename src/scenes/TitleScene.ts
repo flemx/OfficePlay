@@ -39,8 +39,7 @@ export default class TitleScene extends Phaser.Scene {
     );
   }
 
-  startScene( targetScene: String): any {
-    console.log(targetScene);
-    //this.scene.start(targetScene);
+  startScene( targetScene: string): any {
+    this.scene.start(targetScene);
   }
 }
