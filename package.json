@@ -6,16 +6,21 @@
   "scripts": {
     "server": "node index.js",
     "build": "webpack --mode production",
-    "dev": "yarn build && webpack serve --mode development --open",
+    "dev": "webpack serve --mode development --open --port 3000",
     "lint": "npx eslint src/ --fix"
   },
   "author": "Damien Fleminks",
   "license": "ISC",
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.19.0",
+    "@typescript-eslint/parser": "^4.19.0",
+    "clean-webpack-plugin": "^3.0.0",
     "eslint": "^7.22.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
     "raw-loader": "^4.0.2",
+    "ts-loader": "^8.1.0",
+    "typescript": "^4.2.3",
     "webpack": "^5.26.2",
     "webpack-cli": "^4.5.0",
     "webpack-dev-server": "^3.11.2"

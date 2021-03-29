@@ -166,7 +166,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       // this.anims.stop();
       if (this.lastMove === 'left') {
         this.anims.play('player-left-idle', true);
-        console.log('move left');
       }
       if (this.lastMove === 'right') {
         this.anims.play('player-right-idle', true);
@@ -176,7 +175,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       }
       if (this.lastMove === 'back') {
         this.anims.play('player-back-idle', true);
-        console.log('move up');
       }
     }
   }
