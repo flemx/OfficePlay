@@ -1,4 +1,3 @@
-console.log('Time to get started...');
 import Phaser from 'phaser';
 
 import HelloWorldScene from './scenes/HelloWorldScene'
