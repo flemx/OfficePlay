@@ -7,37 +7,40 @@ import UiButton from '../classes/UiButton';
  */
 
 export default class TitleScene extends Phaser.Scene {
+
+
   constructor() {
+    console.log('Load BootScene');
     super('Title');
   }
 
   create() {
     // Create title text
-    this.titleText = this.add.text(
+    const titleText = this.add.text(
       this.scale.width / 2,
       this.scale.height / 2,
       'Virtual Office',
       {
         fontSize: '64px',
-        fill: '#fff',
+        color: '#fff',
       },
     );
-    this.titleText.setOrigin(0.5);
+    titleText.setOrigin(0.5);
 
-    // this.scale.width /= 2;
-    // this.scale.height *= 0.65;
-    this.startGameButton = new UiButton(
+   
+    const startGameButton = new UiButton(
       this,
       this.scale.width / 2,
       this.scale.height * 0.65,
       'button1',
       'button2',
       'Start',
-      this.startScene.bind(this, 'Game'),
+      this.startScene('Game'),
     );
   }
 
-  startScene(targetScene) {
-    this.scene.start(targetScene);
+  startScene( targetScene: String): any {
+    console.log(targetScene);
+    //this.scene.start(targetScene);
   }
 }
