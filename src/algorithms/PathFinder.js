@@ -9,6 +9,10 @@ import PriorityQueue from './PriorityQueue';
  */
 
 export default class PathFinder {
+
+  // in TS dfine as:  {x:`${number}y${number}`}
+
+
   constructor() {
     this.graph = {};
     //  Keep track of the distances from vstarting vertex to goal vertex

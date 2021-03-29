@@ -63,16 +63,16 @@ export default class GameScene extends Phaser.Scene {
         const dk = new PathFinder();
         const path = dk.findPath(`x${startPoint.x}y${startPoint.y}`, `x${destination.x}y${destination.y}`, this.gamemap.graph);
         console.log('The shortest path is: ', path);
-        this.player.path = [];
+        this.player.resetPath();
         for (const coord of path) {
-          this.player.path.push(
+          this.player.addCoord(
             {
               x: this.gamemap.coordinates[coord].x,
               y: this.gamemap.coordinates[coord].y,
             },
           );
         }
-        this.player.moveToCoord = this.player.path[0];
+        this.player.nextCoord();
       }
     });
   }

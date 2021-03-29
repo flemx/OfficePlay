@@ -1,25 +1,35 @@
 import * as Phaser from 'phaser';
+import { Coordinate } from '../models/types';
 /**
  * Player
  * @ Damien Fleminks
  */
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
-  constructor(scene, x, y, key, frame) {
-    super(scene, x, y, key, frame);
+
+
+  private speed: number;
+  private lastMove: 'back' | 'left' | 'right' | 'front';
+  private _path: Array<Coordinate>; // Path the player should walk
+  private _nextCoord: Coordinate | undefined; // Keep track of next coord to move to
+
+  constructor(
+      scene: Phaser.Scene, // the scene this container will be added to
+      x: number,  // the start x position of the player
+      y: number,  // the start y position of the player
+      key: string  // player spritesheet
+    ){
+    super(scene, x, y, key);
+
     // Enable physics
     this.scene.physics.world.enable(this);
-
-    this.scene = scene;
     this.speed = 250; // Velocity when moving our player
     this.setSize(32, 32);
     this.setOffset(0, 32);
-    this.lastMove = 'down';
-    this.path = [];
-    this.playerPos = {};
-
-    // Keep track of next coord to move to
-    this.moveToCoord = {};
+    this.lastMove = 'front';
+    //this.playerPos = {};
+    this._path = [];
+    this._nextCoord = {x:x,y:y};
 
     // Setup all player animations
     this.setPlayerAnims();
@@ -34,6 +44,29 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.scene.cameras.main.startFollow(this);
     // Make sure player is visible by putting layer on top
     this.setDepth(5);
+  }
+
+  /**
+   *  Add coordinates to define a path for player to walk
+   * @param coord defines the coordinate on the map
+   */
+  public addCoord(coord: Coordinate): void{
+    this._path.push(coord);
+  }
+
+  /**
+   *  Empty the _path array
+   */
+  public resetPath(): void{
+    this._path.length = 0;
+  }
+
+
+  /**
+   *  Sets the next Coordinate the player will walk to to the first value in the walking path
+   */
+  public nextCoord(): void{
+      this._nextCoord = this._path[0];
   }
 
   setPlayerAnims() {
@@ -98,15 +131,16 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     const speed = this.speed;
 
     // Stop any previous movement from the last frame
-    this.body.setVelocity(0);
+    let body =  this.body as Phaser.Physics.Arcade.Body
+    body.setVelocity(0);
 
     let moveX = 0;
     let moveY = 0;
-    // console.log('this.moveToCoord', this.moveToCoord);
-    if (this.moveToCoord) {
+    // console.log('this._nextCoord', this._nextCoord);
+    if (this._nextCoord) {
       // debugger;
-      moveX = this.moveToCoord.x - this.x;
-      moveY = this.moveToCoord.y - this.y;
+      moveX = this._nextCoord.x - this.x;
+      moveY = this._nextCoord.y - this.y;
 
       if (Math.abs(moveX) < 5) {
         moveX = 0;
@@ -116,11 +150,11 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       }
 
       if (moveY === 0 && moveX === 0) {
-        if (this.path.length > 0) {
-          this.moveToCoord = this.path.shift();
+        if (this._path.length > 0) {
+          this._nextCoord = this._path.shift();
           return;
         }
-        this.moveToCoord = undefined;
+        this._nextCoord = undefined;
       }
     }
 
@@ -133,17 +167,17 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     // Horizontal movement
     if (moveState.left.isDown) {
-      this.body.setVelocityX(-speed);
+      body.setVelocityX(-speed);
     } else if (moveState.right.isDown) {
-      this.body.setVelocityX(speed);
+      body.setVelocityX(speed);
       // this.scene.physics.moveTo(this, this.x + 10, this.y + 10, 200);
     }
 
     // Vertical movement
     if (moveState.up.isDown) {
-      this.body.setVelocityY(-speed);
+      body.setVelocityY(-speed);
     } else if (moveState.down.isDown) {
-      this.body.setVelocityY(speed);
+      body.setVelocityY(speed);
     }
     // Normalize and scale the velocity so that player can't move faster along a diagonal
     this.body.velocity.normalize().scale(speed);
