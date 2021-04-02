@@ -35,7 +35,7 @@ export default class TitleScene extends Phaser.Scene {
       'button1',
       'button2',
       'Start',
-      this.startScene('Game'),
+      this.startScene.bind(this, 'Game'),
     );
   }
 

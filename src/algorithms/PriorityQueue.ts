@@ -28,7 +28,7 @@ export default class PriorityQueue {
    * Returnss the number of queued items left 
    */
   public getValueNum(): number{
-      return this.values.length;
+      return this.values.length
   }
 
   /**
@@ -37,9 +37,9 @@ export default class PriorityQueue {
    public dequeue(): QueItem {
     // remove highest first value and replace with latest
     const min: QueItem = this.values[0];
+    const end: QueItem = this.values[this.values.length-1];
+    this.values.pop();
     if (this.values.length > 1) {
-      const end: QueItem = this.values[this.values.length];
-      this.values.pop();
       // correct the nodes in the tree with bubbledown method
       this.values[0] = end;
       this.bubbleDown();
@@ -83,7 +83,7 @@ export default class PriorityQueue {
       const rightChildindx: number = 2 * indx + 2;
       let leftChild!: QueItem; 
       let rightChild!: QueItem;
-      let swap = 0;
+      let swap = null;
       // Set children nodes if nto out of bounds and keep track of index to swap
       if (leftChildindx < length) {
         leftChild = this.values[leftChildindx];
@@ -106,6 +106,7 @@ export default class PriorityQueue {
       // Swap nodes and update parent index
       this.values[indx] = this.values[swap];
       this.values[swap] = element;
+      console.log('SWAP:', swap);
       indx = swap;
     }
   }

@@ -115,7 +115,7 @@ export default class GameMap {
    * @returns Node key value
    */
   public getNodeKey(x: number, y: number): Coordinate{
-    const tileMap = this.tilemap.getTileAtWorldXY(x, y);
+    const tileMap = this.tilemap.getTileAtWorldXY(x, y,false, this.scene.cameras.main, 'background');
     return {x: tileMap.x, y: tileMap.y};
   }
 
@@ -125,7 +125,7 @@ export default class GameMap {
    * @returns boolean
    */
   public isValidPath(coord: Coordinate): boolean{
-    if(!this.mapCoord[coord.y][coord.x]){
+    if(!this.mapCoord[coord.y][coord.x].illigal){
         return true;
     }
     return false;

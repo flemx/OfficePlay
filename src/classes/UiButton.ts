@@ -59,7 +59,7 @@ export default class UiButton extends Phaser.GameObjects.Container {
 
     // Event listeners for button, hover & click
     button.on('pointerdown', () => {
-      this.targetCallback;
+      this.targetCallback('Game');
     });
     button.on('pointerover', () => {
       button.setTexture(config.hoverKey);

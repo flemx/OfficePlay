@@ -32,7 +32,7 @@ export type NodeKey = `x${number}y${number}`;
 
 /**
  * Node / Vertex, used 
-//  */
+ */
 export type NodeNaughbour = {
     [key: string] : {
         coor: Coordinate, cost: number 
