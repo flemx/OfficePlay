@@ -19,15 +19,22 @@ export default class PriorityQueue {
    * @param {*} value
    * @param {*} priority
    */
-  enqueue(item: QueItem) {
+  public enqueue(item: QueItem): void {
     this.values.push(item);
     this.bubbleUp();
   }
 
   /**
+   * Returnss the number of queued items left 
+   */
+  public getValueNum(): number{
+      return this.values.length;
+  }
+
+  /**
    *  Remove and returns the highest priority node
    */
-  dequeue() {
+   public dequeue(): QueItem {
     // remove highest first value and replace with latest
     const min: QueItem = this.values[0];
     if (this.values.length > 1) {
@@ -43,7 +50,7 @@ export default class PriorityQueue {
   /**
    * When new node is added, reshuffle the queue to correct priorities
    */
-  bubbleUp() {
+   public bubbleUp(): void {
     // Keep track of index (last inserted item)
     let indx = this.values.length - 1;
     const element: QueItem = this.values[indx];
@@ -66,7 +73,7 @@ export default class PriorityQueue {
   /**
    * When a node is removed, reshuffle the queue to correct priorities
    */
-  bubbleDown() {
+   public bubbleDown(): void {
     let indx = 0;
     const length: number  = this.values.length;
     const element: QueItem = this.values[0];
