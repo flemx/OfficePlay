@@ -3,6 +3,7 @@ import PathFinder from '../algorithms/PathFinder';
 import NPC from '../classes/NPC';
 import Player from '../classes/Player';
 import GameMap from '../classes/GameMap';
+import { Coordinate, NodeKey } from '../models/types';
 
 /**
  * GameScene
@@ -53,27 +54,44 @@ export default class GameScene extends Phaser.Scene {
   createInput() {
     // On mouse press retrieve the shortest path to destination
     this.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
-      const destination = this.gamemap.tilemap.getTileAtWorldXY(pointer.worldX, pointer.worldY, 'background');
-      const startPoint = this.gamemap.tilemap.getTileAtWorldXY(this.player.x, this.player.y, 'background');
-      const desVertex = `x${destination.x}y${destination.y}`;
-      if (this.gamemap.illigals[desVertex]) {
-        console.log(`Coordinate ${desVertex} is an illigal destination!`);
-      } else {
-        // Call pathfinder algorithm
-        const dk = new PathFinder();
-        const path = dk.findPath(`x${startPoint.x}y${startPoint.y}`, `x${destination.x}y${destination.y}`, this.gamemap.graph);
+      const destination: Coordinate = this.gamemap.getNodeKey(pointer.worldX, pointer.worldY);
+      const startPoint: Coordinate = this.gamemap.getNodeKey(this.player.x, this.player.y);
+      if(this.gamemap.isValidPath(destination)){
+        // get optimnal path 
+        const path = this.gamemap.getPath(startPoint,destination);;
         console.log('The shortest path is: ', path);
         this.player.resetPath();
         for (const coord of path) {
           this.player.addCoord(
             {
-              x: this.gamemap.coordinates[coord].x,
-              y: this.gamemap.coordinates[coord].y,
+              x: coord.x,
+              y: coord.y,
             },
           );
         }
         this.player.nextCoord();
+      }else{
+        console.log(`Coordinate ${destination} is an illigal destination!`);
       }
+
+      // if (this.gamemap.illigals[desVertex]) {
+      //   console.log(`Coordinate ${desVertex} is an illigal destination!`);
+      // } else {
+      //   // Call pathfinder algorithm
+      //   const dk = new PathFinder();
+      //   const path = dk.findPath(`x${startPoint.x}y${startPoint.y}`, `x${destination.x}y${destination.y}`, this.gamemap.graph);
+      //   console.log('The shortest path is: ', path);
+      //   this.player.resetPath();
+      //   for (const coord of path) {
+      //     this.player.addCoord(
+      //       {
+      //         x: this.gamemap.coordinates[coord].x,
+      //         y: this.gamemap.coordinates[coord].y,
+      //       },
+      //     );
+      //   }
+      //   this.player.nextCoord();
+      // }
     });
   }
 
@@ -84,7 +102,7 @@ export default class GameScene extends Phaser.Scene {
 
   createMap() {
     // setup map configuration
-    const mapConfig = [
+    const config = [
       {
         tilesetImage: 'background',
         layer: 'background',
@@ -108,10 +126,10 @@ export default class GameScene extends Phaser.Scene {
       {
         tilesetImage: 'interiors',
         layer: 'interiors1',
-      },
+      }
     ];
 
     // create map
-    this.gamemap = new GameMap(this, 'map', mapConfig, this.player, this.officeHelpNpc);
+    this.gamemap = new GameMap(this, 'map', config, this.player, this.officeHelpNpc);
   }
 }

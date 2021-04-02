@@ -136,7 +136,7 @@ export default class PathFinder {
      *  Initialise the data structures to use for the dijkstra pathfinder algorithm
      * @param {*} start
      */
-  initDijkstra(start: NodeKey) {
+  private initDijkstra(start: NodeKey): void {
     // Empty all data structures
     this.distances = {};
     this.previous = {};
@@ -163,18 +163,18 @@ export default class PathFinder {
      * @param {*} goal
      * @param {*} graph
      */
-  public findPath(start: NodeKey, goal: NodeKey): NodeKey[] {
+  public findPath(start: Coordinate, goal: Coordinate): Coordinate[] {
     // Initialise new data structures
-    this.initDijkstra(start);
+    this.initDijkstra(`x${start.x}y${start.y}` as const);
     let smallest: NodeKey | undefined;
-    const path = [];
+    const path: Coordinate[] = [];
 
     while (this.prioQueue.getValueNum()) {
       smallest = this.prioQueue.dequeue().value as NodeKey;
       // Stop algortihm when it has found the shortest path to the goal
-      if (smallest === goal) {
+      if (smallest === `x${goal.x}y$${goal.y}`) {
         while (this.previous[smallest]) {
-          path.push(smallest);
+          path.push(this.formatCoord(smallest));
           if(this.previous[smallest]){
             smallest = this.previous[smallest] as NodeKey;
           }
@@ -202,7 +202,16 @@ export default class PathFinder {
         }
       }
     }
+    return path.concat(this.formatCoord(smallest as NodeKey)).reverse();
+  }
 
-    return path.concat(smallest as NodeKey ).reverse();
+  /**
+   *  Transforms a NodeKey type string into a Coordinate Type
+   * @param nodeKey 
+   * @returns Coordinate
+   */
+  private formatCoord(nodeKey: NodeKey): Coordinate{
+    let numbers = nodeKey.match(/\d+/g)!.map(Number);
+    return {x: numbers[0], y: numbers[1]};
   }
 }

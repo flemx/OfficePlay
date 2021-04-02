@@ -13,16 +13,16 @@ export default class GameMap {
 
   private scene: Phaser.Scene;
   private key: string;
-  private config: MapConfig;
+  private config: Array<MapConfig>;
   private player: Player;
   private npc: NPC; 
 
   private tilemap: Phaser.Tilemaps.Tilemap;
 
   private mapCoord: MapCoordinates;
-  private coordinates;
-  private illigals: Record<string,boolean>
-  private grap: PathFinder;
+  private graph: PathFinder;
+
+
 
 
   // TODO:  Define better type
@@ -32,7 +32,7 @@ export default class GameMap {
   constructor(
       scene: Phaser.Scene, // the scene this map will be added to
       key: string, 
-      config: MapConfig, 
+      config: Array<MapConfig>, 
       player: Player, 
       npc: NPC
     ){
@@ -42,28 +42,23 @@ export default class GameMap {
     this.config = config; // Map config with layers and images
     this.player = player;
     this.npc = npc;
-    // this.graph = {};
-
-    this.tilemap = this.scene.make.tilemap({ key: this.key });
-
-    this.coordinates = {};
-    this.illigals = {};
-    this.createMap();
-    this.generateGraph();
+    this.tilemap = this.createMap();
+    this.mapCoord = this.createCoord();
+    this.graph = new PathFinder(this.mapCoord);
     // Set collision on NPC's
     // this.addCollisions(this.npc);
   }
 
-  createMap() {
+  private createMap(): Phaser.Tilemaps.Tilemap {
     // create the tile map
-   // this.tilemap = this.scene.make.tilemap({ key: this.key });
+   let tilemap = this.scene.make.tilemap({ key: this.key });
 
     // loop through map configruation to load all layers
     for (const item of this.config) {
       // add the tileset image
-      const tiles = this.tilemap.addTilesetImage(item.tilesetImage);
+      const tiles = tilemap.addTilesetImage(item.tilesetImage);
       // add layer
-      const layer = this.tilemap.createStaticLayer(item.layer, tiles, 0, 0);
+      const layer = tilemap.createLayer(item.layer, tiles, 0, 0);
       // Increase scale
       layer.setScale(1.5);
 
@@ -76,26 +71,31 @@ export default class GameMap {
       }
     }
     // update the world bounds
-    this.scene.physics.world.bounds.width = this.tilemap.widthInPixels * 2;
-    this.scene.physics.world.bounds.height = this.tilemap.heightInPixels * 2;
+    this.scene.physics.world.bounds.width = tilemap.widthInPixels * 2;
+    this.scene.physics.world.bounds.height = tilemap.heightInPixels * 2;
+
+    return tilemap;
   }
 
   /**
    *  Formats the Phaser tile map into usable data structure for the pathfinder algorithms 
    * @returns formatted coordinates
    */
-  createCoord(): MapCoordinates{
+   private createCoord(): MapCoordinates{
     let coordinates: MapCoordinates = [];
     const Tilemap = this.tilemap
 
     //Generate 2D coordinates array from mapo dimensions
     for (let y = 0; y < Tilemap.height; y += 1) {
+      coordinates.push([]);
       for (let x = 0; x < Tilemap.width; x += 1) {
         // add the pixel coordinates
-        coordinates[y][x].coord = {
-          x: Tilemap.layers[0].data[y][x].getCenterX(),
-          y: Tilemap.layers[0].data[y][x].getCenterY(),
-        };
+        coordinates[y].push({
+          coord: {
+            x: Tilemap.layers[0].data[y][x].getCenterX(),
+            y: Tilemap.layers[0].data[y][x].getCenterY(),
+          }, illigal: false
+        });
         // Set illigal to false by default
         coordinates[y][x].illigal = false;
         // Look for collisions in the differenrt layers and set the coordinate illigal to false
@@ -109,14 +109,46 @@ export default class GameMap {
     return coordinates;
   }
 
-
-  generateGraph() {
-    // const path = new PathFinder();
-    const graphResult = PathFinder.generateGraph(this.tilemap);
-    this.coordinates = graphResult.coor;
-    this.graph = graphResult.graph;
-    this.illigals = graphResult.illigals;
+  /**
+   * get world xy from pointer coordinates
+   * @param {x, y} get x,y fro m pointer  
+   * @returns Node key value
+   */
+  public getNodeKey(x: number, y: number): Coordinate{
+    const tileMap = this.tilemap.getTileAtWorldXY(x, y);
+    return {x: tileMap.x, y: tileMap.y};
   }
+
+  /**
+   * Checks if a tile on the map is valid coordinate to move to
+   * @param coord of the tile number coord
+   * @returns boolean
+   */
+  public isValidPath(coord: Coordinate): boolean{
+    if(!this.mapCoord[coord.y][coord.x]){
+        return true;
+    }
+    return false;
+  }
+
+  /**
+   * Call the Dijkstra algorithm from PathFinder and return the optimal path from the map coordinates
+   * @param startPoint  the coodindate of thhe player current location
+   * @param destination  cooridnate of desires location to move to
+   * @returns the optimal path to walk to desitnation 
+   */
+  public getPath(startPoint: Coordinate, destination: Coordinate): Coordinate[]{
+    return  this.graph.findPath(startPoint, destination);
+  }
+
+
+  // generateGraph(): PathFinder{
+  //   // const path = new PathFinder();
+  //   const graphResult = PathFinder.generateGraph(this.tilemap);
+  //   this.coordinates = graphResult.coor;
+  //   this.graph = graphResult.graph;
+  //   this.illigals = graphResult.illigals;
+  // }
 
   // addCollisions(layer) {
   //   // check for collisions between player and the specified layer

@@ -6,12 +6,18 @@ import * as Phaser from 'phaser';
  */
 
 export default class NPC extends Phaser.Physics.Arcade.Sprite {
-  constructor(scene, x, y, key) {
-    super(scene, x, y, key);
+  constructor(
+    scene: Phaser.Scene, // the scene this NPC will be added to
+    x: number,  // the start x position of the NPC
+    y: number,  // the start y position of the NPC
+    key: string  // NPC spritesheet
+  ){
+  super(scene, x, y, key);
+
     // Enable physics
     this.scene.physics.world.enable(this);
 
-    this.scene = scene;
+    // this.scene = scene;
 
     // Set animations
     this.scene.anims.create({
