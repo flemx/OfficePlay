@@ -39,7 +39,7 @@ export default class PriorityQueue {
     const min: QueItem = this.values[0];
     const end: QueItem = this.values[this.values.length-1];
     this.values.pop();
-    if (this.values.length > 1) {
+    if (this.values.length > 0) {
       // correct the nodes in the tree with bubbledown method
       this.values[0] = end;
       this.bubbleDown();
@@ -106,7 +106,6 @@ export default class PriorityQueue {
       // Swap nodes and update parent index
       this.values[indx] = this.values[swap];
       this.values[swap] = element;
-      console.log('SWAP:', swap);
       indx = swap;
     }
   }
