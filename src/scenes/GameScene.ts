@@ -1,8 +1,7 @@
 import * as Phaser from 'phaser';
-import PathFinder from '../algorithms/PathFinder';
-import NPC from '../classes/NPC';
-import Player from '../classes/Player';
-import GameMap from '../classes/GameMap';
+import NPC from '../objects/NPC';
+import Player from '../objects/Player';
+import GameMap from '../objects/GameMap';
 import { Coordinate, NodeKey } from '../models/types';
 
 /**
@@ -22,12 +21,12 @@ export default class GameScene extends Phaser.Scene {
     super('Game');
   }
 
-  init() {
+  public init(): void {
     // Start Ui scene in parallel, placed on top
     // this.scene.launch('Ui');   // Not used for the moment
   }
 
-  create() {
+  public create(): void {
     this.createPlayer();
     this.createNPC();
     this.createMap();
@@ -35,72 +34,51 @@ export default class GameScene extends Phaser.Scene {
     this.createInput();
   }
 
-  update() {
+  public update(): void {
     // this.player.update(this.cursors,this.walkTest);
     this.player.update();
   }
 
-  createAudio() {
+  private createAudio(): void {
     this.backgroundAudio = this.sound.add('background1', { loop: true });
     this.backgroundAudio.play();
   }
 
-  createPlayer() {
+  private createPlayer(): void {
     // Spawn player at location 216,216
     // this.player = new Player(this,216,216,"atlas", "misa-front");
     this.player = new Player(this, 216, 216, 'player-walk');
   }
 
-  createInput() {
+  private createInput(): void {
     // On mouse press retrieve the shortest path to destination
     this.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
-      const destination: Coordinate = this.gamemap.getNodeKey(pointer.worldX, pointer.worldY);
-      const startPoint: Coordinate = this.gamemap.getNodeKey(this.player.x, this.player.y);
-      if(this.gamemap.isValidPath(destination)){
+      if(this.gamemap.isValidPath({x: pointer.worldX, y: pointer.worldY})){
+        const destination: Coordinate = this.gamemap.getNodeKey({x: pointer.worldX, y: pointer.worldY});
+        const startPoint: Coordinate = this.gamemap.getNodeKey({x: this.player.x, y: this.player.y});
         // get optimnal path 
         const path = this.gamemap.getPath(startPoint,destination);;
         console.log('The shortest path is: ', path);
+        // Make sure the current path of the player is reset 
         this.player.resetPath();
+        // Add the new coordinates to the players path
         for (const coord of path) {
-          this.player.addCoord(
-            {
-              x: coord.x,
-              y: coord.y,
-            },
-          );
+          this.player.addCoord(this.gamemap.getPixelCoord(coord));
         }
+        // Set the first coordinate of player to trigger the player movement
         this.player.nextCoord();
       }else{
-        console.log(`Coordinate ${destination} is an illigal destination!`);
+        console.log(`You are not allowed to go there!`);
       }
-
-      // if (this.gamemap.illigals[desVertex]) {
-      //   console.log(`Coordinate ${desVertex} is an illigal destination!`);
-      // } else {
-      //   // Call pathfinder algorithm
-      //   const dk = new PathFinder();
-      //   const path = dk.findPath(`x${startPoint.x}y${startPoint.y}`, `x${destination.x}y${destination.y}`, this.gamemap.graph);
-      //   console.log('The shortest path is: ', path);
-      //   this.player.resetPath();
-      //   for (const coord of path) {
-      //     this.player.addCoord(
-      //       {
-      //         x: this.gamemap.coordinates[coord].x,
-      //         y: this.gamemap.coordinates[coord].y,
-      //       },
-      //     );
-      //   }
-      //   this.player.nextCoord();
-      // }
     });
   }
 
-  createNPC() {
+  private createNPC(): void {
     // Spawn NPC with idle standing animation
     this.officeHelpNpc = new NPC(this, 285, 75, 'office-help');
   }
 
-  createMap() {
+  private createMap(): void {
     // setup map configuration
     const config = [
       {

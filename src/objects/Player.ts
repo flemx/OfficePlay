@@ -12,6 +12,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   private lastMove: 'back' | 'left' | 'right' | 'front';
   private _path: Array<Coordinate>; // Path the player should walk
   private _nextCoord: Coordinate | undefined; // Keep track of next coord to move to
+  private _body: Phaser.Physics.Arcade.Body;
 
   constructor(
       scene: Phaser.Scene, // the scene this container will be added to
@@ -30,7 +31,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     //this.playerPos = {};
     this._path = [];
     this._nextCoord = {x:x,y:y};
-
+    this._body = this.body as Phaser.Physics.Arcade.Body;
     // Setup all player animations
     this.setPlayerAnims();
 
@@ -69,7 +70,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       this._nextCoord = this._path[0];
   }
 
-  setPlayerAnims() {
+  private setPlayerAnims(): void {
     // Set animations
     const anims = this.scene.anims;
 
@@ -127,62 +128,71 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.anims.play('player-front-idle', true);
   }
 
-  update() {
-    const speed = this.speed;
+  public update(): void {
+    // Get the move coordinatess reletaive from the players position and next move
+    let moveCoord = this.nextMoveCoord();
+    // move player to next coordinate
+    this.movePlayer(moveCoord);
+  }
 
-    // Stop any previous movement from the last frame
-    let body =  this.body as Phaser.Physics.Arcade.Body
-    body.setVelocity(0);
+  /**
+   *  Calculate coordinate used to determine direction of player for animations
+   * @returns coordimnes with directions
+   */
+  private nextMoveCoord(): Coordinate{
 
-    let moveX = 0;
-    let moveY = 0;
-    // console.log('this._nextCoord', this._nextCoord);
+    let moveCoord = {x:0,y:0};
     if (this._nextCoord) {
       // debugger;
-      moveX = this._nextCoord.x - this.x;
-      moveY = this._nextCoord.y - this.y;
+      moveCoord.x = this._nextCoord.x - this.x;
+      moveCoord.y = this._nextCoord.y - this.y;
 
-      if (Math.abs(moveX) < 5) {
-        moveX = 0;
+      if (Math.abs(moveCoord.x) < 5) {
+        moveCoord.x = 0;
       }
-      if (Math.abs(moveY) < 5) {
-        moveY = 0;
+      if (Math.abs(moveCoord.y) < 5) {
+        moveCoord.y = 0;
       }
 
-      if (moveY === 0 && moveX === 0) {
+      if (moveCoord.y === 0 && moveCoord.x === 0) {
         if (this._path.length > 0) {
           this._nextCoord = this._path.shift();
-          return;
+          return moveCoord;
         }
         this._nextCoord = undefined;
       }
     }
+    return moveCoord;
+  }
 
+  /**
+   * Based on next coordinate and players position move player with animation
+   * @param coor coordinate used to determine direction of player for animations
+   */
+  private movePlayer(coor:  Coordinate): void{
+    // Stop any previous movement from the last frame
+    this._body.setVelocity(0);
     const moveState = {
-      left: { isDown: moveX < 0 },
-      right: { isDown: moveX > 0 },
-      up: { isDown: moveY < 0 },
-      down: { isDown: moveY > 0 },
+      left: { isDown: coor.x < 0 },
+      right: { isDown: coor.x > 0 },
+      up: { isDown: coor.y < 0 },
+      down: { isDown: coor.y > 0 },
     };
-
     // Horizontal movement
     if (moveState.left.isDown) {
-      body.setVelocityX(-speed);
+      this._body.setVelocityX(-this.speed);
     } else if (moveState.right.isDown) {
-      body.setVelocityX(speed);
+      this._body.setVelocityX(this.speed);
       // this.scene.physics.moveTo(this, this.x + 10, this.y + 10, 200);
     }
-
     // Vertical movement
     if (moveState.up.isDown) {
-      body.setVelocityY(-speed);
+      this._body.setVelocityY(-this.speed);
     } else if (moveState.down.isDown) {
-      body.setVelocityY(speed);
+      this._body.setVelocityY(this.speed);
     }
     // Normalize and scale the velocity so that player can't move faster along a diagonal
-    this.body.velocity.normalize().scale(speed);
-
-    // debugger;
+    this.body.velocity.normalize().scale(this.speed);
     // Update the animation last and give left/right animations precedence over up/down animations
     if (moveState.left.isDown) {
       this.anims.play('player-left-walk', true);
@@ -212,4 +222,5 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       }
     }
   }
+
 }

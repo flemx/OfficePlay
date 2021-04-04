@@ -1,5 +1,5 @@
 import * as Phaser from 'phaser';
-import UiButton from '../classes/UiButton';
+import UiButton from '../objects/UiButton';
 
 /**
  * TitleScene
@@ -14,7 +14,7 @@ export default class TitleScene extends Phaser.Scene {
     super('Title');
   }
 
-  create() {
+  public create(): void {
     // Create title text
     const titleText = this.add.text(
       this.scale.width / 2,
@@ -39,7 +39,7 @@ export default class TitleScene extends Phaser.Scene {
     );
   }
 
-  startScene( targetScene: string): any {
+  private startScene( targetScene: string): void {
     this.scene.start(targetScene);
   }
 }

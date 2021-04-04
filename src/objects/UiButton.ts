@@ -36,7 +36,7 @@ export default class UiButton extends Phaser.GameObjects.Container {
     this.scene.add.existing(this);
   }
 
-  createButton(config: {key: string, hoverKey: string, text: string}) {
+  private createButton(config: {key: string, hoverKey: string, text: string}): void {
     // Start string
     const button = this.scene.add.image(0, 0, config.key);
     // Make it interactive so you can click and add text

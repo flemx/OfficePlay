@@ -44,6 +44,7 @@ export default class GameMap {
     this.npc = npc;
     this.tilemap = this.createMap();
     this.mapCoord = this.createCoord();
+    console.log(this.mapCoord);
     this.graph = new PathFinder(this.mapCoord);
     console.log(this.graph);
     // Set collision on NPC's
@@ -143,21 +144,32 @@ export default class GameMap {
    * @param {x, y} get x,y fro m pointer  
    * @returns Node key value
    */
-  public getNodeKey(x: number, y: number): Coordinate{
-    const tileMap = this.tilemap.getTileAtWorldXY(x, y,false, this.scene.cameras.main, 'background');
+  public getNodeKey(coor: Coordinate): Coordinate{
+    const tileMap = this.tilemap.getTileAtWorldXY(coor.x, coor.y,false, this.scene.cameras.main, 'background');
     return {x: tileMap.x, y: tileMap.y};
   }
 
   /**
+   *  Get pixel coordinates of given tile cooridates of the world map from the mapCoord
+   * @param coor xy coordinates of tile
+   * @returns  map pixel coordinates
+   */
+  public getPixelCoord(coor: Coordinate): Coordinate{
+      return this.mapCoord[coor.y][coor.x].coord;
+  }
+
+  /**
    * Checks if a tile on the map is valid coordinate to move to
-   * @param coord of the tile number coord
+   * @param coord of the world pixel coordinates
    * @returns boolean
    */
   public isValidPath(coord: Coordinate): boolean{
-    if(!this.mapCoord[coord.y][coord.x].illigal){
-        return true;
+    try{
+        let coor = this.getNodeKey(coord)
+        return !this.mapCoord[coor.y][coor.x].illigal;
+    }catch(e){
+        return false;
     }
-    return false;
   }
 
   /**
@@ -169,15 +181,6 @@ export default class GameMap {
   public getPath(startPoint: Coordinate, destination: Coordinate): Coordinate[]{
     return  this.graph.findPath(startPoint, destination);
   }
-
-
-  // generateGraph(): PathFinder{
-  //   // const path = new PathFinder();
-  //   const graphResult = PathFinder.generateGraph(this.tilemap);
-  //   this.coordinates = graphResult.coor;
-  //   this.graph = graphResult.graph;
-  //   this.illigals = graphResult.illigals;
-  // }
 
   // addCollisions(layer) {
   //   // check for collisions between player and the specified layer

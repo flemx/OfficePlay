@@ -9,7 +9,7 @@ export default class BootScene extends Phaser.Scene {
     super('Boot');
   }
 
-  preload() {
+  public preload(): void {
     // load images
     this.loadImages();
     // Load player animations
@@ -22,7 +22,12 @@ export default class BootScene extends Phaser.Scene {
     this.loadTileMap(); // New code
   }
 
-  loadImages() {
+  public create(): void {
+    this.scene.start('Title');
+  }
+
+
+  private loadImages(): void {
     // Key name and image location
     this.load.image('button1', 'assets/images/ui/blue_button01.png');
     this.load.image('button2', 'assets/images/ui/blue_button02.png');
@@ -33,26 +38,22 @@ export default class BootScene extends Phaser.Scene {
     this.load.image('interiors', 'assets/level/Interiors_32x32.png');
   }
 
-  loadPlayer() {
+  private loadPlayer(): void {
     this.load.spritesheet('player-walk', 'assets/images/characters/player1-run.png', { frameWidth: 32, frameHeight: 64 });
     this.load.spritesheet('player-idle', 'assets/images/characters/player1-idle.png', { frameWidth: 32, frameHeight: 64 });
   }
 
-  loadSpriteSheets() {
+  private loadSpriteSheets(): void {
     // Load image as array of sprites devided by size
     this.load.spritesheet('office-help', 'assets/level/npc-conference.png', { frameWidth: 32, frameHeight: 48 }); // Load NPC
   }
 
-  loadAudio() {
+  private loadAudio(): void {
     // Relax background music
     this.load.audio('background1', ['assets/audio/background1.wav']);
   }
 
-  create() {
-    this.scene.start('Title');
-  }
-
-  loadTileMap() {
+  private loadTileMap(): void {
     // map made with Tiled in JSON format
     this.load.tilemapTiledJSON('map', 'assets/level/office.json');
   }
