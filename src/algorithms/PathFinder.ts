@@ -12,12 +12,12 @@ import PriorityQueue from './PriorityQueue';
 export default class PathFinder {
 
   private prioQueue: PriorityQueue;
-  private nodes: Node;
+  private adjacencyList: Node;
   private distances: Record<string, number>;
   private previous: Record<string, string | undefined>;
 
   constructor(coordinates: MapCoordinates){
-    this.nodes = this.generateGraph(coordinates);
+    this.adjacencyList = this.generateGraph(coordinates);
     //  Keep track of the distances from starting node to goal node
     this.distances = {};
     // // Keep track of the paths
@@ -62,12 +62,17 @@ export default class PathFinder {
         //   { coor: { x: x - 1, y: y - 1 }, cost: 2.5 }, // walk diagonally left-up
         //   { coor: { x: x + 1, y: y - 1 }, cost: 2.5 }, // walk diagonally right-up
         // ];
-        // If tile coordinate is a valid move, add a node with edges to valid naughbouring nodes
+        // If tile coordinate is a valid move, add a node with edges to valid naughbouring adjacencyList
         if(!coordinates[y][x].illigal){
           graph[`x${x}y${y}`] = naughbours.filter((naughbour: NodeNaughbour)=> {
             let naughboorY = naughbour[Object.keys(naughbour)[0]].coor.y;
             let naughboorX = naughbour[Object.keys(naughbour)[0]].coor.x;
-            return !coordinates[naughboorY][naughboorX].illigal;
+            try {
+              return !coordinates[naughboorY][naughboorX].illigal;
+            }
+            catch(e) {
+              // catch inaccessible undefined exception for non-existing noughbours 
+            }
           });
         }
 
@@ -142,7 +147,7 @@ export default class PathFinder {
     this.previous = {};
     this.prioQueue = new PriorityQueue();
     // create array with vertexes
-    const vertexes = Object.keys(this.nodes) as Array<NodeKey>;
+    const vertexes = Object.keys(this.adjacencyList) as Array<NodeKey>;
     // prepare the data structures
     for (let i = 0; i < vertexes.length; i += 1) {
       const key: NodeKey = vertexes[i];
@@ -172,7 +177,7 @@ export default class PathFinder {
     while (this.prioQueue.getValueNum()) {
       smallest = this.prioQueue.dequeue().value as NodeKey;
       // Stop algortihm when it has found the shortest path to the goal
-      if (smallest === `x${goal.x}y$${goal.y}`) {
+      if (smallest as string === `x${goal.x}y${goal.y}` as string) {
         while (this.previous[smallest]) {
           path.push(this.formatCoord(smallest));
           if(this.previous[smallest]){
@@ -182,9 +187,9 @@ export default class PathFinder {
         break;
       }
       if (smallest || this.distances[smallest] !== Infinity) {
-        for (const naughbour of this.nodes[smallest]) {
+        for (const naughbour of this.adjacencyList[smallest]) {
           // Find naughboring node
-          const nextNode = this.nodes[smallest].filter(
+          const nextNode = this.adjacencyList[smallest].filter(
             (v) => Object.keys(v)[0] === Object.keys(naughbour)[0],
           )[0];
           // Calculate new distance to neighboring node

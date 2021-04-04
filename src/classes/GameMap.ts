@@ -45,8 +45,37 @@ export default class GameMap {
     this.tilemap = this.createMap();
     this.mapCoord = this.createCoord();
     this.graph = new PathFinder(this.mapCoord);
+    console.log(this.graph);
     // Set collision on NPC's
     // this.addCollisions(this.npc);
+  }
+
+  /**
+   *  Generates a simple mock coordinate for testing purposes
+   * @returns 3x3 2D array of coordinates
+   */
+  testCoord(): MapCoordinates{
+    let coordinates: MapCoordinates = [];
+
+    //Generate 2D coordinates array from mapo dimensions
+    for (let y = 0; y < 3; y += 1) {
+      coordinates.push([]);
+      for (let x = 0; x < 3; x += 1) {
+        // add the pixel coordinates
+        coordinates[y].push({
+          coord: {
+            x: x+1,
+            y: y+1,
+          }, illigal: false
+        });
+        // Set illigal to false by default
+        coordinates[y][x].illigal = false;
+        // Look for collisions in the differenrt layers and set the coordinate illigal to false
+       
+      }
+    }
+    coordinates[1][1].illigal = true;
+    return coordinates;
   }
 
   private createMap(): Phaser.Tilemaps.Tilemap {
