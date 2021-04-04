@@ -27,7 +27,6 @@ export default class TitleScene extends Phaser.Scene {
     );
     titleText.setOrigin(0.5);
 
-   
     const startGameButton = new UiButton(
       this,
       this.scale.width / 2,

@@ -36,6 +36,10 @@ export default class UiButton extends Phaser.GameObjects.Container {
     this.scene.add.existing(this);
   }
 
+  /**
+   * Create the button from the configuration and add to container 
+   * @param config 
+   */
   private createButton(config: {key: string, hoverKey: string, text: string}): void {
     // Start string
     const button = this.scene.add.image(0, 0, config.key);
@@ -43,20 +47,16 @@ export default class UiButton extends Phaser.GameObjects.Container {
     button.setInteractive();
     // scale the button
     button.setScale(1.4);
-
     // Create button text
     const buttonText = this.scene.add.text(
       0, 0, config.text,
       { fontSize: '26px', color: '#fff' },
     );
-
     // Method to allign objects inside eacht other
     Phaser.Display.Align.In.Center(buttonText, button);
-
     // Add the two game objects to our container
     this.add(button);
     this.add(buttonText);
-
     // Event listeners for button, hover & click
     button.on('pointerdown', () => {
       this.targetCallback('Game');

@@ -1,7 +1,5 @@
 import PathFinder from '../algorithms/PathFinder';
 import { Coordinate, MapConfig, MapCoordinates, NodeKey } from '../models/types';
-import Player from './Player';
-import NPC from './NPC';
 
 /**
  * Map Class
@@ -14,41 +12,24 @@ export default class GameMap {
   private scene: Phaser.Scene;
   private key: string;
   private config: Array<MapConfig>;
-  private player: Player;
-  private npc: NPC; 
-
   private tilemap: Phaser.Tilemaps.Tilemap;
-
   private mapCoord: MapCoordinates;
   private graph: PathFinder;
-
-
-
-
-  // TODO:  Define better type
-
-
 
   constructor(
       scene: Phaser.Scene, // the scene this map will be added to
       key: string, 
-      config: Array<MapConfig>, 
-      player: Player, 
-      npc: NPC
+      config: Array<MapConfig>
     ){
     console.log('Map class run');
     this.scene = scene; // the scene this map belongs to
     this.key = key; // Tiled JSON file key name
     this.config = config; // Map config with layers and images
-    this.player = player;
-    this.npc = npc;
     this.tilemap = this.createMap();
     this.mapCoord = this.createCoord();
     console.log(this.mapCoord);
     this.graph = new PathFinder(this.mapCoord);
     console.log(this.graph);
-    // Set collision on NPC's
-    // this.addCollisions(this.npc);
   }
 
   /**
@@ -181,10 +162,5 @@ export default class GameMap {
   public getPath(startPoint: Coordinate, destination: Coordinate): Coordinate[]{
     return  this.graph.findPath(startPoint, destination);
   }
-
-  // addCollisions(layer) {
-  //   // check for collisions between player and the specified layer
-  //   // this.scene.physics.add.collider(this.player, layer);
-
-  // }
+  
 }

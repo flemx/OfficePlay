@@ -4,7 +4,6 @@ import * as Phaser from 'phaser';
  * NPC
  * @ Damien Fleminks
  */
-
 export default class NPC extends Phaser.Physics.Arcade.Sprite {
   constructor(
     scene: Phaser.Scene, // the scene this NPC will be added to
@@ -13,12 +12,8 @@ export default class NPC extends Phaser.Physics.Arcade.Sprite {
     key: string  // NPC spritesheet
   ){
   super(scene, x, y, key);
-
     // Enable physics
     this.scene.physics.world.enable(this);
-
-    // this.scene = scene;
-
     // Set animations
     this.scene.anims.create({
       key: 'ideNpc',
@@ -35,12 +30,9 @@ export default class NPC extends Phaser.Physics.Arcade.Sprite {
     this.scene.add.existing(this);
     // Make sure player is visible by putting layer on top
     this.setDepth(4);
-
     // Start animation
     this.play('ideNpc');
     this.body.immovable = true;
   }
-
-  // update(cursors) {
-  // }
+  
 }

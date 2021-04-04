@@ -108,6 +108,6 @@ export default class GameScene extends Phaser.Scene {
     ];
 
     // create map
-    this.gamemap = new GameMap(this, 'map', config, this.player, this.officeHelpNpc);
+    this.gamemap = new GameMap(this, 'map', config);
   }
 }

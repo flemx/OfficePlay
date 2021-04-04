@@ -7,7 +7,6 @@ import { Coordinate } from '../models/types';
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
 
-
   private speed: number;
   private lastMove: 'back' | 'left' | 'right' | 'front';
   private _path: Array<Coordinate>; // Path the player should walk
@@ -21,20 +20,17 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       key: string  // player spritesheet
     ){
     super(scene, x, y, key);
-
     // Enable physics
     this.scene.physics.world.enable(this);
     this.speed = 250; // Velocity when moving our player
     this.setSize(32, 32);
     this.setOffset(0, 32);
     this.lastMove = 'front';
-    //this.playerPos = {};
     this._path = [];
     this._nextCoord = {x:x,y:y};
     this._body = this.body as Phaser.Physics.Arcade.Body;
     // Setup all player animations
     this.setPlayerAnims();
-
     // Scale our player
     this.setScale(1.5);
     // Collide with our world bounds
@@ -62,7 +58,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this._path.length = 0;
   }
 
-
   /**
    *  Sets the next Coordinate the player will walk to to the first value in the walking path
    */
@@ -70,10 +65,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       this._nextCoord = this._path[0];
   }
 
+  /**
+   *  Setup the player animation from the spritesheet
+   */
   private setPlayerAnims(): void {
     // Set animations
     const anims = this.scene.anims;
-
     // Walk animation
     anims.create({
       key: 'player-left-walk',
@@ -99,7 +96,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       frameRate: 10,
       repeat: -1,
     });
-
     // Idle animation
     anims.create({
       key: 'player-left-idle',
@@ -128,6 +124,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.anims.play('player-front-idle', true);
   }
 
+  /**
+   *  Call by scene's on every scene update
+   */
   public update(): void {
     // Get the move coordinatess reletaive from the players position and next move
     let moveCoord = this.nextMoveCoord();
@@ -183,7 +182,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       this._body.setVelocityX(-this.speed);
     } else if (moveState.right.isDown) {
       this._body.setVelocityX(this.speed);
-      // this.scene.physics.moveTo(this, this.x + 10, this.y + 10, 200);
     }
     // Vertical movement
     if (moveState.up.isDown) {
