@@ -4,9 +4,9 @@ const CleanPlugin = require('clean-webpack-plugin');
 
 module.exports = {
   mode: 'production',
-  entry: './src/index.ts',
+  entry: './phaser/src/index.ts',
   output: {
-    path: path.resolve(__dirname, 'build'),
+    path: path.resolve(__dirname, 'force-app/main/default/staticresources/virtualOfficeAssets/build'),
     filename: 'project.bundle.js',
   },
   module: {
