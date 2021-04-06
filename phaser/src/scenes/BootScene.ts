@@ -50,7 +50,7 @@ export default class BootScene extends Phaser.Scene {
 
   private loadAudio(): void {
     // Relax background music
-    this.load.audio('background1', ['assets/audio/background1.wav']);
+    //this.load.audio('background1', ['assets/audio/background1.wav']);
   }
 
   private loadTileMap(): void {

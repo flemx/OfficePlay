@@ -40,8 +40,8 @@ export default class GameScene extends Phaser.Scene {
   }
 
   private createAudio(): void {
-    this.backgroundAudio = this.sound.add('background1', { loop: true });
-    this.backgroundAudio.play();
+    // this.backgroundAudio = this.sound.add('background1', { loop: true });
+    // this.backgroundAudio.play();
   }
 
   private createPlayer(): void {

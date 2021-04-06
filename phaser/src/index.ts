@@ -20,14 +20,17 @@ import Phaser from 'phaser';
 
 import scenes from './scenes/scenes';
 
+var ZOOM_LEVEL = 1;
+
 /**
  *  Setup configuration and start Game instance
  */
 
 const phaserConfig = {
   type: Phaser.AUTO,
-  width: 800,
-  height: 600,
+  mode: Phaser.Scale.NONE,
+  width:  window.innerWidth/ZOOM_LEVEL,
+  height: window.innerHeight/ZOOM_LEVEL,
   scene: scenes,
   physics: {
     default: 'arcade',
@@ -42,6 +45,13 @@ const phaserConfig = {
   roundPixels: true, // Fix blurry lines between tiles
 };
 
+const game = new Phaser.Game(phaserConfig);
+
+window.addEventListener("resize", () => {
+    game.scale.resize(window.innerWidth/ZOOM_LEVEL, window.innerHeight/ZOOM_LEVEL);
+  },false
+);
+
 // class Game extends Phaser.Game {
 //   constructor(config) {
 //     super(config);
@@ -49,4 +59,4 @@ const phaserConfig = {
 //   }
 // }
 
-export default new Phaser.Game(phaserConfig);
+export default game;

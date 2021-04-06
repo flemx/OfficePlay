@@ -1,7 +1,0 @@
-<apex:page >
-    <apex:includeScript value="{!$Resource.phaser}"/>
-    <c:phaserTestComp />
-    <script>
-        testMe();
-    </script>
-</apex:page>

@@ -7,13 +7,20 @@ module.exports = {
   mode: "development",
   entry: "./phaser/src/index.ts",
   output: {
-    path: path.resolve(__dirname, "force-app/main/default/staticresources/virtualOfficeAssets/build"),
+    path: path.resolve(
+      __dirname,
+      "force-app/main/default/staticresources/remoteOfficeAssets/build"
+    ),
     publicPath: "/build/",
     filename: "project.bundle.js"
   },
   devServer: {
-    contentBase: path.join(__dirname, 'force-app/main/default/staticresources/virtualOfficeAssets'),
-    index: './force-app/main/default/staticresources/virtualOfficeAssets/index.html',
+    contentBase: path.join(
+      __dirname,
+      "force-app/main/default/staticresources/remoteOfficeAssets"
+    ),
+    index:
+      "./force-app/main/default/staticresources/remoteOfficeAssets/index.html"
   },
   module: {
     rules: [
