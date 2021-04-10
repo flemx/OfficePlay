@@ -17,7 +17,7 @@ export default class PhaserWrap extends LightningElement {
     return `height:${this.windowHeight * (1 - this.scale)}px`;
   }
 
-  get containerStyle() {
+  get containerHeigh() {
     return `height:${this.windowHeight}vh`;
   }
 
@@ -32,15 +32,20 @@ export default class PhaserWrap extends LightningElement {
     super();
     this.iframeUrl = ASSETS + "/index.html";
     this.scale = 0.8; // set scale of canvas relative to banner
-    //this.windowHeight =
+    this.windowHeight = 0;
   }
 
   renderedCallback() {
     if (!this.isRendered) {
       // @ts-ignore
-      this.querySelector(".container").addEventListener("resize", (e) => {
-        console.log(e);
-      });
+      let el = this.template.querySelector(".container");
+      new ResizeObserver(() => {
+        // @ts-ignore
+        let newHeight = parseInt(
+          this.template.querySelector(".container").offsetHeight
+        );
+        this.windowHeight = newHeight;
+      }).observe(el);
       this.isRendered = true;
     }
   }
