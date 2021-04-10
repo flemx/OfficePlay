@@ -1,10 +1,12 @@
 <template>
-  <div class="slds-grid_frame">
+  <div class="container" style={containerStyle}>
+    <div class="" style={bannerHeight}></div>
     <iframe
-      src="http://localhost:3000"
+      src={iframeUrl}
       scrolling="no"
       frameborder="0"
       class="phaser"
+      style={windowHeight}
     ></iframe>
   </div>
 </template>

@@ -46,6 +46,9 @@ export default class BootScene extends Phaser.Scene {
   private loadSpriteSheets(): void {
     // Load image as array of sprites devided by size
     this.load.spritesheet('office-help', 'assets/level/npc-conference.png', { frameWidth: 32, frameHeight: 48 }); // Load NPC
+
+     // Load effects
+     this.load.spritesheet('select', 'assets/images/effects/hover_animation.png',  {frameWidth: 32, frameHeight: 32 }); // Load shover select 
   }
 
   private loadAudio(): void {

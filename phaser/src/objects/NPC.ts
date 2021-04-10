@@ -18,12 +18,12 @@ export default class NPC extends Phaser.Physics.Arcade.Sprite {
     this.scene.anims.create({
       key: 'ideNpc',
       frameRate: 6,
-      frames: this.scene.anims.generateFrameNumbers('office-help', { start: 0, end: 5 }),
+      frames: this.scene.anims.generateFrameNumbers(key, { start: 0, end: 5 }),
       repeat: -1,
     });
 
-    // Scale our player
-    this.setScale(1.3);
+    // Scale our NPC
+    this.setScale(1.5);
     // Collide with our world bounds
     this.setCollideWorldBounds(true);
     // Add the player to our existing scene
