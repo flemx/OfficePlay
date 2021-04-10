@@ -5,12 +5,15 @@ import * as Phaser from 'phaser';
  * @ Damien Fleminks
  */
 export default class HoverSelect extends Phaser.Physics.Arcade.Sprite {
+
+  
+
   constructor(
     scene: Phaser.Scene, // the scene this spritesheet will be added to
     x: number,  // the start x position 
     y: number,  // the start y position 
     key: string,  // Select spritesheet
-    scale: number // set scale
+    scale: number, // set scale
   ){
   super(scene, x, y, key);
     // Enable physics
@@ -32,6 +35,9 @@ export default class HoverSelect extends Phaser.Physics.Arcade.Sprite {
     // Start animation
     this.play('hover');
     this.body.immovable = true;
+    this.setVisible(false);
   }
+
+
   
 }

@@ -1,6 +1,6 @@
 import * as Phaser from 'phaser';
 import NPC from '../objects/NPC';
-import HoverSelect from '../objects/HoverSelect';
+//import HoverSelect from '../objects/HoverSelect';
 import Player from '../objects/Player';
 import GameMap from '../objects/GameMap';
 import { Coordinate, NodeKey } from '../models/types';
@@ -17,7 +17,7 @@ export default class GameScene extends Phaser.Scene {
   private backgroundAudio!: Phaser.Sound.BaseSound;
   private gamemap!: GameMap;
   private officeHelpNpc!: NPC;
-  private hoverEffect!: HoverSelect;
+  //private hoverEffect!: HoverSelect;
 
   constructor() {
     super('Game');
@@ -77,8 +77,8 @@ export default class GameScene extends Phaser.Scene {
 
   private createNPC(): void {
     // Spawn NPC with idle standing animation
-    this.officeHelpNpc = new NPC(this, 285, 75, 'office-help');
-    this.hoverEffect = new HoverSelect(this, 285, 25, 'select', 1.5);
+    this.officeHelpNpc = new NPC(this, 285, 75, 'office-help', ()=> console.log('NPC Clicked!'));
+    //this.hoverEffect = new HoverSelect(this, 285, 25, 'select', 1.5);
     
   }
 
