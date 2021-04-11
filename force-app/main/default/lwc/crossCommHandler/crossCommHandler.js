@@ -1,6 +1,6 @@
 // import { LightningElement } from 'lwc';
 
-export default class CrossCommHandler {
+const CrossCommHandler = class CrossCommHandler {
   /** @type string */
   iframeOrigin;
 
@@ -9,11 +9,11 @@ export default class CrossCommHandler {
 
   /**
    *
-   * @param {string} staticResource
+   * @param {string} iframeOrigin
    */
-  constructor(staticResource) {
+  constructor(iframeOrigin) {
     //super();
-    this.iframeOrigin = `${staticResource}/${staticResource}`;
+    this.iframeOrigin = iframeOrigin;
     this.receivedMessage = "";
 
     console.log("Resource URL IS: ", this.iframeOrigin);
@@ -32,6 +32,10 @@ export default class CrossCommHandler {
     }
   }
 
+  testFun() {
+    console.log("FUN WORKING!");
+  }
+
   /**
    *
    * @param {string} message
@@ -47,10 +51,12 @@ export default class CrossCommHandler {
    * @param {string} message
    * @return {void}
    */
-  sendMessgaeToVisualForce(ifameElement, message) {
+  sendMessgaeToPhaser(ifameElement, message) {
     if (ifameElement) {
       // @ts-ignore
       ifameElement.contentWindow.postMessage(message, this.iframeOrigin);
     }
   }
-}
+};
+
+export { CrossCommHandler };

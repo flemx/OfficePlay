@@ -52,6 +52,15 @@ window.addEventListener("resize", () => {
   },false
 );
 
+
+window.addEventListener("message", function (event) {
+    let lexOrigin = new URLSearchParams(window.location.search).get('origin');    
+    if (event.origin === lexOrigin) {
+        console.log('Message received!', event.data);
+    }
+}, false );
+
+
 // class Game extends Phaser.Game {
 //   constructor(config) {
 //     super(config);

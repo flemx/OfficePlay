@@ -1,5 +1,7 @@
 import { LightningElement } from "lwc";
 import ASSETS from "@salesforce/resourceUrl/remoteOfficeAssets";
+import { getTermOptions, calculateMonthlyPayment } from "c/mortgage";
+import { CrossCommHandler } from "c/crossCommHandler";
 export default class PhaserWrap extends LightningElement {
   /** @type number */
   windowHeight;
@@ -34,7 +36,14 @@ export default class PhaserWrap extends LightningElement {
 
   /**  @type string */
   get iframeUrl() {
-    return this.devMode ? "http://localhost:3000" : ASSETS + "/index.html";
+    let orignParam = `?origin=${window.origin}`;
+    return this.devMode
+      ? `http://localhost:3000${orignParam}`
+      : `${ASSETS}/index.html${orignParam}`;
+  }
+
+  get iframeOrigin() {
+    return this.devMode ? `http://localhost:3000` : `${window.origin}`;
   }
 
   constructor() {
@@ -44,6 +53,7 @@ export default class PhaserWrap extends LightningElement {
     this.windowHeight = 0;
     this.bannerHeightNumber = 50;
     this.devMode = true;
+    //console.log(new CrossCommHandler().testFun());
   }
 
   renderedCallback() {
@@ -68,5 +78,13 @@ export default class PhaserWrap extends LightningElement {
    */
   handleToggleChange() {
     this.devMode = !this.devMode;
+  }
+
+  sendEvent() {
+    let ifameElement = this.template.querySelector("iframe");
+    new CrossCommHandler(this.iframeOrigin).sendMessgaeToPhaser(
+      ifameElement,
+      "Received!!!!"
+    );
   }
 }
