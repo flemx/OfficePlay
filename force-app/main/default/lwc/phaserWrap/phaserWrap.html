@@ -1,12 +1,34 @@
 <template>
   <div class="container">
-    <div class="" style={bannerHeight}></div>
-    <iframe
-      src={iframeUrl}
-      scrolling="no"
-      frameborder="0"
-      class="phaser"
-      style={canvasHeight}
-    ></iframe>
+    <div class="" style={bannerHeight}>
+      <lightning-input
+        type="toggle"
+        label="Dev Mode"
+        onchange={handleToggleChange}
+        checked
+      >
+      </lightning-input>
+    </div>
+
+    <template if:true={devMode}>
+      <iframe
+        src={iframeUrl}
+        scrolling="no"
+        frameborder="0"
+        class="phaser"
+        style={canvasHeight}
+      >
+      </iframe>
+    </template>
+    <template if:false={devMode}>
+      <iframe
+        src={iframeUrl}
+        scrolling="no"
+        frameborder="0"
+        class="phaser"
+        style={canvasHeight}
+      >
+      </iframe>
+    </template>
   </div>
 </template>
