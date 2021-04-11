@@ -17,10 +17,11 @@ export default class GameScene extends Phaser.Scene {
   private backgroundAudio!: Phaser.Sound.BaseSound;
   private gamemap!: GameMap;
   private officeHelpNpc!: NPC;
-  //private hoverEffect!: HoverSelect;
+  public lockMovement: boolean;
 
   constructor() {
     super('Game');
+    this.lockMovement = false;
   }
 
   public init(): void {
@@ -55,7 +56,7 @@ export default class GameScene extends Phaser.Scene {
   private createInput(): void {
     // On mouse press retrieve the shortest path to destination
     this.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
-      if(this.gamemap.isValidPath({x: pointer.worldX, y: pointer.worldY})){
+      if(!this.lockMovement && this.gamemap.isValidPath({x: pointer.worldX, y: pointer.worldY})){
         const destination: Coordinate = this.gamemap.getNodeKey({x: pointer.worldX, y: pointer.worldY});
         const startPoint: Coordinate = this.gamemap.getNodeKey({x: this.player.x, y: this.player.y});
         // get optimnal path 
@@ -73,6 +74,10 @@ export default class GameScene extends Phaser.Scene {
         console.log(`You are not allowed to go there!`);
       }
     });
+  }
+
+  public setMovementLock(lockMovement: boolean): void{
+    this.lockMovement = lockMovement;
   }
 
   private createNPC(): void {

@@ -1,4 +1,5 @@
 import * as Phaser from 'phaser';
+import GameScene from '../scenes/GameScene';
 import HoverSelect from './HoverSelect';
 
 /**
@@ -12,7 +13,7 @@ export default class NPC extends Phaser.Physics.Arcade.Sprite {
   private hoverEffect: HoverSelect;
 
   constructor(
-    scene: Phaser.Scene, // the scene this NPC will be added to
+    scene: GameScene, // the scene this NPC will be added to
     x: number,  // the start x position of the NPC
     y: number,  // the start y position of the NPC
     key: string,  // NPC spritesheet
@@ -52,10 +53,10 @@ export default class NPC extends Phaser.Physics.Arcade.Sprite {
       this.targetCallback(); // trigger calback function
     });
     this.on('pointerover', () => {
-      this.hoverEffect.setVisible(true);
+      this.hoverEffect.activateHover(true);
     });
     this.on('pointerout', () => {
-      this.hoverEffect.setVisible(false);
+      this.hoverEffect.activateHover(false);
     });
   }
   
