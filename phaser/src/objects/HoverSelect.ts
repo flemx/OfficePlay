@@ -7,7 +7,6 @@ import GameScene from '../scenes/GameScene';
  */
 export default class HoverSelect extends Phaser.Physics.Arcade.Sprite {
 
-  // private targetCallback: (targetScene: boolean) => any;
   private targetScene: GameScene;
 
   constructor(
@@ -16,7 +15,6 @@ export default class HoverSelect extends Phaser.Physics.Arcade.Sprite {
     y: number,  // the start y position 
     key: string,  // Select spritesheet
     scale: number, // set scale
-    // setMovementLock: (targetScene: boolean) => any
   ){
   super(scene, x, y, key);
   this.targetScene = scene; //set scene in seperate property to access custom methods

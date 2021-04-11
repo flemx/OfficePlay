@@ -61,7 +61,7 @@ export default class GameScene extends Phaser.Scene {
         const startPoint: Coordinate = this.gamemap.getNodeKey({x: this.player.x, y: this.player.y});
         // get optimnal path 
         const path = this.gamemap.getPath(startPoint,destination);;
-        console.log('The shortest path is: ', path);
+        //console.log('The shortest path is: ', path);
         // Make sure the current path of the player is reset 
         this.player.resetPath();
         // Add the new coordinates to the players path

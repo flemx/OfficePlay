@@ -1,9 +1,6 @@
 import { LightningElement } from "lwc";
 import ASSETS from "@salesforce/resourceUrl/remoteOfficeAssets";
 export default class PhaserWrap extends LightningElement {
-  //   /** @type string */
-  //   iframeUrl;
-
   /** @type number */
   windowHeight;
 
@@ -21,7 +18,7 @@ export default class PhaserWrap extends LightningElement {
 
   /**  @type string */
   get canvasHeight() {
-    return `height:${this.windowHeight * this.scale}px`;
+    return `height:${this.windowHeight - this.bannerHeightNumber}px`;
   }
 
   /** @type string */
@@ -64,35 +61,12 @@ export default class PhaserWrap extends LightningElement {
     }
   }
 
+  /**
+   * Dev mode will use different source of iframne url
+   * Used for WebPack developer hot reload local server
+   * @return void
+   */
   handleToggleChange() {
     this.devMode = !this.devMode;
-    // // Query the DOM
-    // const checked = Array.from(
-    //   // @ts-ignore
-    //   this.template.querySelectorAll("lightning-input")
-    // )
-    //   // Filter down to checked items
-    //   .filter((element) => element.checked)
-    //   // Map checked items to their labels
-    //   .map((element) => element.label);
-    // this.selection = checked.join(", ");
   }
-
-  // /**
-  //  * Set windowHeight to innerHeight of window
-  //  * @returns {string} window height in style parameter
-  //  */
-  //  innerHeight(){
-  //     console.log('setHeight() run');
-  //     return `height:${window.innerHeight * this.scale}px`;
-  // }
-
-  // /**
-  //  * Set windowHeight to innerHeight of window
-  //  * @returns {string} window height in style parameter
-  //  */
-  //  innerHeight(){
-  //     console.log('setHeight() run');
-  //     return `height:${window.innerHeight * this.scale}px`;
-  // }
 }
