@@ -1,14 +1,19 @@
 <template>
   <div class="container">
-    <div style={bannerHeight}>
+    <div class="banner" style={bannerHeight}>
       <lightning-input
+        class="banner-items"
         type="toggle"
         label="Dev Mode"
         onchange={handleToggleChange}
         checked
       >
       </lightning-input>
-      <lightning-button label="send event" onclick={sendEvent}>
+      <lightning-button
+        class="banner-items"
+        label="send event"
+        onclick={sendEvent}
+      >
       </lightning-button>
     </div>
 

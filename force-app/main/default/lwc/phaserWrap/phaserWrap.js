@@ -1,6 +1,5 @@
 import { LightningElement } from "lwc";
 import ASSETS from "@salesforce/resourceUrl/remoteOfficeAssets";
-import { getTermOptions, calculateMonthlyPayment } from "c/mortgage";
 import { CrossCommHandler } from "c/crossCommHandler";
 export default class PhaserWrap extends LightningElement {
   /** @type number */
@@ -81,6 +80,7 @@ export default class PhaserWrap extends LightningElement {
   }
 
   sendEvent() {
+    // @ts-ignore
     let ifameElement = this.template.querySelector("iframe");
     new CrossCommHandler(this.iframeOrigin).sendMessgaeToPhaser(
       ifameElement,

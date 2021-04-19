@@ -7,3 +7,11 @@ iframe {
   width: 90vw;
   height: 100%;
 }
+
+.banner {
+  display: flex;
+}
+
+.banner-items {
+  margin-left: 5%;
+}
