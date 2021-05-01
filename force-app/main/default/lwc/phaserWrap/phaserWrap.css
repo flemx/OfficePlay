@@ -3,6 +3,16 @@ iframe {
   width: 100%;
 }
 
+.resize {
+  background-color: rgb(181, 181, 181);
+  position: relative;
+  bottom: 0;
+  height: 8px;
+  width: 100%;
+  cursor: w-resize;
+  cursor: s-resize;
+}
+
 .container {
   width: 90vw;
   height: 100%;

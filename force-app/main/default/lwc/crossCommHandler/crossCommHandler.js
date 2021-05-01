@@ -1,5 +1,3 @@
-// import { LightningElement } from 'lwc';
-
 const CrossCommHandler = class CrossCommHandler {
   /** @type string */
   iframeOrigin;
@@ -30,10 +28,6 @@ const CrossCommHandler = class CrossCommHandler {
     if (message.origin === this.iframeOrigin) {
       this.receivedMessage = JSON.stringify(message.data);
     }
-  }
-
-  testFun() {
-    console.log("FUN WORKING!");
   }
 
   /**
