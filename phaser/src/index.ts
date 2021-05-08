@@ -47,18 +47,11 @@ const phaserConfig = {
 
 const game = new Phaser.Game(phaserConfig);
 
+// event listener to resize canvas wghen parent iframe resizes
 window.addEventListener("resize", () => {
     game.scale.resize(window.innerWidth/ZOOM_LEVEL, window.innerHeight/ZOOM_LEVEL);
   },false
 );
-
-
-window.addEventListener("message", function (event) {
-    let lexOrigin = new URLSearchParams(window.location.search).get('origin');    
-    if (event.origin === lexOrigin) {
-        console.log('Message received!', event.data);
-    }
-}, false );
 
 
 // class Game extends Phaser.Game {

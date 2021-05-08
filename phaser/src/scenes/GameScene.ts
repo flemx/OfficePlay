@@ -3,6 +3,7 @@ import NPC from '../objects/NPC';
 //import HoverSelect from '../objects/HoverSelect';
 import Player from '../objects/Player';
 import GameMap from '../objects/GameMap';
+import CrossCommHandler from '../utils/CrossCommHandler';
 import { Coordinate, NodeKey } from '../models/types';
 
 /**
@@ -18,10 +19,17 @@ export default class GameScene extends Phaser.Scene {
   private gamemap!: GameMap;
   private officeHelpNpc!: NPC;
   public lockMovement: boolean;
+  private commHandler: CrossCommHandler;
 
   constructor() {
     super('Game');
     this.lockMovement = false;
+    this.commHandler = new CrossCommHandler();
+    this.commHandler.subscribe(this.testEvent, 'event-test');
+  }
+
+  testEvent(e: MessageEvent){
+    console.log(e);
   }
 
   public init(): void {
@@ -41,6 +49,8 @@ export default class GameScene extends Phaser.Scene {
     // this.player.update(this.cursors,this.walkTest);
     this.player.update();
   }
+
+
 
   private createAudio(): void {
     // this.backgroundAudio = this.sound.add('background1', { loop: true });
@@ -82,7 +92,9 @@ export default class GameScene extends Phaser.Scene {
 
   private createNPC(): void {
     // Spawn NPC with idle standing animation
-    this.officeHelpNpc = new NPC(this, 285, 75, 'office-help', ()=> console.log('NPC Clicked!'));
+    this.officeHelpNpc = new NPC(this, 285, 75, 'office-help', ()=> {
+      new CrossCommHandler().sendToLigntningWC();
+    });
     //this.hoverEffect = new HoverSelect(this, 285, 25, 'select', 1.5);
     
   }

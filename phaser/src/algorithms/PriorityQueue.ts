@@ -83,7 +83,7 @@ export default class PriorityQueue {
       const rightChildindx: number = 2 * indx + 2;
       let leftChild!: QueItem; 
       let rightChild!: QueItem;
-      let swap = null;
+      let swap: number | null = null;
       // Set children nodes if nto out of bounds and keep track of index to swap
       if (leftChildindx < length) {
         leftChild = this.values[leftChildindx];

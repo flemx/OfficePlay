@@ -50,6 +50,7 @@ export default class NPC extends Phaser.Physics.Arcade.Sprite {
 
   setEventListeners(){
     this.on('pointerdown', () => {
+      console.log('Clicks NPC');
       this.targetCallback(); // trigger calback function
     });
     this.on('pointerover', () => {

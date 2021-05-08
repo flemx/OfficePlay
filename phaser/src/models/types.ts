@@ -62,3 +62,7 @@ export type MapConfig = {
     layer: string,
   };
 
+
+export type MessageTypes = {
+
+}

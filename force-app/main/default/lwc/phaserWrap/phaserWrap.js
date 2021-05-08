@@ -23,6 +23,9 @@ export default class PhaserWrap extends LightningElement {
   /** @type number */
   m_pos;
 
+  /** @type  CrossCommHandler */
+  commHandler;
+
   /**  @type string */
   get canvasHeight() {
     return `height:${this.windowHeight - this.bannerHeightNumber}px`;
@@ -55,21 +58,22 @@ export default class PhaserWrap extends LightningElement {
     super();
     //this.iframeUrl = ASSETS + "/index.html";
     this.scale = 0.8; // set scale of canvas relative to banner
-    this.windowHeight = 500;
+    this.windowHeight = 700;
     this.bannerHeightNumber = 50;
     this.devMode = true;
     this.mousedown = false;
     this.m_pos = 0;
+    this.commHandler = new CrossCommHandler();
     //console.log(new CrossCommHandler().testFun());
   }
 
   /**
-   *  Set all Event Listeners after all elements are rendered
+   *  Set all Event Listeners after elements are rendered
    */
   renderedCallback() {
     if (!this.isRendered) {
-      let panel = this.template.querySelector(".resize");
       // @ts-ignore
+      let panel = this.template.querySelector(".resize");
       panel.addEventListener(
         "mousedown",
         (e) => {
@@ -79,6 +83,9 @@ export default class PhaserWrap extends LightningElement {
         },
         false
       );
+
+      // CrossCommHandler will listen for message events
+      this.commHandler.subscribe(this.testEvent, "event-test");
 
       window.addEventListener(
         "mousemove",
@@ -95,7 +102,6 @@ export default class PhaserWrap extends LightningElement {
       window.addEventListener(
         "mouseup",
         () => {
-          console.log("mouseup");
           this.mousedown = false;
         },
         false
@@ -115,13 +121,16 @@ export default class PhaserWrap extends LightningElement {
     }
   }
 
+  testEvent(e) {
+    console.log("EVENT TEST", e);
+  }
+
   /**
    * Resize Iframe height based on dragging direction
    * @param {MouseEvent} e
    * @param {HTMLElement} iframe
    */
   resizeIframe(e, iframe) {
-    console.log("resize called", iframe.style.height);
     const dx = e.y - this.m_pos;
     this.m_pos = e.y;
     iframe.style.height =
@@ -129,20 +138,23 @@ export default class PhaserWrap extends LightningElement {
   }
 
   /**
-   * Dev mode will use different source of iframne url
+   * Dev mode will use different source of iframe url
    * Used for WebPack developer hot reload local server
    * @return void
    */
   handleToggleChange() {
     this.devMode = !this.devMode;
+    //this.commHandler.setOrigin(this.iframeOrigin);
   }
 
   sendEvent() {
-    // @ts-ignore
+    // @ts-ignorethis.iframeOrigin
     let ifameElement = this.template.querySelector("iframe");
-    new CrossCommHandler(this.iframeOrigin).sendMessgaeToPhaser(
-      ifameElement,
-      "Received!!!!"
-    );
+    this.commHandler.publish(ifameElement, {
+      data: { message: "I come from LWC" },
+      eventName: "event-test2"
+    });
   }
+
+  handleEvents() {}
 }
