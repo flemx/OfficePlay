@@ -24,26 +24,26 @@ Object.freeze(EventNames);
  */
 let EventMessage;
 
-/*--------------------  SCENE TYPES  ------------------------------ */
+// /*--------------------  SCENE TYPES  ------------------------------ */
 
-/**
- * Define Scene Names used to group UI elements to a Phaser Scene
- * @typedef {'NewGame' | 'None'} sceneName
- */
-/**
- * @type {sceneName}
- */
-let sceneName;
+// /**
+//  * Define Scene Names used to group UI elements to a Phaser Scene
+//  * @typedef {'NewGame' | 'None'} sceneName
+//  */
+// /**
+//  * @type {sceneName}
+//  */
+// let sceneName;
 
-/**
- * @type {Record<string,sceneName>}
- */
-const Scenes = {
-  NewGame: "NewGame",
-  None: "None"
-};
-Object.freeze(Scenes);
+// /**
+//  * @type {Record<string,sceneName>}
+//  */
+// const Scenes = {
+//   NewGame: "NewGame",
+//   None: "None"
+// };
+// Object.freeze(Scenes);
 
 /*--------------------  EXPORT  ------------------------------ */
 
-export { EventNames, EventMessage, eventName, Scenes, sceneName };
+export { EventNames, EventMessage, eventName };

@@ -3,6 +3,7 @@
  * Provides set of functions to communicate with child Iframe
  * Implementation of Publish Subscribe Design Pattern
  * @Author Damien Fleminks
+ *
  * @typedef {{data: {}, eventName : string}} EventMessage
  * @typedef {Record<string, Set<Function>>} callbacks
  */

@@ -1,16 +1,25 @@
 import { LightningElement } from "lwc";
 import PubSubParent from "c/pubSubParent";
-import { EventNames, Scenes, sceneName } from "c/types";
+import { EventNames } from "c/types";
 
 /**
+ * SceneHandler
+ * @description Handles the visibility of UI elements to render in a Phaser scene,
+ * Subscribes to PubSub Class to handle visibility
+ * @author Damien Fleminks
+ *
  * @typedef {Record<string, boolean>} scenesEnabled
+ * @typedef {Record<string,string>} scenes
  */
-export default class UiHandler extends LightningElement {
+export default class SceneHandler extends LightningElement {
   /** @type  PubSubParent */
   commHandler;
 
-  /** @type  {sceneName} */
+  /** @type  {string} */
   enabledScene;
+
+  /** @type scenes */
+  scenes;
 
   /** @type scenesEnabled */
   get enabledScenes() {
@@ -20,7 +29,14 @@ export default class UiHandler extends LightningElement {
   constructor() {
     super();
     this.commHandler = new PubSubParent();
-    this.enabledScene = Scenes.None;
+    // Define object to restrict scenes to use
+    this.scenes = {
+      NewGame: "NewGame",
+      None: "None"
+    };
+    Object.freeze(this.scenes);
+    // Enable the first scene to render
+    this.enabledScene = this.scenes.NewGame;
   }
 
   /**
@@ -31,13 +47,9 @@ export default class UiHandler extends LightningElement {
   formatScenes() {
     /** @type  scenesEnabled */
     let scenes = {};
-    for (let scene in Scenes) {
+    for (let scene in this.scenes) {
       scenes[scene] = scene === this.enabledScene;
     }
     return scenes;
-  }
-
-  setScene() {
-    this.enabledScene = Scenes.NewGame;
   }
 }
