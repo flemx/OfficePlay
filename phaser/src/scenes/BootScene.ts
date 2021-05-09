@@ -23,7 +23,7 @@ export default class BootScene extends Phaser.Scene {
   }
 
   public create(): void {
-    this.scene.start('Title');
+    this.scene.start('NewGame');
   }
 
 

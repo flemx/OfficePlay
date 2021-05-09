@@ -1,5 +1,7 @@
 
 import * as Phaser from 'phaser';
+import {EventName} from '../models/enums';
+import {EventMessage} from '../models/types';
 
 /**
  * PubSubChild
@@ -22,7 +24,8 @@ export default class PubSubChild {
    * @param callback 
    * @param eventName 
    */
-  public subscribe(callback: Function, eventName: string): void{
+  public subscribe(callback: Function, nameEvent: EventName): void{
+    const eventName: string = EventName[nameEvent];
     if (!this.callbacks[eventName]) {
       this.callbacks[eventName] = new Set();
     }
@@ -32,12 +35,8 @@ export default class PubSubChild {
   /**
    * Send messages to the parent Lightning Web Component
    */
-  public publish(): void{     
-    let messageToLWC = {
-        data : {name: 'Damien'},
-        eventName  : 'event-test'
-    }
-    window.parent.postMessage( messageToLWC, '*' );
+  public publish(message: EventMessage): void{     
+    window.parent.postMessage( message, '*' );
   }
   
   /**

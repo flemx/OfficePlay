@@ -2,26 +2,26 @@ import * as Phaser from 'phaser';
 import UiButton from '../objects/UiButton';
 
 /**
- * TitleScene
+ * NewGameScene
  * @ Damien Fleminks
  */
 
-export default class TitleScene extends Phaser.Scene {
+export default class NewGameScene extends Phaser.Scene {
 
 
   constructor() {
     console.log('Load BootScene');
-    super('Title');
+    super('NewGame');
   }
 
   public create(): void {
     // Create title text
     const titleText = this.add.text(
       this.scale.width / 2,
-      this.scale.height / 2,
-      'Virtual Office',
+      this.scale.height / 5,
+      'Create new avatar',
       {
-        fontSize: '64px',
+        fontSize: '52px',
         color: '#fff',
       },
     );
@@ -33,7 +33,7 @@ export default class TitleScene extends Phaser.Scene {
       this.scale.height * 0.65,
       'button1',
       'button2',
-      'Start new game',
+      'Submit',
       this.startScene.bind(this, 'Game'),
     );
   }

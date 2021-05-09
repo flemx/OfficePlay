@@ -4,8 +4,8 @@ import NPC from '../objects/NPC';
 import Player from '../objects/Player';
 import GameMap from '../objects/GameMap';
 import PubSubChild from '../utils/PubSubChild';
-import { Coordinate } from '../models/types';
-
+import { Coordinate, EventMessage } from '../models/types';
+import {EventName} from '../models/enums';
 /**
  * GameScene
  * @ Damien Fleminks
@@ -27,7 +27,9 @@ export default class GameScene extends Phaser.Scene {
     // this.commHandler = new CrossCommHandler();
     // this.commHandler.subscribe(this.testEvent, 'event-test');
     this.commHandler = new PubSubChild();
-    this.commHandler.subscribe(this.testEvent, 'event-test');
+
+    // subscribe to test event
+    this.commHandler.subscribe(this.testEvent, EventName.eventTest);
   }
 
   testEvent(e: MessageEvent){
@@ -93,9 +95,15 @@ export default class GameScene extends Phaser.Scene {
   }
 
   private createNPC(): void {
+    const message: EventMessage = {
+      data: {
+        origin: 'I AM FROM PHASER'
+      },
+      eventName: EventName.eventTest
+  }
     // Spawn NPC with idle standing animation
     this.officeHelpNpc = new NPC(this, 285, 75, 'office-help', ()=> {
-      this.commHandler.publish();
+      this.commHandler.publish(message);
     });
     //this.hoverEffect = new HoverSelect(this, 285, 25, 'select', 1.5);
     

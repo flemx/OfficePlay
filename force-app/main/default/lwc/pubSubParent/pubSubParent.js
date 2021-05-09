@@ -3,15 +3,15 @@
  * Provides set of functions to communicate with child Iframe
  * Implementation of Publish Subscribe Design Pattern
  * @Author Damien Fleminks
- * @typedef {{data: {}, eventName : string}} messageObj
- * @typedef {Object<string, Set<Function>>} callbacks
+ * @typedef {{data: {}, eventName : string}} EventMessage
+ * @typedef {Record<string, Set<Function>>} callbacks
  */
 export default class PubSubParent {
   /** @type callbacks */
-  #callbacks;
+  callbacks;
 
   constructor() {
-    this.#callbacks = {};
+    this.callbacks = {};
     this.callbackHandler();
   }
 
@@ -22,10 +22,10 @@ export default class PubSubParent {
    * @return {void}
    */
   subscribe(callback, eventName) {
-    if (!this.#callbacks[eventName]) {
-      this.#callbacks[eventName] = new Set();
+    if (!this.callbacks[eventName]) {
+      this.callbacks[eventName] = new Set();
     }
-    this.#callbacks[eventName].add(callback);
+    this.callbacks[eventName].add(callback);
   }
 
   /**
@@ -34,8 +34,8 @@ export default class PubSubParent {
    */
   callbackHandler() {
     window.addEventListener("message", (e) => {
-      if (this.#callbacks[e.data.eventName]) {
-        this.#callbacks[e.data.eventName].forEach((callback) => {
+      if (this.callbacks[e.data.eventName]) {
+        this.callbacks[e.data.eventName].forEach((callback) => {
           try {
             callback(e.data.data);
           } catch (error) {
@@ -63,7 +63,7 @@ export default class PubSubParent {
    *
    * Publish to Iframe from LWC
    * @param {HTMLIFrameElement} ifameElement
-   * @param {messageObj} message
+   * @param {EventMessage} message
    * @return {void}
    */
   publish(ifameElement, message) {

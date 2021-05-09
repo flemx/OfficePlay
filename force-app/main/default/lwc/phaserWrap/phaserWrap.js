@@ -1,6 +1,6 @@
 import { LightningElement } from "lwc";
 import ASSETS from "@salesforce/resourceUrl/remoteOfficeAssets";
-import PubSubParent from "pubSubParent/pubSubParent";
+import PubSubParent from "c/pubSubParent";
 export default class PhaserWrap extends LightningElement {
   /** @type number */
   windowHeight;
@@ -87,7 +87,7 @@ export default class PhaserWrap extends LightningElement {
       );
 
       // CrossCommHandler will listen for message events
-      this.commHandler.subscribe(this.testEvent, "event-test");
+      this.commHandler.subscribe(this.testEvent, "eventTest");
 
       window.addEventListener(
         "mousemove",
@@ -159,7 +159,7 @@ export default class PhaserWrap extends LightningElement {
     let ifameElement = this.template.querySelector("iframe");
     this.commHandler.publish(ifameElement, {
       data: { message: "I come from LWC" },
-      eventName: "event-test"
+      eventName: "eventTest"
     });
   }
 }

@@ -1,3 +1,5 @@
+import {EventName} from './enums';
+
 /**
  * @Author Damien Fleminks
  * Manage custom types that are used in multiple locations
@@ -62,7 +64,10 @@ export type MapConfig = {
     layer: string,
   };
 
-
-export type MessageTypes = {
-
+/**
+ * Used by PubSub Class to publish EventMessage data
+ */
+export type EventMessage =  {
+    data: {}, eventName : EventName
 }
+
