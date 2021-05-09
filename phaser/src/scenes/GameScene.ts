@@ -36,9 +36,10 @@ export default class GameScene extends Phaser.Scene {
     console.log(e);
   }
 
-  public init(): void {
+  public init(data: any): void {
     // Start Ui scene in parallel, placed on top
     // this.scene.launch('Ui');   // Not used for the moment
+    console.log('PLAYER NAME IS: ' + data.name);
   }
 
   public create(): void {

@@ -1,6 +1,7 @@
 import { LightningElement } from "lwc";
 import ASSETS from "@salesforce/resourceUrl/remoteOfficeAssets";
 import PubSubParent from "c/pubSubParent";
+import { EventNames } from "c/types";
 export default class PhaserWrap extends LightningElement {
   /** @type number */
   windowHeight;
@@ -44,7 +45,7 @@ export default class PhaserWrap extends LightningElement {
 
   /**  @type string */
   get iframeUrl() {
-    let orignParam = `?origin=${window.origin}`;
+    let orignParam = `?id=${window.origin}`;
     return this.devMode
       ? `http://localhost:3000${orignParam}`
       : `${ASSETS}/index.html${orignParam}`;
@@ -72,6 +73,9 @@ export default class PhaserWrap extends LightningElement {
    */
   renderedCallback() {
     if (!this.isRendered) {
+      // @ts-ignore
+      window.phaserIframeElement = this.template.querySelector("iframe");
+
       /** @type {HTMLElement} */
       // @ts-ignore
       let panel = this.template.querySelector(".resize");

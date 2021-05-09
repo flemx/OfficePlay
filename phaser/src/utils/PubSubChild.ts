@@ -55,5 +55,26 @@ export default class PubSubChild {
       }
     });
   }
+
+
+  /**
+   * Remove all callbacks
+   * @returns {void}
+   */
+  unsubscribeAll(){
+    this.callbacks = {};
+  }
+
+  /**
+   * Unsubscribe a callback for an event
+   * @param {string} eventName - Name of the event to unregister from.
+   * @param {Function} callback - Function to unregister.
+   * @returns {void}
+   */
+  unsubscribe(eventName: string, callback: Function){
+    if (this.callbacks[eventName]) {
+      this.callbacks[eventName].delete(callback);
+    }
+  }
   
 }

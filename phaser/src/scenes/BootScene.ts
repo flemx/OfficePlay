@@ -13,7 +13,7 @@ export default class BootScene extends Phaser.Scene {
     // load images
     this.loadImages();
     // Load player animations
-    this.loadPlayer();
+    this.loadPlayers();
     // load spritesheets
     this.loadSpriteSheets();
     // load audio
@@ -38,9 +38,15 @@ export default class BootScene extends Phaser.Scene {
     this.load.image('interiors', 'assets/level/Interiors_32x32.png');
   }
 
-  private loadPlayer(): void {
-    this.load.spritesheet('player-walk', 'assets/images/characters/player1-run.png', { frameWidth: 32, frameHeight: 64 });
-    this.load.spritesheet('player-idle', 'assets/images/characters/player1-idle.png', { frameWidth: 32, frameHeight: 64 });
+  private loadPlayers(): void {
+    this.load.spritesheet('player1-walk', 'assets/images/characters/player1-run.png', { frameWidth: 32, frameHeight: 64 });
+    this.load.spritesheet('player1-idle', 'assets/images/characters/player1-idle.png', { frameWidth: 32, frameHeight: 64 });
+
+    this.load.spritesheet('player2-walk', 'assets/images/characters/player2-run.png', { frameWidth: 32, frameHeight: 64 });
+    this.load.spritesheet('player2-idle', 'assets/images/characters/player2-idle.png', { frameWidth: 32, frameHeight: 64 });
+
+    this.load.spritesheet('player3-walk', 'assets/images/characters/player3-run.png', { frameWidth: 32, frameHeight: 64 });
+    this.load.spritesheet('player3-idle', 'assets/images/characters/player3-idle.png', { frameWidth: 32, frameHeight: 64 });
   }
 
   private loadSpriteSheets(): void {

@@ -73,4 +73,36 @@ export default class PubSubParent {
       ifameElement.contentWindow.postMessage(message, "*");
     }
   }
+
+  /**
+   *
+   * Publish internally inside LWC
+   * @param {EventMessage} message
+   * @return {void}
+   */
+  publishInternal(message) {
+    console.log("message: ", message);
+    /// @ts-ignore
+    window.postMessage(message);
+  }
+
+  /**
+   * Remove all callbacks
+   * @returns {void}
+   */
+  unsubscribeAll() {
+    this.callbacks = {};
+  }
+
+  /**
+   * Unsubscribe a callback for an event
+   * @param {string} eventName - Name of the event to unregister from.
+   * @param {Function} callback - Function to unregister.
+   * @returns {void}
+   */
+  unsubscribe(eventName, callback) {
+    if (this.callbacks[eventName]) {
+      this.callbacks[eventName].delete(callback);
+    }
+  }
 }

@@ -1,8 +1,10 @@
 /*--------------------  EVENT TYPES    ------------------------------ */
 /**
  * Define event types used by the PubSub Class for handling MessageEvents
- * @typedef {'eventTest'} EventName
+ * @typedef {'eventTest' |
+ * 'startGame_playerName'} EventName
  */
+
 /**
  * @type {EventName}
  */
@@ -11,10 +13,10 @@ let eventName;
 /**
  * Export the eventNames as Object to simulate an enum used
  * to select an even when publishing or subscribing to PuSub Class
- * @type {Record<string,eventName>}
  */
 const EventNames = {
-  eventTest: "eventTest" // Used for testing
+  eventTest: "eventTest", // Used for testing
+  startGame_playerName: "startGame_playerName"
 };
 Object.freeze(EventNames);
 
