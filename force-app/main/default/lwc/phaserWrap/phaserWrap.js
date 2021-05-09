@@ -1,6 +1,6 @@
 import { LightningElement } from "lwc";
 import ASSETS from "@salesforce/resourceUrl/remoteOfficeAssets";
-import { CrossCommHandler } from "c/crossCommHandler";
+import CrossCommHandler from "c/crossCommHandler";
 export default class PhaserWrap extends LightningElement {
   /** @type number */
   windowHeight;
@@ -72,8 +72,10 @@ export default class PhaserWrap extends LightningElement {
    */
   renderedCallback() {
     if (!this.isRendered) {
+      /** @type {HTMLElement} */
       // @ts-ignore
       let panel = this.template.querySelector(".resize");
+
       panel.addEventListener(
         "mousedown",
         (e) => {
@@ -121,6 +123,9 @@ export default class PhaserWrap extends LightningElement {
     }
   }
 
+  /**
+   * @param {MessageEvent} e
+   */
   testEvent(e) {
     console.log("EVENT TEST", e);
   }
@@ -152,9 +157,7 @@ export default class PhaserWrap extends LightningElement {
     let ifameElement = this.template.querySelector("iframe");
     this.commHandler.publish(ifameElement, {
       data: { message: "I come from LWC" },
-      eventName: "event-test2"
+      eventName: "event-test"
     });
   }
-
-  handleEvents() {}
 }
