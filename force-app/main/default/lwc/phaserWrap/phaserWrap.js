@@ -1,6 +1,6 @@
 import { LightningElement } from "lwc";
 import ASSETS from "@salesforce/resourceUrl/remoteOfficeAssets";
-import CrossCommHandler from "c/crossCommHandler";
+import PubSubParent from "pubSubParent/pubSubParent";
 export default class PhaserWrap extends LightningElement {
   /** @type number */
   windowHeight;
@@ -23,7 +23,7 @@ export default class PhaserWrap extends LightningElement {
   /** @type number */
   m_pos;
 
-  /** @type  CrossCommHandler */
+  /** @type  PubSubParent */
   commHandler;
 
   /**  @type string */
@@ -63,7 +63,7 @@ export default class PhaserWrap extends LightningElement {
     this.devMode = true;
     this.mousedown = false;
     this.m_pos = 0;
-    this.commHandler = new CrossCommHandler();
+    this.commHandler = new PubSubParent();
     //console.log(new CrossCommHandler().testFun());
   }
 
@@ -124,7 +124,9 @@ export default class PhaserWrap extends LightningElement {
   }
 
   /**
+   * Test callback function for Subsccribe function
    * @param {MessageEvent} e
+   * @listens MessageEvent
    */
   testEvent(e) {
     console.log("EVENT TEST", e);

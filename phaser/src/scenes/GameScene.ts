@@ -3,7 +3,7 @@ import NPC from '../objects/NPC';
 //import HoverSelect from '../objects/HoverSelect';
 import Player from '../objects/Player';
 import GameMap from '../objects/GameMap';
-import CrossCommHandler from '../utils/CrossCommHandler';
+import PubSubChild from '../utils/PubSubChild';
 import { Coordinate } from '../models/types';
 
 /**
@@ -19,14 +19,14 @@ export default class GameScene extends Phaser.Scene {
   private gamemap!: GameMap;
   private officeHelpNpc!: NPC;
   public lockMovement: boolean;
-  private commHandler: CrossCommHandler;
+  private commHandler: PubSubChild;
 
   constructor() {
     super('Game');
     this.lockMovement = false;
     // this.commHandler = new CrossCommHandler();
     // this.commHandler.subscribe(this.testEvent, 'event-test');
-    this.commHandler = new CrossCommHandler();
+    this.commHandler = new PubSubChild();
     this.commHandler.subscribe(this.testEvent, 'event-test');
   }
 
@@ -95,7 +95,7 @@ export default class GameScene extends Phaser.Scene {
   private createNPC(): void {
     // Spawn NPC with idle standing animation
     this.officeHelpNpc = new NPC(this, 285, 75, 'office-help', ()=> {
-      new CrossCommHandler().publish();
+      this.commHandler.publish();
     });
     //this.hoverEffect = new HoverSelect(this, 285, 25, 'select', 1.5);
     

@@ -1,16 +1,17 @@
 /**
- * CrossCommHandler
+ * PubSubParent
  * Provides set of functions to communicate with child Iframe
- * Uses Publish Subscibe Design Pattern
+ * Implementation of Publish Subscribe Design Pattern
  * @Author Damien Fleminks
  * @typedef {{data: {}, eventName : string}} messageObj
+ * @typedef {Object<string, Set<Function>>} callbacks
  */
-export default class CrossCommHandler {
-  /** @type Object<string, Set<Function>> */
-  callbacks;
+export default class PubSubParent {
+  /** @type callbacks */
+  #callbacks;
 
   constructor() {
-    this.callbacks = {};
+    this.#callbacks = {};
     this.callbackHandler();
   }
 
@@ -18,21 +19,23 @@ export default class CrossCommHandler {
    * Subscribe for message events and execute callback method
    * @param {Function} callback
    * @param {string} eventName
+   * @return {void}
    */
   subscribe(callback, eventName) {
-    if (!this.callbacks[eventName]) {
-      this.callbacks[eventName] = new Set();
+    if (!this.#callbacks[eventName]) {
+      this.#callbacks[eventName] = new Set();
     }
-    this.callbacks[eventName].add(callback);
+    this.#callbacks[eventName].add(callback);
   }
 
   /**
-   *  Private function to handle message events
+   * Execute callback when an event matches eventName
+   * @private
    */
   callbackHandler() {
     window.addEventListener("message", (e) => {
-      if (this.callbacks[e.data.eventName]) {
-        this.callbacks[e.data.eventName].forEach((callback) => {
+      if (this.#callbacks[e.data.eventName]) {
+        this.#callbacks[e.data.eventName].forEach((callback) => {
           try {
             callback(e.data.data);
           } catch (error) {

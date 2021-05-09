@@ -2,11 +2,11 @@
 import * as Phaser from 'phaser';
 
 /**
- * CrossCommHandler
+ * PubSubChild
  * Provides set of functions to communicate with Parent Window from Iframe
  * @Author Damien Fleminks
  */
-export default class CrossCommHandler {
+export default class PubSubChild {
 
   private callbacks: Record<string, Set<Function>>;
 
