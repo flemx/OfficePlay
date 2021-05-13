@@ -21,6 +21,9 @@ export default class SceneHandler extends LightningElement {
   /** @type scenes */
   scenes;
 
+  /** @type boolean*/
+  isRendered;
+
   /** @type scenesEnabled */
   get enabledScenes() {
     return this.formatScenes();
@@ -29,15 +32,31 @@ export default class SceneHandler extends LightningElement {
   constructor() {
     super();
     this.commHandler = new PubSubParent();
+    this.isRendered = false;
     // Define object to restrict scenes to use
     this.scenes = {
       NewGame: "NewGame",
+      GameScene: "GameScene",
       None: "None"
     };
     Object.freeze(this.scenes);
     // Enable the first scene to render
-    this.enabledScene = this.scenes.NewGame;
+    this.enabledScene = this.scenes.None;
+
+    this.commHandler.subscribe((/** @type string **/ scene) => {
+      console.log("EVENT RECEIVED", scene);
+      this.enabledScene = scene;
+    }, EventNames.startScene);
   }
+
+  // renderedCallback(){
+  //   if(!this.isRendered){
+  //     this.commHandler.subscribe((/** @type string **/ scene)=>{
+  //       console.log('EVENT RECEIVED', scene);
+  //         this.enabledScene = scene;
+  //     }, EventNames.scene_startGame);
+  //   }
+  // }
 
   /**
    * Returns an object with keys from all scenes
@@ -50,6 +69,7 @@ export default class SceneHandler extends LightningElement {
     for (let scene in this.scenes) {
       scenes[scene] = scene === this.enabledScene;
     }
+    console.log(scenes);
     return scenes;
   }
 }

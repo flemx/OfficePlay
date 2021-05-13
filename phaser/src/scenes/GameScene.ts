@@ -5,7 +5,7 @@ import Player from '../objects/Player';
 import GameMap from '../objects/GameMap';
 import PubSubChild from '../utils/PubSubChild';
 import { Coordinate, EventMessage, CharSprite } from '../models/types';
-import {EventName} from '../models/enums';
+import {EventName, scenes} from '../models/enums';
 import {spritesDef, mapDef} from '../models/data'
 /**
  * GameScene
@@ -54,6 +54,22 @@ export default class GameScene extends Phaser.Scene {
     this.createMap();
     this.createAudio();
     this.createInput();
+    this.publishScene();
+    this.publishPlayer();
+  }
+
+  private publishScene(): void{
+    this.commHandler.publish({
+      data: scenes.GameScene,
+      eventName : EventName.startScene
+    });
+  }
+
+  private publishPlayer(): void{
+    this.commHandler.publish({
+      data: this.playerName,
+      eventName : EventName.gameScene_playerName
+    });
   }
 
   public update(): void {
@@ -112,8 +128,6 @@ export default class GameScene extends Phaser.Scene {
     this.officeHelpNpc.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
       this.lockMovement = true;
     });
-    //this.hoverEffect = new HoverSelect(this, 285, 25, 'select', 1.5);
-    
   }
 
   private createMap(): void {

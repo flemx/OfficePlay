@@ -2,7 +2,6 @@
 /**
  *  Sprite definitions
  */
-
 const spritesDef = {
     players : {
         p1 : {

@@ -1,7 +1,7 @@
 import * as Phaser from 'phaser';
 import UiButton from '../objects/UiButton';
 import PubSubChild from '../utils/PubSubChild';
-import {EventName} from '../models/enums';
+import {EventName, scenes} from '../models/enums';
 import {spritesDef} from '../models/data';
 import { EventMessage, CharSprite } from '../models/types';
 import NPC from '../objects/NPC';
@@ -32,7 +32,15 @@ export default class NewGameScene extends Phaser.Scene {
 
   public create(): void {
     this.createButtons();
-    this.createCharacters()
+    this.createCharacters();
+    this.publishScene();
+  }
+
+  private publishScene(): void{
+    this.commHandler.publish({
+      data: scenes.NewGame,
+      eventName : EventName.startScene
+    });
   }
 
 
@@ -48,7 +56,7 @@ export default class NewGameScene extends Phaser.Scene {
         },
       );
       titleText.setOrigin(0.5);
-  
+        console.log(titleText);
       const startGameButton = new UiButton(
         this,
         this.scale.width / 2,

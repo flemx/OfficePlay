@@ -1,0 +1,9 @@
+.playerName {
+  position: absolute;
+  font-family: "Courier New", Courier, monospace;
+  top: 11%;
+  left: 6%;
+  z-index: 9999;
+  color: white;
+  font-size: 1.5rem;
+}

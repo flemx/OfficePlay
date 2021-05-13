@@ -2,7 +2,8 @@
 /**
  * Define event types used by the PubSub Class for handling MessageEvents
  * @typedef {'eventTest' |
- * 'startGame_playerName'} EventName
+ * 'startGame_playerName'|
+ * 'startScene'} EventName
  */
 
 /**
@@ -16,7 +17,9 @@ let eventName;
  */
 const EventNames = {
   eventTest: "eventTest", // Used for testing
-  startGame_playerName: "startGame_playerName"
+  startGame_playerName: "startGame_playerName",
+  startScene: "startScene", //StartGame Scene starts
+  gameScene_playerName: "gameScene_playerName"
 };
 Object.freeze(EventNames);
 

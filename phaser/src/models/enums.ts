@@ -4,5 +4,14 @@
  */
 export enum EventName { 
     eventTest = 'eventTest',
-    startGame_playerName = 'startGame_playerName'
+    startScene = 'startScene',
+    startGame_playerName = 'startGame_playerName',
+    gameScene_playerName = 'gameScene_playerName'
+}
+
+
+export enum scenes {
+        NewGame = "NewGame",
+        GameScene = "GameScene",
+        None = "None"
 }
