@@ -1,4 +1,6 @@
 import * as Phaser from 'phaser';
+import {spritesDef, imageDef} from '../models/data'
+
 /**
  * BootScene
  * @ Damien Fleminks
@@ -29,32 +31,32 @@ export default class BootScene extends Phaser.Scene {
 
   private loadImages(): void {
     // Key name and image location
-    this.load.image('button1', 'assets/images/ui/blue_button01.png');
-    this.load.image('button2', 'assets/images/ui/blue_button02.png');
+    this.load.image(imageDef.buttons.btn1, 'assets/images/ui/blue_button01.png');
+    this.load.image(imageDef.buttons.btn2, 'assets/images/ui/blue_button02.png');
     // load the map tileset image
     // Load office maps
-    this.load.image('background', 'assets/level/Tileset_32x32_8.png');
-    this.load.image('furniture', 'assets/level/Office_interiors_32x32.png');
-    this.load.image('interiors', 'assets/level/Interiors_32x32.png');
+    this.load.image(imageDef.maps.background, 'assets/level/Tileset_32x32_8.png');
+    this.load.image(imageDef.maps.furniture, 'assets/level/Office_interiors_32x32.png');
+    this.load.image(imageDef.maps.interiors, 'assets/level/Interiors_32x32.png');
   }
 
   private loadPlayers(): void {
-    this.load.spritesheet('player1-walk', 'assets/images/characters/player1-run.png', { frameWidth: 32, frameHeight: 64 });
-    this.load.spritesheet('player1-idle', 'assets/images/characters/player1-idle.png', { frameWidth: 32, frameHeight: 64 });
+    this.load.spritesheet(spritesDef.players.p1.walk, 'assets/images/characters/player1-run.png', { frameWidth: 32, frameHeight: 64 });
+    this.load.spritesheet(spritesDef.players.p1.idle, 'assets/images/characters/player1-idle.png', { frameWidth: 32, frameHeight: 64 });
 
-    this.load.spritesheet('player2-walk', 'assets/images/characters/player2-run.png', { frameWidth: 32, frameHeight: 64 });
-    this.load.spritesheet('player2-idle', 'assets/images/characters/player2-idle.png', { frameWidth: 32, frameHeight: 64 });
+    this.load.spritesheet(spritesDef.players.p2.walk, 'assets/images/characters/player2-run.png', { frameWidth: 32, frameHeight: 64 });
+    this.load.spritesheet(spritesDef.players.p2.idle, 'assets/images/characters/player2-idle.png', { frameWidth: 32, frameHeight: 64 });
 
-    this.load.spritesheet('player3-walk', 'assets/images/characters/player3-run.png', { frameWidth: 32, frameHeight: 64 });
-    this.load.spritesheet('player3-idle', 'assets/images/characters/player3-idle.png', { frameWidth: 32, frameHeight: 64 });
+    this.load.spritesheet(spritesDef.players.p3.walk, 'assets/images/characters/player3-run.png', { frameWidth: 32, frameHeight: 64 });
+    this.load.spritesheet(spritesDef.players.p3.idle, 'assets/images/characters/player3-idle.png', { frameWidth: 32, frameHeight: 64 });
   }
 
   private loadSpriteSheets(): void {
     // Load image as array of sprites devided by size
-    this.load.spritesheet('office-help', 'assets/level/npc-conference.png', { frameWidth: 32, frameHeight: 48 }); // Load NPC
+    this.load.spritesheet(spritesDef.npc.officeHelp.idle, 'assets/images/characters/npc-conference-idle.png', { frameWidth: 32, frameHeight: 64 }); // Load NPC
 
      // Load effects
-     this.load.spritesheet('select', 'assets/images/effects/hover_animation.png',  {frameWidth: 32, frameHeight: 32 }); // Load shover select 
+     this.load.spritesheet(spritesDef.effects.select, 'assets/images/effects/hover_animation.png',  {frameWidth: 32, frameHeight: 32 }); // Load shover select 
   }
 
   private loadAudio(): void {

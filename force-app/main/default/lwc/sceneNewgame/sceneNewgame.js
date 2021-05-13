@@ -32,7 +32,7 @@ export default class SceneNewgame extends LightningElement {
     // this.commHandler
     console.log(e.detail.value);
     // @ts-ignore
-    console.log("iframe", window.phaserIframeElement);
+    // console.log("iframe", window.phaserIframeElement);
     this.commHandler.publish(
       // @ts-ignore
       window.phaserIframeElement,

@@ -4,8 +4,9 @@ import NPC from '../objects/NPC';
 import Player from '../objects/Player';
 import GameMap from '../objects/GameMap';
 import PubSubChild from '../utils/PubSubChild';
-import { Coordinate, EventMessage } from '../models/types';
+import { Coordinate, EventMessage, CharSprite } from '../models/types';
 import {EventName} from '../models/enums';
+import {spritesDef, mapDef} from '../models/data'
 /**
  * GameScene
  * @ Damien Fleminks
@@ -20,6 +21,8 @@ export default class GameScene extends Phaser.Scene {
   private officeHelpNpc!: NPC;
   public lockMovement: boolean;
   private commHandler: PubSubChild;
+  private playerName: string;
+  private playerSprite: CharSprite;
 
   constructor() {
     super('Game');
@@ -30,6 +33,8 @@ export default class GameScene extends Phaser.Scene {
 
     // subscribe to test event
     this.commHandler.subscribe(this.testEvent, EventName.eventTest);
+    this.playerName = 'Player';
+    this.playerSprite = spritesDef.players.p1;
   }
 
   testEvent(e: MessageEvent){
@@ -38,8 +43,9 @@ export default class GameScene extends Phaser.Scene {
 
   public init(data: any): void {
     // Start Ui scene in parallel, placed on top
-    // this.scene.launch('Ui');   // Not used for the moment
-    console.log('PLAYER NAME IS: ' + data.name);
+    let sprite = JSON.parse(data.playerSprite);
+    this.playerName = data.name;
+    this.playerSprite = sprite;
   }
 
   public create(): void {
@@ -65,7 +71,7 @@ export default class GameScene extends Phaser.Scene {
   private createPlayer(): void {
     // Spawn player at location 216,216
     // this.player = new Player(this,216,216,"atlas", "misa-front");
-    this.player = new Player(this, 216, 216, 'player-walk');
+    this.player = new Player(this, 216, 216, this.playerSprite);
   }
 
   private createInput(): void {
@@ -87,12 +93,9 @@ export default class GameScene extends Phaser.Scene {
         this.player.nextCoord();
       }else{
         console.log(`You are not allowed to go there!`);
+        this.lockMovement = false;
       }
     });
-  }
-
-  public setMovementLock(lockMovement: boolean): void{
-    this.lockMovement = lockMovement;
   }
 
   private createNPC(): void {
@@ -103,43 +106,18 @@ export default class GameScene extends Phaser.Scene {
       eventName: EventName.eventTest
   }
     // Spawn NPC with idle standing animation
-    this.officeHelpNpc = new NPC(this, 285, 75, 'office-help', ()=> {
+    this.officeHelpNpc = new NPC(this as Phaser.Scene, 285, 75, spritesDef.npc.officeHelp, 6, ()=> {
       this.commHandler.publish(message);
+    });
+    this.officeHelpNpc.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
+      this.lockMovement = true;
     });
     //this.hoverEffect = new HoverSelect(this, 285, 25, 'select', 1.5);
     
   }
 
   private createMap(): void {
-    // setup map configuration
-    const config = [
-      {
-        tilesetImage: 'background',
-        layer: 'background',
-      },
-      {
-        tilesetImage: 'furniture',
-        layer: 'furniture1',
-      },
-      {
-        tilesetImage: 'furniture',
-        layer: 'furniture2',
-      },
-      {
-        tilesetImage: 'furniture',
-        layer: 'above1',
-      },
-      {
-        tilesetImage: 'furniture',
-        layer: 'above2',
-      },
-      {
-        tilesetImage: 'interiors',
-        layer: 'interiors1',
-      }
-    ];
-
     // create map
-    this.gamemap = new GameMap(this, 'map', config);
+    this.gamemap = new GameMap(this, mapDef.office1.name, mapDef.office1.config);
   }
 }

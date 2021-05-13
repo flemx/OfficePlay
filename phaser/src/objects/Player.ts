@@ -12,14 +12,15 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   private _path: Array<Coordinate>; // Path the player should walk
   private _nextCoord: Coordinate | undefined; // Keep track of next coord to move to
   private _body: Phaser.Physics.Arcade.Body;
+  private spriteKey: {idle : string, walk : string};
 
   constructor(
       scene: Phaser.Scene, // the scene this container will be added to
       x: number,  // the start x position of the player
       y: number,  // the start y position of the player
-      key: string  // player spritesheet
+      key: {idle : string, walk : string}  // player spritesheet
     ){
-    super(scene, x, y, key);
+    super(scene, x, y, key.idle);
     // Enable physics
     this.scene.physics.world.enable(this);
     this.speed = 250; // Velocity when moving our player
@@ -29,6 +30,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this._path = [];
     this._nextCoord = {x:x,y:y};
     this._body = this.body as Phaser.Physics.Arcade.Body;
+    this.spriteKey = key;
     // Setup all player animations
     this.setPlayerAnims();
     // Scale our player
@@ -74,50 +76,50 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     // Walk animation
     anims.create({
       key: 'player-left-walk',
-      frames: this.scene.anims.generateFrameNumbers('player-walk', { start: 12, end: 17 }),
+      frames: this.scene.anims.generateFrameNumbers(this.spriteKey.walk, { start: 12, end: 17 }),
       frameRate: 6,
       repeat: -1,
     });
     anims.create({
       key: 'player-right-walk',
-      frames: this.scene.anims.generateFrameNumbers('player-walk', { start: 0, end: 5 }),
+      frames: this.scene.anims.generateFrameNumbers(this.spriteKey.walk, { start: 0, end: 5 }),
       frameRate: 10,
       repeat: -1,
     });
     anims.create({
       key: 'player-front-walk',
-      frames: this.scene.anims.generateFrameNumbers('player-walk', { start: 18, end: 23 }),
+      frames: this.scene.anims.generateFrameNumbers(this.spriteKey.walk, { start: 18, end: 23 }),
       frameRate: 10,
       repeat: -1,
     });
     anims.create({
       key: 'player-back-walk',
-      frames: this.scene.anims.generateFrameNumbers('player-walk', { start: 6, end: 12 }),
+      frames: this.scene.anims.generateFrameNumbers(this.spriteKey.walk, { start: 6, end: 12 }),
       frameRate: 10,
       repeat: -1,
     });
     // Idle animation
     anims.create({
       key: 'player-left-idle',
-      frames: this.scene.anims.generateFrameNumbers('player-idle', { start: 12, end: 17 }),
+      frames: this.scene.anims.generateFrameNumbers(this.spriteKey.idle, { start: 12, end: 17 }),
       frameRate: 8,
       repeat: -1,
     });
     anims.create({
       key: 'player-right-idle',
-      frames: this.scene.anims.generateFrameNumbers('player-idle', { start: 0, end: 5 }),
+      frames: this.scene.anims.generateFrameNumbers(this.spriteKey.idle, { start: 0, end: 5 }),
       frameRate: 8,
       repeat: -1,
     });
     anims.create({
       key: 'player-front-idle',
-      frames: this.scene.anims.generateFrameNumbers('player-idle', { start: 18, end: 23 }),
+      frames: this.scene.anims.generateFrameNumbers(this.spriteKey.idle, { start: 18, end: 23 }),
       frameRate: 8,
       repeat: -1,
     });
     anims.create({
       key: 'player-back-idle',
-      frames: this.scene.anims.generateFrameNumbers('player-idle', { start: 6, end: 11 }),
+      frames: this.scene.anims.generateFrameNumbers(this.spriteKey.idle, { start: 6, end: 11 }),
       frameRate: 8,
       repeat: -1,
     });

@@ -7,17 +7,14 @@ import GameScene from '../scenes/GameScene';
  */
 export default class HoverSelect extends Phaser.Physics.Arcade.Sprite {
 
-  private targetScene: GameScene;
-
   constructor(
-    scene: GameScene, // the scene this spritesheet will be added to
+    scene: Phaser.Scene, // the scene this spritesheet will be added to
     x: number,  // the start x position 
     y: number,  // the start y position 
     key: string,  // Select spritesheet
     scale: number, // set scale
   ){
   super(scene, x, y, key);
-  this.targetScene = scene; //set scene in seperate property to access custom methods
     // Enable physics
     this.scene.physics.world.enable(this);
     // Set animations
@@ -43,7 +40,6 @@ export default class HoverSelect extends Phaser.Physics.Arcade.Sprite {
 
   public activateHover(isActive: boolean): void{
     this.setVisible(isActive);
-    this.targetScene.setMovementLock(isActive);
   }  
 
   

@@ -1,4 +1,6 @@
+import {TitleScene, BootScene, NewGameScene, GameScene} from '../scenes/scenes';
 import {EventName} from './enums';
+import * as Phaser from 'phaser';
 
 /**
  * @Author Damien Fleminks
@@ -71,3 +73,7 @@ export type EventMessage =  {
     data: {}, eventName : EventName
 }
 
+/**
+ *  Usde to genrate player sprite animations
+ */
+export type CharSprite = {idle : string, walk : string}

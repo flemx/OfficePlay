@@ -11,3 +11,9 @@ export default [
   GameScene,
   NewGameScene,
 ];
+
+export {BootScene,
+  TitleScene,
+  GameScene,
+  NewGameScene
+};

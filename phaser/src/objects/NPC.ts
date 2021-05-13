@@ -1,6 +1,8 @@
 import * as Phaser from 'phaser';
 import GameScene from '../scenes/GameScene';
+import NewGameScene from '../scenes/NewGameScene';
 import HoverSelect from './HoverSelect';
+import {CharSprite} from '../models/types';
 
 /**
  * NPC
@@ -11,22 +13,27 @@ export default class NPC extends Phaser.Physics.Arcade.Sprite {
 
   private targetCallback: () => any;  // Add callback function for click event
   private hoverEffect: HoverSelect;
+  private fixedHover: boolean;
+  private charSprite: CharSprite;
 
   constructor(
-    scene: GameScene, // the scene this NPC will be added to
+    scene: Phaser.Scene, // the scene this NPC will be added to
     x: number,  // the start x position of the NPC
     y: number,  // the start y position of the NPC
-    key: string,  // NPC spritesheet
+    charSprite: CharSprite,  // NPC spritesheet
+    frameRate: number,
     targetCallback: () => any
   ){
-  super(scene, x, y, key);
+  super(scene, x, y, charSprite.idle);
     // Enable physics
     this.scene.physics.world.enable(this);
-    // Set animations
+    this.fixedHover = false;
+    this.charSprite = charSprite;
+    // Set animations 
     this.scene.anims.create({
-      key: 'ideNpc',
-      frameRate: 6,
-      frames: this.scene.anims.generateFrameNumbers(key, { start: 0, end: 5 }),
+      key: `anim-${charSprite.idle}`,
+      frameRate: frameRate,
+      frames: this.scene.anims.generateFrameNumbers(charSprite.idle, { start: 18, end: 23 }),
       repeat: -1,
     });
 
@@ -39,25 +46,36 @@ export default class NPC extends Phaser.Physics.Arcade.Sprite {
     // Make sure player is visible by putting layer on top
     this.setDepth(4);
     // Start animation
-    this.play('ideNpc');
+    this.play(`anim-${this.charSprite.idle}`);
     this.body.immovable = true;
-    this.hoverEffect = new HoverSelect(scene, 285, 25, 'select', 1.5);
+    this.hoverEffect = new HoverSelect(scene, x, y - 40, 'select', 1.5);
     this.targetCallback = targetCallback;
     this.setInteractive();
     this.setEventListeners();
   }
 
 
-  setEventListeners(){
+  public getCharSpite(): CharSprite{
+    return this.charSprite;
+  }
+
+  public setHoverEffect(enabled: boolean): void{
+    this.hoverEffect.activateHover(enabled);
+    this.fixedHover = enabled;
+  }
+
+
+
+
+  private setEventListeners(): void{
     this.on('pointerdown', () => {
-      console.log('Clicks NPC');
       this.targetCallback(); // trigger calback function
     });
     this.on('pointerover', () => {
-      this.hoverEffect.activateHover(true);
+      if(!this.fixedHover) this.hoverEffect.activateHover(true);
     });
     this.on('pointerout', () => {
-      this.hoverEffect.activateHover(false);
+      if(!this.fixedHover)  this.hoverEffect.activateHover(false);
     });
   }
   
