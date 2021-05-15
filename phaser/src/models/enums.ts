@@ -6,7 +6,8 @@ export enum EventName {
     eventTest = 'eventTest',
     startScene = 'startScene',
     startGame_playerName = 'startGame_playerName',
-    gameScene_playerName = 'gameScene_playerName'
+    gameScene_playerName = 'gameScene_playerName',
+    gameScene_botMsg = 'gameScene_botMsg'
 }
 
 

@@ -19,7 +19,8 @@ const EventNames = {
   eventTest: "eventTest", // Used for testing
   startGame_playerName: "startGame_playerName",
   startScene: "startScene", //StartGame Scene starts
-  gameScene_playerName: "gameScene_playerName"
+  gameScene_playerName: "gameScene_playerName",
+  gameScene_botMsg: "gameScene_botMsg" // chat message from bot
 };
 Object.freeze(EventNames);
 

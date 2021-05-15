@@ -5,8 +5,8 @@
     </div>
     <div class="messages">
       <div class="messages-content mCustomScrollbar _mCS_1 mCS_no_scrollbar">
-        <div id="mCSB_1_container" class="mCSB_container">
-          <div class="message new">
+        <div id="mCSB_1_container" class="mCSB_container" lwc:dom="manual">
+          <!-- <div class="message new">
             <figure class="avatar"><img src={npcChat} /></figure>
             Hi there, I'm Fabio and you?
             <div class="timestamp">8:54</div>
@@ -27,7 +27,7 @@
           <div class="message new">
             <figure class="avatar"><img src={npcChat} /></figure>
             Codepen is a nice place to stay
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -37,7 +37,9 @@
         class="message-input"
         placeholder="Type message..."
       ></textarea>
-      <button type="submit" class="message-submit">Send</button>
+      <button type="submit" class="message-submit" onclick={insertMessage}>
+        Send
+      </button>
     </div>
   </div>
 </template>

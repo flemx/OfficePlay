@@ -72,10 +72,9 @@ export default class PhaserWrap extends LightningElement {
    *  Set all Event Listeners after elements are rendered
    */
   renderedCallback() {
+    // @ts-ignore
+    window.phaserIframeElement = this.template.querySelector("iframe");
     if (!this.isRendered) {
-      // @ts-ignore
-      window.phaserIframeElement = this.template.querySelector("iframe");
-
       /** @type {HTMLElement} */
       // @ts-ignore
       let panel = this.template.querySelector(".resize");
@@ -161,6 +160,7 @@ export default class PhaserWrap extends LightningElement {
   sendEvent() {
     // @ts-ignorethis.iframeOrigin
     let ifameElement = this.template.querySelector("iframe");
+    console.log("iframe from wrapper:", ifameElement);
     this.commHandler.publish(ifameElement, {
       data: { message: "I come from LWC" },
       eventName: "eventTest"

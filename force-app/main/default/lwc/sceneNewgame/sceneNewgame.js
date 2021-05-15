@@ -3,20 +3,20 @@ import PubSubParent from "c/pubSubParent";
 import { EventNames } from "c/types";
 
 export default class SceneNewgame extends LightningElement {
-  /** @type  PubSubParent */
-  commHandler;
-
   /** @type HTMLElement */
   iframeElement;
 
   /** @type boolean */
   isRendered;
 
+  /** @type  PubSubParent */
+  commHandler;
+
   constructor() {
     super();
-    this.commHandler = new PubSubParent();
     this.iframeElement = document.createElement("iframe");
     this.isRendered = false;
+    this.commHandler = new PubSubParent();
   }
 
   renderedCallback() {
@@ -29,8 +29,6 @@ export default class SceneNewgame extends LightningElement {
   }
 
   updateValue(e) {
-    // this.commHandler
-    console.log(e.detail.value);
     // @ts-ignore
     // console.log("iframe", window.phaserIframeElement);
     this.commHandler.publish(

@@ -116,10 +116,8 @@ export default class GameScene extends Phaser.Scene {
 
   private createNPC(): void {
     const message: EventMessage = {
-      data: {
-        origin: 'I AM FROM PHASER'
-      },
-      eventName: EventName.eventTest
+      data: `Welcome ${this.playerName} to OfficePlay!`,
+      eventName: EventName.gameScene_botMsg
   }
     // Spawn NPC with idle standing animation
     this.officeHelpNpc = new NPC(this as Phaser.Scene, 285, 75, spritesDef.npc.officeHelp, 6, ()=> {

@@ -1,3 +1,4 @@
+import ASSETS from "@salesforce/resourceUrl/remoteOfficeAssets";
 /**
  * PubSubParent
  * Provides set of functions to communicate with child Iframe
@@ -69,7 +70,7 @@ export default class PubSubParent {
    */
   publish(ifameElement, message) {
     if (ifameElement) {
-      /// @ts-ignore
+      // @ts-ignore
       ifameElement.contentWindow.postMessage(message, "*");
     }
   }

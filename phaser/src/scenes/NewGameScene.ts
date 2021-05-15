@@ -56,7 +56,7 @@ export default class NewGameScene extends Phaser.Scene {
         },
       );
       titleText.setOrigin(0.5);
-        console.log(titleText);
+        // console.log(titleText);
       const startGameButton = new UiButton(
         this,
         this.scale.width / 2,
