@@ -18,6 +18,12 @@ iframe {
   height: 100%;
 }
 
+.canvasCon {
+  height: 650px;
+  position: absolute !important;
+  width: 1000px !important;
+}
+
 .banner {
   display: flex;
 }

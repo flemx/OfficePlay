@@ -16,28 +16,29 @@
       >
       </lightning-button>
     </div>
-
-    <template if:true={devMode}>
-      <iframe
-        src={iframeUrl}
-        scrolling="no"
-        frameborder="0"
-        class="phaser"
-        style={canvasHeight}
-      >
-      </iframe>
-    </template>
-    <template if:false={devMode}>
-      <iframe
-        src={iframeUrl}
-        scrolling="no"
-        frameborder="0"
-        class="phaser"
-        style={canvasHeight}
-      >
-      </iframe>
-    </template>
-    <c-scene-handler> </c-scene-handler>
-    <div class="resize"></div>
+    <div class="canvasCon" style={canvasHeight}>
+      <template if:true={devMode}>
+        <iframe
+          src={iframeUrl}
+          scrolling="no"
+          frameborder="0"
+          class="phaser"
+          style={canvasHeight}
+        >
+        </iframe>
+      </template>
+      <template if:false={devMode}>
+        <iframe
+          src={iframeUrl}
+          scrolling="no"
+          frameborder="0"
+          class="phaser"
+          style={canvasHeight}
+        >
+        </iframe>
+      </template>
+      <c-scenes-handler> </c-scenes-handler>
+      <div class="resize"></div>
+    </div>
   </div>
 </template>

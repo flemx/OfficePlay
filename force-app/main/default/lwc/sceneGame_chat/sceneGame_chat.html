@@ -1,0 +1,43 @@
+<template>
+  <div class="chat" style={chatHeight}>
+    <div class="chat-title" onclick={toggleChat}>
+      <h1>Chat Messages</h1>
+    </div>
+    <div class="messages">
+      <div class="messages-content mCustomScrollbar _mCS_1 mCS_no_scrollbar">
+        <div id="mCSB_1_container" class="mCSB_container">
+          <div class="message new">
+            <figure class="avatar"><img src={npcChat} /></figure>
+            Hi there, I'm Fabio and you?
+            <div class="timestamp">8:54</div>
+          </div>
+          <div class="message message-personal new">
+            hjkhjk
+            <div class="timestamp">8:59</div>
+          </div>
+          <div class="message new">
+            <figure class="avatar"><img src={npcChat} /></figure>
+            Nice to meet you
+          </div>
+          <div class="message message-personal new">
+            cvfvf
+            <div class="timestamp">9:9</div>
+          </div>
+
+          <div class="message new">
+            <figure class="avatar"><img src={npcChat} /></figure>
+            Codepen is a nice place to stay
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="message-box">
+      <textarea
+        type="text"
+        class="message-input"
+        placeholder="Type message..."
+      ></textarea>
+      <button type="submit" class="message-submit">Send</button>
+    </div>
+  </div>
+</template>
