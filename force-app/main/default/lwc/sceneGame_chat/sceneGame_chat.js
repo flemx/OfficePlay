@@ -17,15 +17,14 @@ export default class SceneGame_chat extends LightningElement {
 
   /** @type string */
   get chatHeight() {
-    let style = "height: 30px; bottom:0px; left: 170px;";
-    if (this.chatCollapsed)
-      style = "height: 280px; bottom: -125px; left: 170px;";
+    let style = "height: 280px; bottom: -125px; left: 170px;";
+    if (this.chatCollapsed) style = "height: 30px; bottom:0px; left: 170px;";
     return style;
   }
 
   constructor() {
     super();
-    this.chatCollapsed = false;
+    this.chatCollapsed = true;
     this.npcChat = ASSETS + "/assets/images/characters/ui/npc-chat.png";
     this.isRendered = false;
     this.commHandler = new PubSubParent();
@@ -63,6 +62,7 @@ export default class SceneGame_chat extends LightningElement {
             ${msg} 
         <div class="timestamp">${time}</div>
        </div>`;
+    if (this.chatCollapsed) this.toggleChat();
     // @ts-ignore
     this.template
       .querySelector(".mCSB_container")
@@ -78,10 +78,8 @@ export default class SceneGame_chat extends LightningElement {
     if (inputEl.value !== "") {
       let template = document.createElement("template");
       template.innerHTML = `<div class="message message-personal new"> ${inputEl.value}</div>`;
-      //let template = new DOMParser().parseFromString(`<div class="message message-personal new"> ${inputEl.value}</div>`, 'text/html');
-
-      // @ts-ignore
       this.template
+        // @ts-ignore
         .querySelector(".mCSB_container")
         .appendChild(template.content);
       inputEl.value = "";
