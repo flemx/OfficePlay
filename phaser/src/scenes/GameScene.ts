@@ -7,6 +7,7 @@ import PubSubChild from '../utils/PubSubChild';
 import { Coordinate, EventMessage, CharSprite } from '../models/types';
 import {EventName, scenes} from '../models/enums';
 import {spritesDef, mapDef} from '../models/data'
+import Cat from '../objects/Cat';
 /**
  * GameScene
  * @ Damien Fleminks
@@ -23,6 +24,7 @@ export default class GameScene extends Phaser.Scene {
   private commHandler: PubSubChild;
   private playerName: string;
   private playerSprite: CharSprite;
+  private cat!: Cat;
 
   constructor() {
     super('Game');
@@ -51,6 +53,7 @@ export default class GameScene extends Phaser.Scene {
   public create(): void {
     this.createPlayer();
     this.createNPC();
+    this.createCat();
     this.createMap();
     this.createAudio();
     this.createInput();
@@ -116,7 +119,10 @@ export default class GameScene extends Phaser.Scene {
 
   private createNPC(): void {
     const message: EventMessage = {
-      data: `Welcome ${this.playerName} to OfficePlay!`,
+      data: {
+        message:  `Welcome ${this.playerName} to OfficePlay!`,
+        img : 'npc'
+      },
       eventName: EventName.gameScene_botMsg
   }
     // Spawn NPC with idle standing animation
@@ -127,6 +133,26 @@ export default class GameScene extends Phaser.Scene {
       this.lockMovement = true;
     });
   }
+
+  private createCat(): void {
+    const message: EventMessage = {
+      data: {
+        message:  `meow meow!`,
+        img : 'cat'
+      },
+      eventName: EventName.gameScene_botMsg
+    }
+    // Spawn NPC with idle standing animation
+    this.cat = new Cat(this as Phaser.Scene, 264, 650, spritesDef.npc.cat, 6, ()=> {
+      this.commHandler.publish(message);
+    });
+    this.cat.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
+      this.lockMovement = true;
+    });
+  }
+
+
+  
 
   private createMap(): void {
     // create map

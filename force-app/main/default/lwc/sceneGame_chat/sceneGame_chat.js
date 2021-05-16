@@ -15,6 +15,9 @@ export default class SceneGame_chat extends LightningElement {
   /** @type  PubSubParent */
   commHandler;
 
+  /** @type Record<string, string> */
+  botImages;
+
   /** @type string */
   get chatHeight() {
     let style = "height: 280px; bottom: -125px; left: 170px;";
@@ -28,6 +31,11 @@ export default class SceneGame_chat extends LightningElement {
     this.npcChat = ASSETS + "/assets/images/characters/ui/npc-chat.png";
     this.isRendered = false;
     this.commHandler = new PubSubParent();
+    this.botImages = {
+      npc: ASSETS + "/assets/images/characters/ui/npc-chat.png",
+      cat: ASSETS + "/assets/images/characters/ui/cat-chat.png"
+    };
+    Object.freeze(this.botImages);
   }
 
   renderedCallback() {
@@ -49,22 +57,22 @@ export default class SceneGame_chat extends LightningElement {
 
   /**
    * Insert message from bot
-   * @param {string} msg
+   * @param {{message:string,img:string}} data
    */
-  botMessage(msg) {
+  botMessage(data) {
     let today = new Date();
     let time = today.getHours() + ":" + today.getMinutes();
     let template = document.createElement("template");
-    let botImg = ASSETS + "/assets/images/characters/ui/npc-chat.png";
+    let botImg = this.botImages[data.img];
     template.innerHTML = `
       <div class="message new">
         <figure class="avatar"><img src=${botImg} /></figure>
-            ${msg} 
+            ${data.message} 
         <div class="timestamp">${time}</div>
        </div>`;
     if (this.chatCollapsed) this.toggleChat();
-    // @ts-ignore
     this.template
+      // @ts-ignore
       .querySelector(".mCSB_container")
       .appendChild(template.content);
   }

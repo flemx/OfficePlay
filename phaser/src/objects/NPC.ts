@@ -1,6 +1,4 @@
 import * as Phaser from 'phaser';
-import GameScene from '../scenes/GameScene';
-import NewGameScene from '../scenes/NewGameScene';
 import HoverSelect from './HoverSelect';
 import {CharSprite} from '../models/types';
 

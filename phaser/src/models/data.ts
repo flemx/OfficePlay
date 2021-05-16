@@ -21,10 +21,14 @@ const spritesDef = {
         officeHelp : {
           idle: 'office-help',
           walk: 'office-help'
-      }
+      },
+      cat : 'cat'
     },
     effects : {
         select : 'select'
+    },
+    objects: {
+      coffee : 'coffee'
     }
 }
 Object.freeze(spritesDef);
@@ -71,6 +75,14 @@ const mapDef = {
         {
           tilesetImage: imageDef.maps.interiors,
           layer: 'interiors1',
+        },
+        {
+          tilesetImage: imageDef.maps.interiors,
+          layer: 'interiors2',
+        },
+        {
+          tilesetImage: imageDef.maps.interiors,
+          layer: 'above-interiors',
         }
       ]
     }

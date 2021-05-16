@@ -52,10 +52,14 @@ export default class BootScene extends Phaser.Scene {
   }
 
   private loadSpriteSheets(): void {
-    // Load image as array of sprites devided by size
+    // Load bot charactes
     this.load.spritesheet(spritesDef.npc.officeHelp.idle, 'assets/images/characters/npc-conference-idle.png', { frameWidth: 32, frameHeight: 64 }); // Load NPC
+    this.load.spritesheet(spritesDef.npc.cat, 'assets/images/characters/cat.png', { frameWidth: 96, frameHeight: 32 }); // Load Cat
+    
+    // Load objects
+    this.load.spritesheet(spritesDef.objects.coffee, 'assets/images/objects/coffee.png', { frameWidth: 32, frameHeight: 64 }); 
 
-     // Load effects
+    // Load effects
      this.load.spritesheet(spritesDef.effects.select, 'assets/images/effects/hover_animation.png',  {frameWidth: 32, frameHeight: 32 }); // Load shover select 
   }
 
