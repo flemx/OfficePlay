@@ -8,6 +8,7 @@ import { Coordinate, EventMessage, CharSprite } from '../models/types';
 import {EventName, scenes} from '../models/enums';
 import {spritesDef, mapDef} from '../models/data'
 import Cat from '../objects/Cat';
+import Coffee from '../objects/Coffee';
 /**
  * GameScene
  * @ Damien Fleminks
@@ -25,6 +26,7 @@ export default class GameScene extends Phaser.Scene {
   private playerName: string;
   private playerSprite: CharSprite;
   private cat!: Cat;
+  private coffee!: Coffee;
 
   constructor() {
     super('Game');
@@ -54,6 +56,7 @@ export default class GameScene extends Phaser.Scene {
     this.createPlayer();
     this.createNPC();
     this.createCat();
+    this.createCoffee();
     this.createMap();
     this.createAudio();
     this.createInput();
@@ -148,9 +151,18 @@ export default class GameScene extends Phaser.Scene {
     });
     this.cat.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
       this.lockMovement = true;
-    });
+    });   
   }
 
+  private createCoffee(): void {
+    // Spawn NPC with idle standing animation
+    this.coffee = new Coffee(this as Phaser.Scene, 888, 200, spritesDef.objects.coffee);
+    // this.cat.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
+    //   this.lockMovement = true;
+    // });   
+  }
+
+  
 
   
 
