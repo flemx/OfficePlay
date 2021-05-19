@@ -1,5 +1,6 @@
 import * as Phaser from 'phaser';
 import UiButton from '../objects/UiButton';
+import {imageDef} from '../models/data'
 
 /**
  * TitleScene
@@ -15,17 +16,26 @@ export default class TitleScene extends Phaser.Scene {
   }
 
   public create(): void {
-    // Create title text
-    const titleText = this.add.text(
+
+    const titleImage = this.add.image(
       this.scale.width / 2,
-      this.scale.height / 2,
-      'Virtual Office',
-      {
-        fontSize: '64px',
-        color: '#fff',
-      },
+      this.scale.height / 2.5,
+      imageDef.branding.title_logo
     );
-    titleText.setOrigin(0.5);
+
+    // // Create title text
+    // const titleText = this.add.text(
+    //   this.scale.width / 2,
+    //   this.scale.height / 2,
+    //   'Virtual Office',
+    //   {
+    //     fontSize: '64px',
+    //     color: '#fff',
+    //   },
+    // );
+    // titleText.setOrigin(0.5);
+
+    titleImage.setScale(0.7);
 
     const startGameButton = new UiButton(
       this,

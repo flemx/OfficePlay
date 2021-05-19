@@ -46,6 +46,9 @@ const imageDef  = {
     buttons : {
         btn1 : 'button1',
         btn2 : 'button2'
+    },
+    branding : {
+      title_logo : 'title-logo'
     }
 }
 

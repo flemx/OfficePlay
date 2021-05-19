@@ -38,6 +38,9 @@ export default class BootScene extends Phaser.Scene {
     this.load.image(imageDef.maps.background, 'assets/level/Tileset_32x32_8.png');
     this.load.image(imageDef.maps.furniture, 'assets/level/Office_interiors_32x32.png');
     this.load.image(imageDef.maps.interiors, 'assets/level/Interiors_32x32.png');
+
+    // Load branding images
+    this.load.image(imageDef.branding.title_logo, 'assets/images/ui/officeplay-logo.png');
   }
 
   private loadPlayers(): void {
