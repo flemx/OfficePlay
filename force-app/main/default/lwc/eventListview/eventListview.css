@@ -1,0 +1,31 @@
+.listContainer {
+  margin-top: 1%;
+  position: relative;
+  text-align: Center;
+}
+
+.upcomginCon {
+  margin-top: 2%;
+}
+
+.noResultsTitle {
+  font-weight: var(--lwc-fontWeightRegular, 400);
+  min-width: 75%;
+  max-width: 500px;
+}
+
+.noResultsMessage {
+  word-break: break-word;
+  word-wrap: break-word;
+}
+
+.bttnCont {
+  position: absolute;
+  right: 28px;
+  top: 1rem;
+  z-index: 999;
+}
+
+.showBttn {
+  display: inline-block;
+}

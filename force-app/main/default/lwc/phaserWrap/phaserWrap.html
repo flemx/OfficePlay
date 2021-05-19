@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <!-- <div class="banner" style={bannerHeight}>
+  <!-- <div class="container"> -->
+  <!-- <div class="banner" style={bannerHeight}>
       <lightning-input
         class="banner-items"
         type="toggle"
@@ -16,29 +16,29 @@
       >
       </lightning-button>
     </div> -->
-    <div class="canvasCon" style={canvasHeight}>
-      <template if:true={devMode}>
-        <iframe
-          src={iframeUrl}
-          scrolling="no"
-          frameborder="0"
-          class="phaser"
-          style={canvasHeight}
-        >
-        </iframe>
-      </template>
-      <template if:false={devMode}>
-        <iframe
-          src={iframeUrl}
-          scrolling="no"
-          frameborder="0"
-          class="phaser"
-          style={canvasHeight}
-        >
-        </iframe>
-      </template>
-      <c-scenes-handler> </c-scenes-handler>
-      <div class="resize"></div>
-    </div>
+  <div class="canvasCon slds-box" style={containerHeigh}>
+    <template if:true={devMode}>
+      <iframe
+        src={iframeUrl}
+        scrolling="no"
+        frameborder="0"
+        class="phaser"
+        style={canvasHeight}
+      >
+      </iframe>
+    </template>
+    <template if:false={devMode}>
+      <iframe
+        src={iframeUrl}
+        scrolling="no"
+        frameborder="0"
+        class="phaser"
+        style={canvasHeight}
+      >
+      </iframe>
+    </template>
+    <c-scenes-handler> </c-scenes-handler>
+    <!-- <div class="resize"></div> -->
   </div>
+  <!-- </div> -->
 </template>

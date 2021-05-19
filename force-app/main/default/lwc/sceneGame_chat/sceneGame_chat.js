@@ -20,8 +20,8 @@ export default class SceneGame_chat extends LightningElement {
 
   /** @type string */
   get chatHeight() {
-    let style = "height: 280px; bottom: -125px; left: 170px;";
-    if (this.chatCollapsed) style = "height: 30px; bottom:0px; left: 170px;";
+    let style = "height: 280px; bottom: -117px; left: 170px;";
+    if (this.chatCollapsed) style = "height: 30px; bottom:8px; left: 170px;";
     return style;
   }
 

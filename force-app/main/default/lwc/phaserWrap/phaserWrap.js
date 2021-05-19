@@ -38,9 +38,9 @@ export default class PhaserWrap extends LightningElement {
     return `height:${this.bannerHeightNumber}px`;
   }
 
-  /** @type string */
+  /** @type string  */
   get containerHeigh() {
-    return `height:${this.windowHeight}vh`;
+    return `height:${this.windowHeight - this.bannerHeightNumber + 32}px`;
   }
 
   /**  @type string */
@@ -74,56 +74,56 @@ export default class PhaserWrap extends LightningElement {
   renderedCallback() {
     // @ts-ignore
     window.phaserIframeElement = this.template.querySelector("iframe");
-    if (!this.isRendered) {
-      /** @type {HTMLElement} */
-      // @ts-ignore
-      let panel = this.template.querySelector(".resize");
+    // if (!this.isRendered) {
+    //   /** @type {HTMLElement} */
+    //   // @ts-ignore
+    //   let panel = this.template.querySelector(".resize");
 
-      panel.addEventListener(
-        "mousedown",
-        (e) => {
-          // Used to track position of pointer for resizing iframe
-          this.mousedown = true;
-          this.m_pos = e.y;
-        },
-        false
-      );
+    //   panel.addEventListener(
+    //     "mousedown",
+    //     (e) => {
+    //       // Used to track position of pointer for resizing iframe
+    //       this.mousedown = true;
+    //       this.m_pos = e.y;
+    //     },
+    //     false
+    //   );
 
-      // CrossCommHandler will listen for message events
-      this.commHandler.subscribe(this.testEvent, "eventTest");
+    //   // CrossCommHandler will listen for message events
+    //   this.commHandler.subscribe(this.testEvent, "eventTest");
 
-      window.addEventListener(
-        "mousemove",
-        (e) => {
-          if (this.mousedown) {
-            // @ts-ignore
-            let iframe = this.template.querySelector("iframe");
-            this.resizeIframe(e, iframe);
-          }
-        },
-        false
-      );
+    // window.addEventListener(
+    //   "mousemove",
+    //   (e) => {
+    //     if (this.mousedown) {
+    //       // @ts-ignore
+    //       let iframe = this.template.querySelector("iframe");
+    //       this.resizeIframe(e, iframe);
+    //     }
+    //   },
+    //   false
+    // );
 
-      window.addEventListener(
-        "mouseup",
-        () => {
-          this.mousedown = false;
-        },
-        false
-      );
+    // window.addEventListener(
+    //   "mouseup",
+    //   () => {
+    //     this.mousedown = false;
+    //   },
+    //   false
+    // );
 
-      // @ts-ignore
-      let el = this.template.querySelector(".container");
-      el.addEventListener("resize", () => {
-        // Event listener to resize iframe height when browser height ius adjusted
-        let newHeight = parseInt(
-          // @ts-ignore
-          this.template.querySelector(".container").offsetHeight
-        );
-        this.windowHeight = newHeight;
-      });
-      this.isRendered = true;
-    }
+    // // @ts-ignore
+    // let el = this.template.querySelector(".container");
+    // el.addEventListener("resize", () => {
+    //   // Event listener to resize iframe height when browser height ius adjusted
+    //   let newHeight = parseInt(
+    //     // @ts-ignore
+    //     this.template.querySelector(".container").offsetHeight
+    //   );
+    //   this.windowHeight = newHeight;
+    // });
+    // this.isRendered = true;
+    // }
   }
 
   /**
