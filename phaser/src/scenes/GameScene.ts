@@ -9,6 +9,7 @@ import {EventName, scenes} from '../models/enums';
 import {spritesDef, mapDef} from '../models/data'
 import Cat from '../objects/Cat';
 import Coffee from '../objects/Coffee';
+import Fridge from '../objects/Fridge';
 /**
  * GameScene
  * @ Damien Fleminks
@@ -57,6 +58,7 @@ export default class GameScene extends Phaser.Scene {
     this.createNPC();
     this.createCat();
     this.createCoffee();
+    this.createFridges();
     this.createMap();
     this.createAudio();
     this.createInput();
@@ -157,6 +159,24 @@ export default class GameScene extends Phaser.Scene {
   private createCoffee(): void {
     // Spawn NPC with idle standing animation
     this.coffee = new Coffee(this as Phaser.Scene, 888, 200, spritesDef.objects.coffee);
+    // this.cat.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
+    //   this.lockMovement = true;
+    // });   
+  }
+
+  private createFridges(): void {
+    // Spawn NPC with idle standing animation
+    let fridge1 = new Fridge(this as Phaser.Scene, 1128, 100, spritesDef.objects.fridge1);
+    fridge1.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
+      this.lockMovement = true;
+    }); 
+    let fridge2 = new Fridge(this as Phaser.Scene, 1078, 100, spritesDef.objects.fridge2);
+    fridge2.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
+      this.lockMovement = true;
+    });  
+    // let fridge1 = new Cat(this as Phaser.Scene, 1128, 100, spritesDef.npc.cat, 6, ()=> {
+    //   console.log('MEOW');
+    // });
     // this.cat.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
     //   this.lockMovement = true;
     // });   

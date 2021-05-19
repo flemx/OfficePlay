@@ -43,7 +43,7 @@ export default class ScenesHandler extends LightningElement {
     };
     Object.freeze(this.scenes);
     // Enable the first scene to render
-    this.enabledScene = this.scenes.NewGame;
+    this.enabledScene = this.scenes.None;
 
     this.commHandler.subscribe((/** @type string **/ scene) => {
       console.log("EVENT RECEIVED", scene);

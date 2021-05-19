@@ -28,7 +28,9 @@ const spritesDef = {
         select : 'select'
     },
     objects: {
-      coffee : 'coffee'
+      coffee : 'coffee',
+      fridge1 : 'fridge1',
+      fridge2 : 'fridge2'
     }
 }
 Object.freeze(spritesDef);

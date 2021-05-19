@@ -25,7 +25,7 @@ export default class BootScene extends Phaser.Scene {
   }
 
   public create(): void {
-    this.scene.start('NewGame');
+    this.scene.start('Title');
   }
 
 
@@ -58,6 +58,9 @@ export default class BootScene extends Phaser.Scene {
     
     // Load objects
     this.load.spritesheet(spritesDef.objects.coffee, 'assets/images/objects/coffee.png', { frameWidth: 32, frameHeight: 64 }); 
+    this.load.spritesheet(spritesDef.objects.fridge1, 'assets/images/objects/fridge1.png', { frameWidth: 32, frameHeight: 96 }); 
+    this.load.spritesheet(spritesDef.objects.fridge2, 'assets/images/objects/fridge2.png', { frameWidth: 32, frameHeight: 96 }); 
+
 
     // Load effects
      this.load.spritesheet(spritesDef.effects.select, 'assets/images/effects/hover_animation.png',  {frameWidth: 32, frameHeight: 32 }); // Load shover select 
