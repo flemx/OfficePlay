@@ -1,22 +1,101 @@
 <template>
   <div class="listContainer">
-    <lightning-layout multiple-rows="true" class="upcomginCon">
-      <template for:each={data} for:item="f">
-        <lightning-layout-item
-          size="12"
-          small-device-size="6"
-          medium-device-size="4"
-          large-device-size="3"
-          class="slds-p-bottom_large slds-p-left_small slds-p-right_small"
-          key={f.id}
+    <div class="bttnCont">
+      <lightning-button
+        label="Add OfficePlay Game"
+        title="Add SIC"
+        icon-name="utility:add"
+        icon-position="right"
+        class="slds-m-left_x-small"
+        onclick={addSIC}
+      ></lightning-button>
+    </div>
+
+    <lightning-accordion
+      allow-multiple-sections-open
+      onsectiontoggle={handleSectionToggle}
+      active-section-name={activeSections}
+    >
+      <lightning-accordion-section name="A" label="Active">
+        <lightning-layout multiple-rows="true" class="upcomginCon">
+          <lightning-layout multiple-rows="true" class="upcomginCon">
+            <template for:each={data} for:item="f">
+              <lightning-layout-item
+                size="12"
+                small-device-size="6"
+                medium-device-size="4"
+                large-device-size="3"
+                class="slds-p-bottom_large slds-p-left_small slds-p-right_small"
+                key={f.id}
+              >
+                <c-event-tile
+                  record-id={f.Id}
+                  name={f.Name}
+                  image={f.Image__c}
+                ></c-event-tile>
+              </lightning-layout-item>
+            </template>
+          </lightning-layout>
+        </lightning-layout>
+      </lightning-accordion-section>
+
+      <lightning-accordion-section name="B" label="Not Active">
+        <lightning-layout multiple-rows="true" class="upcomginCon">
+        </lightning-layout>
+      </lightning-accordion-section>
+    </lightning-accordion>
+  </div>
+
+  <div class="modalSIC slds-hide">
+    <section
+      role="dialog"
+      tabindex="-1"
+      aria-labelledby="modal-heading-01"
+      aria-modal="true"
+      aria-describedby="modal-content-id-1"
+      class="slds-modal slds-fade-in-open"
+    >
+      <div class="slds-modal__container">
+        <header class="slds-modal__header">
+          <button
+            class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+            title="Close"
+          >
+            <lightning-icon
+              icon-name="utility:close"
+              onclick={closeModalSIC}
+              alternative-text="Connected"
+              size="small"
+              title="small size"
+            >
+            </lightning-icon>
+            <span class="slds-assistive-text">Close</span>
+          </button>
+          <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">
+            New Office Play Game
+          </h2>
+        </header>
+        <div
+          class="slds-modal__content slds-p-around_medium"
+          id="modal-content-id-1"
         >
-          <c-event-tile
-            record-id={f.Id}
-            name={f.Name}
-            image={f.Image__c}
-          ></c-event-tile>
-        </lightning-layout-item>
-      </template>
-    </lightning-layout>
+          <lightning-record-edit-form object-api-name="Office_Play__c">
+            <lightning-messages> </lightning-messages>
+            <lightning-input-field field-name="Name"> </lightning-input-field>
+            <lightning-input-field field-name="Allow_Guest_Players__c">
+            </lightning-input-field>
+            <lightning-input-field field-name="Player_Limit__c">
+            </lightning-input-field>
+            <lightning-button
+              class="slds-m-top_small slds-float_right"
+              type="submit"
+              label="Create new"
+            >
+            </lightning-button>
+          </lightning-record-edit-form>
+        </div>
+      </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
   </div>
 </template>

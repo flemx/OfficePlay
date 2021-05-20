@@ -3,7 +3,7 @@ import { LightningElement, track } from "lwc";
 export default class EventListview extends LightningElement {
   @track data = [
     {
-      id: "1",
+      id: "a001j000007VWgkAAG",
       Name: "Classic Office",
       Image__c: "https://i.imgur.com/FtmSkvc.jpg"
     },
@@ -18,6 +18,9 @@ export default class EventListview extends LightningElement {
       Image__c: "https://i.imgur.com/q3wwUF2.jpg"
     }
   ];
+
+  activeSections = "A";
+  activeSectionsMessage = "";
 
   connectedCallback() {}
 
@@ -55,5 +58,15 @@ export default class EventListview extends LightningElement {
     } else {
       this.activeSectionsMessage = "Open sections: " + openSections.join(", ");
     }
+  }
+
+  addSIC() {
+    console.log("clicked add sic");
+    this.template.querySelector(".modalSIC").classList.remove("slds-hide");
+  }
+
+  closeModalSIC() {
+    console.log("close sic");
+    this.template.querySelector(".modalSIC").classList.add("slds-hide");
   }
 }
