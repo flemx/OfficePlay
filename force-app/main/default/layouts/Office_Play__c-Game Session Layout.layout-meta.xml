@@ -67,10 +67,16 @@
     </layoutSections>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Player__c</fields>
+        <fields>Session_Started__c</fields>
+        <fields>Session_Ended__c</fields>
         <relatedList>Login_session__c.Office_Play__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Player__c.Email__c</fields>
+        <fields>Player__c.NAME</fields>
+        <fields>Player__c.Username__c</fields>
         <relatedList>Player_Game__c.Office_Play__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
