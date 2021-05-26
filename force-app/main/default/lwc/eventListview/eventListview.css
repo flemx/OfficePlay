@@ -2,6 +2,7 @@
   margin-top: 1%;
   position: relative;
   text-align: Center;
+  background-color: #ffffffcf;
 }
 
 .upcomginCon {
@@ -22,7 +23,7 @@
 .bttnCont {
   position: absolute;
   right: 28px;
-  top: 1rem;
+  top: 0.5rem;
   z-index: 999;
 }
 

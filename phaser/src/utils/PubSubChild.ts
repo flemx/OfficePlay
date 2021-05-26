@@ -1,5 +1,3 @@
-
-import * as Phaser from 'phaser';
 import {EventName} from '../models/enums';
 import {EventMessage} from '../models/types';
 

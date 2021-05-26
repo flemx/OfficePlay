@@ -15,6 +15,7 @@ export default class EventTile extends NavigationMixin(LightningElement) {
       type: "standard__recordPage",
       attributes: {
         recordId: this.recordId,
+        objectApiName: "Office_Play__c",
         actionName: "view"
       }
     });
