@@ -24,6 +24,30 @@ export default class PathFinder {
     // Make a priority queue of the distances
     this.prioQueue = new PriorityQueue();
   }
+  
+  /**
+     *  Initialise the data structures to use for the dijkstra pathfinder algorithm
+     * @param {*} start
+     */
+  private initDijkstra(start: NodeKey): void {
+    // Empty all data structures
+    this.distances = {};
+    this.previous = {};
+    this.prioQueue = new PriorityQueue();
+    // create array with vertexes
+    const vertexes = Object.keys(this.adjacencyList) as Array<NodeKey>;
+    // prepare the data structures
+    for (let i = 0; i < vertexes.length; i += 1) {
+      const key: NodeKey = vertexes[i];
+      if (key === start) {
+        this.distances[key] = 0;
+      } else {
+        this.distances[key] = Infinity;
+      }
+      this.prioQueue.enqueue({value: key, priority: this.distances[key]});
+      this.previous[key] = undefined;
+    }
+  }
 
   /**
      *  Return a graph with all possible paths,
@@ -31,7 +55,7 @@ export default class PathFinder {
      *  and a list of the illigal collision coordinates
      * @param {*} coordinates
      */
-  private generateGraph(coordinates: MapCoordinates): Node {
+   private generateGraph(coordinates: MapCoordinates): Node {
     const graph: Node = {};
     // Generate vertexes from map dimensions
     for (let y = 0; y < coordinates.length; y += 1) {
@@ -64,30 +88,6 @@ export default class PathFinder {
       }
     }
     return graph;
-  }
-
-  /**
-     *  Initialise the data structures to use for the dijkstra pathfinder algorithm
-     * @param {*} start
-     */
-  private initDijkstra(start: NodeKey): void {
-    // Empty all data structures
-    this.distances = {};
-    this.previous = {};
-    this.prioQueue = new PriorityQueue();
-    // create array with vertexes
-    const vertexes = Object.keys(this.adjacencyList) as Array<NodeKey>;
-    // prepare the data structures
-    for (let i = 0; i < vertexes.length; i += 1) {
-      const key: NodeKey = vertexes[i];
-      if (key === start) {
-        this.distances[key] = 0;
-      } else {
-        this.distances[key] = Infinity;
-      }
-      this.prioQueue.enqueue({value: key, priority: this.distances[key]});
-      this.previous[key] = undefined;
-    }
   }
 
   /**

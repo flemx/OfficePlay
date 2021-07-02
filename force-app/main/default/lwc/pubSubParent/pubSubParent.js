@@ -1,4 +1,3 @@
-import ASSETS from "@salesforce/resourceUrl/remoteOfficeAssets";
 /**
  * PubSubParent
  * Provides set of functions to communicate with child Iframe
