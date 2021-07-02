@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
-    <brand>
-        <headerColor>#2B7884</headerColor>
-        <logo>Screenshot_20210514_at_171825</logo>
-        <logoVersion>1</logoVersion>
-        <shouldOverrideOrgTheme>true</shouldOverrideOrgTheme>
-    </brand>
     <formFactors>Small</formFactors>
     <formFactors>Large</formFactors>
     <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
@@ -44,9 +38,6 @@
         <type>Flexipage</type>
         <profile>Admin</profile>
     </profileActionOverrides>
-    <tabs>OfficePlay</tabs>
-    <tabs>Player__c</tabs>
     <tabs>Start_OfficePlay</tabs>
     <uiType>Lightning</uiType>
-    <utilityBar>OfficePlay_UtilityBar</utilityBar>
 </CustomApplication>

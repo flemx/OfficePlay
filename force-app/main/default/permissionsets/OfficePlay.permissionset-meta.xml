@@ -103,15 +103,11 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <tabSettings>
-        <tab>OfficePlay</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
         <tab>Office_Play__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
-        <tab>Player__c</tab>
+        <tab>Start_OfficePlay</tab>
         <visibility>Visible</visibility>
     </tabSettings>
 </PermissionSet>

@@ -3,13 +3,13 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>phaserWrap</componentName>
+                <componentName>eventListview</componentName>
             </componentInstance>
         </itemInstances>
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>
-    <masterLabel>Start OfficePlay</masterLabel>
+    <masterLabel>OfficePlay Sessions</masterLabel>
     <template>
         <name>flexipage:defaultAppHomeTemplate</name>
     </template>
