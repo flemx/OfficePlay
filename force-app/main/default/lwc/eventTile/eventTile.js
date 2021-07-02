@@ -9,16 +9,16 @@ export default class EventTile extends NavigationMixin(LightningElement) {
 
   //Callback fires when component is added to DOM
   onClick() {
-    console.log(this.recordId);
-    // Generate a URL to the record page
-    this[NavigationMixin.Navigate]({
-      type: "standard__recordPage",
-      attributes: {
-        recordId: this.recordId,
-        objectApiName: "Office_Play__c",
-        actionName: "view"
-      }
-    });
+    // console.log(this.recordId);
+    // // Generate a URL to the record page
+    // this[NavigationMixin.Navigate]({
+    //   type: "standard__recordPage",
+    //   attributes: {
+    //     recordId: this.recordId,
+    //     objectApiName: "Office_Play__c",
+    //     actionName: "view"
+    //   }
+    // });
   }
 
   get sessionpic() {

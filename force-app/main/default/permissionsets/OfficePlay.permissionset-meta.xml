@@ -26,22 +26,27 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Office_Play__c.Activated__c</field>
+        <field>Office_Play_config__c.Activated__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Office_Play__c.Allow_Guest_Players__c</field>
+        <field>Office_Play_config__c.Allow_Guest_Players__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Office_Play_config__c.Image__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Office_Play_config__c.Office_Map__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Office_Play__c.Office_Map__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Office_Play__c.Player_Limit__c</field>
+        <field>Office_Play_config__c.Player_Limit__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -81,7 +86,7 @@
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
-        <object>Office_Play__c</object>
+        <object>Office_Play_config__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
@@ -103,7 +108,7 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <tabSettings>
-        <tab>Office_Play__c</tab>
+        <tab>Office_Play_config__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>

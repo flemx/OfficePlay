@@ -65,16 +65,7 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentInstanceProperties>
-                    <name>decorate</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>richTextValue</name>
-                    <value
-          >&lt;p&gt;&lt;img src=&quot;https://energy-customization-74863-dev-ed--c.documentforce.com/servlet/rtaImage?refid=0EM1j000000BP9N&quot; alt=&quot;image.png&quot;&gt;&lt;/p&gt;</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:richText</componentName>
+                <componentName>phaserWrap</componentName>
             </componentInstance>
         </itemInstances>
         <name>Facet-4f1bf422-95c9-4d2f-9d95-8933c00f1abf</name>
@@ -147,7 +138,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>parentFieldApiName</name>
-                    <value>Office_Play__c.Id</value>
+                    <value>Office_Play_config__c.Id</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relatedListApiName</name>
@@ -174,7 +165,7 @@
     </flexiPageRegions>
     <masterLabel>Office Play Record Page</masterLabel>
     <parentFlexiPage>flexipage__default_rec_L</parentFlexiPage>
-    <sobjectType>Office_Play__c</sobjectType>
+    <sobjectType>Office_Play_config__c</sobjectType>
     <template>
         <name>flexipage:recordHomeTemplateDesktop</name>
     </template>
