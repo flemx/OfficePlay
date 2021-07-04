@@ -5,10 +5,23 @@
  *******************************************************************************************/
 public with sharing class PlayerTriggerHandler implements triggerHandler {
   public void bulkBefore() {
+    // Add Email from User__r.Email upon insert
     if (Trigger.isInsert) {
-      System.debug('Inserted new Player!');
+      List<Player__c> newPlayers = Trigger.new;
+      Map<Id, String> userEmails = new Map<Id, String>();
+      Set<Id> userIds = new Set<Id>();
+
+      for (Player__c p : newPlayers) {
+        userIds.add(p.User__c);
+      }
+      for (User u : [SELECT Id, Email FROM User WHERE Id IN :userIds]) {
+        userEmails.put(u.Id, u.Email);
+      }
+      for (Player__c p : newPlayers) {
+        p.User_Email__c = userEmails.get(p.User__c);
+      }
     } else if (Trigger.isUpdate) {
-      // Keep User_Email__c in sync after any updates
+      // Keep User_Email__c in sync from User__r.Email after any updates
       List<Player__c> newPlayers = Trigger.new;
       Map<Id, String> userEmails = new Map<Id, String>();
       Set<Id> playerIds = new Set<Id>();
