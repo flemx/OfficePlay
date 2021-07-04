@@ -6,6 +6,7 @@
 public with sharing class PlayerTriggerHandler implements triggerHandler {
   public void bulkBefore() {
     if (Trigger.isInsert) {
+      System.debug('Inserted new Player!');
     } else if (Trigger.isUpdate) {
     } else if (Trigger.isDelete) {
     } else if (Trigger.isUndelete) {

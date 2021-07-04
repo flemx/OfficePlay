@@ -6,5 +6,5 @@ trigger PlayerTrigger on Player__c(
   before insert,
   before update
 ) {
-  TriggerFactory.createHandler(Player__c.sObjectType);
+  TriggerFactory.createTriggerHandler(Player__c.sObjectType);
 }
