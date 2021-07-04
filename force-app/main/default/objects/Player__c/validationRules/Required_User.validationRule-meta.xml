@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Required_User</fullName>
+    <active>true</active>
+    <description>Checks if User if defined</description>
+    <errorConditionFormula>ISBLANK(  User__c  )</errorConditionFormula>
+    <errorMessage>User is required</errorMessage>
+</ValidationRule>
