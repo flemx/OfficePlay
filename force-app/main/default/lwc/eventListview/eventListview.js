@@ -3,9 +3,11 @@ import { LightningElement, track } from "lwc";
 export default class EventListview extends LightningElement {
   startGame = false;
 
+  testId = "a013N000002ZR2VQAW";
+
   @track data = [
     {
-      id: "a001j000007VWgkAAG",
+      id: this.testId,
       Name: "Classic Office",
       Image__c: "https://i.imgur.com/FtmSkvc.jpg"
     },

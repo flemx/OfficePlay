@@ -4,8 +4,8 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <externalId>false</externalId>
     <label>Office Play</label>
-    <referenceTo>Office_Play__c</referenceTo>
-    <relationshipLabel>Office Plays</relationshipLabel>
+    <referenceTo>Office_Play_config__c</referenceTo>
+    <relationshipLabel>Login Sessions</relationshipLabel>
     <relationshipName>Login_sessions</relationshipName>
     <required>false</required>
     <trackTrending>false</trackTrending>

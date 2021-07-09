@@ -58,11 +58,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Player__c.Email__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Player__c.User__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -72,13 +67,7 @@
         <readable>false</readable>
     </fieldPermissions>
     <layoutAssignments>
-        <layout>Office_Play__c-Office Play Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>Office_Play_config__c-Game Session Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Player_Game__c-Player Game Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Player__c-Player Layout</layout>
@@ -98,25 +87,7 @@
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
-        <object>Office_Play__c</object>
-        <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
         <object>Office_Play_config__c</object>
-        <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
-        <object>Player_Game__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
@@ -128,10 +99,6 @@
         <object>Player__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
-    <tabVisibilities>
-        <tab>Office_Play__c</tab>
-        <visibility>DefaultOff</visibility>
-    </tabVisibilities>
     <tabVisibilities>
         <tab>Office_Play_config__c</tab>
         <visibility>DefaultOff</visibility>

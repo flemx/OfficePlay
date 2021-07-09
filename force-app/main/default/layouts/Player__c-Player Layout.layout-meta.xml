@@ -69,13 +69,6 @@
         <layoutColumns />
         <style>CustomLinks</style>
     </layoutSections>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>Session_Started__c</fields>
-        <fields>Session_Ended__c</fields>
-        <fields>Office_Play__c</fields>
-        <relatedList>Login_session__c.Player__c</relatedList>
-    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>

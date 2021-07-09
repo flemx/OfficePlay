@@ -1,4 +1,4 @@
-import { LightningElement } from "lwc";
+import { LightningElement, api } from "lwc";
 import ASSETS from "@salesforce/resourceUrl/remoteOfficeAssets";
 import PubSubParent from "c/pubSubParent";
 import { EventNames } from "c/types";
@@ -26,6 +26,12 @@ export default class PhaserWrap extends LightningElement {
 
   /** @type  PubSubParent */
   commHandler;
+
+  /** @type boolean */
+  rendered;
+
+  /** @type string */
+  @api gameId;
 
   /**  @type string */
   get canvasHeight() {
@@ -65,6 +71,7 @@ export default class PhaserWrap extends LightningElement {
     this.mousedown = false;
     this.m_pos = 0;
     this.commHandler = new PubSubParent();
+    this.rendered = false;
     //console.log(new CrossCommHandler().testFun());
   }
 
@@ -72,23 +79,12 @@ export default class PhaserWrap extends LightningElement {
    *  Set all Event Listeners after elements are rendered
    */
   renderedCallback() {
-    // @ts-ignore
-    window.phaserIframeElement = this.template.querySelector("iframe");
-    // if (!this.isRendered) {
-    //   /** @type {HTMLElement} */
-    //   // @ts-ignore
-    //   let panel = this.template.querySelector(".resize");
-
-    //   panel.addEventListener(
-    //     "mousedown",
-    //     (e) => {
-    //       // Used to track position of pointer for resizing iframe
-    //       this.mousedown = true;
-    //       this.m_pos = e.y;
-    //     },
-    //     false
-    //   );
-
+    if (!this.rendered) {
+      // @ts-ignore
+      window.phaserIframeElement = this.template.querySelector("iframe");
+      this.rendered = true;
+      console.log("Id is: " + this.gameId);
+    }
     //   // CrossCommHandler will listen for message events
     //   this.commHandler.subscribe(this.testEvent, "eventTest");
 
