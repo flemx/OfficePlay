@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Character_Image__c</fullName>
+    <externalId>false</externalId>
+    <formula
+  >IMAGE(&quot;/resource/remoteOfficeAssets/assets/images/characters/&quot; + TEXT( Character__c ) + &quot;.png&quot;, &quot;p1&quot;, 96, 64)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Character Image</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -3,6 +3,7 @@
  * @Author       Damien Fleminks
  * @Description  Trigger Handler for the  Player__c object trigger, contains all trigger event methods
  *******************************************************************************************/
+
 public with sharing class PlayerTriggerHandler implements triggerHandler {
   public void bulkBefore() {
     // Add Email from User__r.Email upon insert
@@ -18,10 +19,10 @@ public with sharing class PlayerTriggerHandler implements triggerHandler {
         userEmails.put(u.Id, u.Email);
       }
       for (Player__c p : newPlayers) {
-        p.User_Email__c = userEmails.get(p.User__c);
+        p.Player_ID__c = userEmails.get(p.User__c);
       }
     } else if (Trigger.isUpdate) {
-      // Keep User_Email__c in sync from User__r.Email after any updates
+      // Keep Player_ID__c in sync from User__r.Email after any updates
       List<Player__c> newPlayers = Trigger.new;
       Map<Id, String> userEmails = new Map<Id, String>();
       Set<Id> playerIds = new Set<Id>();
@@ -29,13 +30,13 @@ public with sharing class PlayerTriggerHandler implements triggerHandler {
         playerIds.add(p.Id);
       }
       for (Player__c p : [
-        SELECT User__r.Email, User_Email__c
+        SELECT User__r.Email, Player_ID__c
         FROM Player__c
         WHERE Id IN :playerIds
       ]) {
         Player__c triggerPlayer = (Player__c) Trigger.newMap.get(p.Id);
-        if (triggerPlayer.User_Email__c != p.User__r.Email) {
-          triggerPlayer.User_Email__c = p.User__r.Email;
+        if (triggerPlayer.Player_ID__c != p.User__r.Email) {
+          triggerPlayer.Player_ID__c = p.User__r.Email;
         }
       }
     }

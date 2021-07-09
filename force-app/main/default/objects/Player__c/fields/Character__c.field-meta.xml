@@ -3,8 +3,28 @@
     <fullName>Character__c</fullName>
     <externalId>false</externalId>
     <label>Character</label>
-    <length>32768</length>
+    <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Html</type>
-    <visibleLines>25</visibleLines>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>p1</fullName>
+                <default>true</default>
+                <label>player1</label>
+            </value>
+            <value>
+                <fullName>p2</fullName>
+                <default>false</default>
+                <label>player2</label>
+            </value>
+            <value>
+                <fullName>p3</fullName>
+                <default>false</default>
+                <label>player3</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
 </CustomField>
