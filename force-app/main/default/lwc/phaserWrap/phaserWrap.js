@@ -1,7 +1,7 @@
 import { LightningElement, api } from "lwc";
 import ASSETS from "@salesforce/resourceUrl/remoteOfficeAssets";
 import PubSubParent from "c/pubSubParent";
-import { EventNames } from "c/types";
+import { EventNames, EventMessage } from "c/types";
 export default class PhaserWrap extends LightningElement {
   /** @type number */
   windowHeight;
@@ -79,47 +79,22 @@ export default class PhaserWrap extends LightningElement {
    *  Set all Event Listeners after elements are rendered
    */
   renderedCallback() {
+    // @ts-ignore
+    window.phaserIframeElement = this.template.querySelector("iframe");
     if (!this.rendered) {
-      // @ts-ignore
-      window.phaserIframeElement = this.template.querySelector("iframe");
       this.rendered = true;
-      console.log("Id is: " + this.gameId);
+      // Send the game config id to the
+      this.commHandler.subscribe(() => {
+        this.commHandler.publish(
+          // @ts-ignore
+          window.phaserIframeElement,
+          {
+            data: this.gameId,
+            eventName: EventNames.phaserWrap_gameId
+          }
+        );
+      }, EventNames.phaserWrap_gameId);
     }
-    //   // CrossCommHandler will listen for message events
-    //   this.commHandler.subscribe(this.testEvent, "eventTest");
-
-    // window.addEventListener(
-    //   "mousemove",
-    //   (e) => {
-    //     if (this.mousedown) {
-    //       // @ts-ignore
-    //       let iframe = this.template.querySelector("iframe");
-    //       this.resizeIframe(e, iframe);
-    //     }
-    //   },
-    //   false
-    // );
-
-    // window.addEventListener(
-    //   "mouseup",
-    //   () => {
-    //     this.mousedown = false;
-    //   },
-    //   false
-    // );
-
-    // // @ts-ignore
-    // let el = this.template.querySelector(".container");
-    // el.addEventListener("resize", () => {
-    //   // Event listener to resize iframe height when browser height ius adjusted
-    //   let newHeight = parseInt(
-    //     // @ts-ignore
-    //     this.template.querySelector(".container").offsetHeight
-    //   );
-    //   this.windowHeight = newHeight;
-    // });
-    // this.isRendered = true;
-    // }
   }
 
   /**

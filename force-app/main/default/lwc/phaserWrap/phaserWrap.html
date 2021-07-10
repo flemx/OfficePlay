@@ -17,25 +17,27 @@
       </lightning-button>
     </div> -->
   <div class="canvasCon slds-box" style={containerHeigh}>
-    <template if:true={devMode}>
-      <iframe
-        src={iframeUrl}
-        scrolling="no"
-        frameborder="0"
-        class="phaser"
-        style={canvasHeight}
-      >
-      </iframe>
-    </template>
-    <template if:false={devMode}>
-      <iframe
-        src={iframeUrl}
-        scrolling="no"
-        frameborder="0"
-        class="phaser"
-        style={canvasHeight}
-      >
-      </iframe>
+    <template if:true={rendered}>
+      <template if:true={devMode}>
+        <iframe
+          src={iframeUrl}
+          scrolling="no"
+          frameborder="0"
+          class="phaser"
+          style={canvasHeight}
+        >
+        </iframe>
+      </template>
+      <template if:false={devMode}>
+        <iframe
+          src={iframeUrl}
+          scrolling="no"
+          frameborder="0"
+          class="phaser"
+          style={canvasHeight}
+        >
+        </iframe>
+      </template>
     </template>
     <c-scenes-handler> </c-scenes-handler>
     <!-- <div class="resize"></div> -->

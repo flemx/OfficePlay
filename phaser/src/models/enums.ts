@@ -7,7 +7,8 @@ export enum EventName {
     startScene = 'startScene',
     startGame_playerName = 'startGame_playerName',
     gameScene_playerName = 'gameScene_playerName',
-    gameScene_botMsg = 'gameScene_botMsg'
+    gameScene_botMsg = 'gameScene_botMsg',
+    phaserWrap_gameId =  'phaserWrap_gameId' // game record ID 
 }
 
 
