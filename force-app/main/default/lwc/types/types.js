@@ -19,7 +19,8 @@ const EventNames = {
   eventTest: "eventTest", // Used for testing
   startGame_playerName: "startGame_playerName",
   startScene: "startScene", //StartGame Scene starts
-  gameScene_playerName: "gameScene_playerName",
+  titleScene_playerDetail: "titleScene_playerDetail", // Details of player
+  gameScene_playerName: "gameScene_playerName", // send playername
   gameScene_botMsg: "gameScene_botMsg", // chat message from bot
   phaserWrap_gameId: "phaserWrap_gameId" // game record ID
 };

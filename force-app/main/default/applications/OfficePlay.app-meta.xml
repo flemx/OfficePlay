@@ -39,5 +39,6 @@
         <profile>Admin</profile>
     </profileActionOverrides>
     <tabs>Start_OfficePlay</tabs>
+    <tabs>Office_Play_config__c</tabs>
     <uiType>Lightning</uiType>
 </CustomApplication>

@@ -1,4 +1,4 @@
-import { LightningElement } from "lwc";
+import { LightningElement, api } from "lwc";
 import PubSubParent from "c/pubSubParent";
 import { EventNames } from "c/types";
 
@@ -24,6 +24,9 @@ export default class ScenesHandler extends LightningElement {
   /** @type boolean*/
   isRendered;
 
+  /** @type string */
+  @api gameId;
+
   /** @type scenesEnabled */
   get enabledScenes() {
     let scenes = this.formatScenes();
@@ -37,6 +40,7 @@ export default class ScenesHandler extends LightningElement {
     this.isRendered = false;
     // Define object to restrict scenes to use
     this.scenes = {
+      TitleScene: "TitleScene",
       NewGame: "NewGame",
       GameScene: "GameScene",
       None: "None"

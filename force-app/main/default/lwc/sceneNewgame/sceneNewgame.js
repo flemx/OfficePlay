@@ -3,8 +3,8 @@ import PubSubParent from "c/pubSubParent";
 import { EventNames } from "c/types";
 
 export default class SceneNewgame extends LightningElement {
-  /** @type HTMLElement */
-  iframeElement;
+  // /** @type HTMLElement */
+  // iframeElement;
 
   /** @type boolean */
   isRendered;
@@ -14,7 +14,7 @@ export default class SceneNewgame extends LightningElement {
 
   constructor() {
     super();
-    this.iframeElement = document.createElement("iframe");
+    // this.iframeElement = document.createElement("iframe");
     this.isRendered = false;
     this.commHandler = new PubSubParent();
   }

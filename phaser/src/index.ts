@@ -45,13 +45,15 @@ const phaserConfig = {
   roundPixels: true, // Fix blurry lines between tiles
 };
 
+
+
 const game = new Phaser.Game(phaserConfig);
 
-// event listener to resize canvas wghen parent iframe resizes
-window.addEventListener("resize", () => {
-    game.scale.resize(window.innerWidth/ZOOM_LEVEL, window.innerHeight/ZOOM_LEVEL);
-  },false
-);
+// // event listener to resize canvas wghen parent iframe resizes
+// window.addEventListener("resize", () => {
+//     game.scale.resize(window.innerWidth/ZOOM_LEVEL, window.innerHeight/ZOOM_LEVEL);
+//   },false
+// );
 
 
 // class Game extends Phaser.Game {
