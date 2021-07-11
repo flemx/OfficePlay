@@ -3,7 +3,7 @@ import { LightningElement, track } from "lwc";
 export default class EventListview extends LightningElement {
   startGame = false;
 
-  testId = "a013N000002ZR2VQAW";
+  testId = "a019E00000BnD6KQAV";
 
   @track data = [
     {

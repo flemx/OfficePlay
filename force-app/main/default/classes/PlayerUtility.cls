@@ -9,19 +9,25 @@ public with sharing class PlayerUtility {
    * Return player details if exists
    */
   @AuraEnabled(cacheable=true)
-  public static Player getPlayer() {
+  public static Player__c getPlayer(String gameId) {
     String userId = UserInfo.getUserId();
     Player__c player = new Player__c();
     Player playerReturn = new Player(false);
     try {
-      player = [SELECT Id, Name FROM Player__c WHERE User__c = :userId];
+      player = [
+        SELECT Id, Name
+        FROM Player__c
+        WHERE User__c = :userId AND Office_Play_Config__c = :gameId
+      ];
       playerReturn.playerExist = true;
       playerReturn.player = player;
     } catch (QueryException e) {
       System.debug('NO PLAYER FOUND');
-      return playerReturn;
+      //return playerReturn;
+      return null;
     }
-    return playerReturn;
+    // return playerReturn;
+    return player;
   }
 
   /**
@@ -41,7 +47,9 @@ public with sharing class PlayerUtility {
       User__c = userId
     );
     insert player;
-    return new Player(playerExist = true, player = player);
+    Player newPlayer = new Player(true);
+    newPlayer.player = player;
+    return newPlayer;
   }
 
   /**

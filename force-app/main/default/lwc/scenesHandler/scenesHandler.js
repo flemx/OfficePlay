@@ -30,7 +30,7 @@ export default class ScenesHandler extends LightningElement {
   /** @type scenesEnabled */
   get enabledScenes() {
     let scenes = this.formatScenes();
-    console.log("scenes:", scenes);
+    // console.log("scenes:", scenes);
     return scenes;
   }
 
@@ -75,7 +75,7 @@ export default class ScenesHandler extends LightningElement {
     for (let scene in this.scenes) {
       scenes[scene] = scene === this.enabledScene;
     }
-    console.log(scenes);
+    //console.log(scenes);
     return scenes;
   }
 }

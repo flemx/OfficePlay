@@ -67,7 +67,7 @@ export default class PhaserWrap extends LightningElement {
     this.scale = 0.8; // set scale of canvas relative to banner
     this.windowHeight = 650;
     this.bannerHeightNumber = 0;
-    this.devMode = true;
+    this.devMode = false;
     this.mousedown = false;
     this.m_pos = 0;
     this.commHandler = new PubSubParent();
@@ -75,16 +75,16 @@ export default class PhaserWrap extends LightningElement {
     //console.log(new CrossCommHandler().testFun());
 
     // Send the game config details to phaser when receiving the event
-    this.commHandler.subscribe(() => {
-      this.commHandler.publish(
-        // @ts-ignore
-        window.phaserIframeElement,
-        {
-          data: this.gameId,
-          eventName: EventNames.phaserWrap_gameId
-        }
-      );
-    }, EventNames.phaserWrap_gameId);
+    // this.commHandler.subscribe(() => {
+    //   this.commHandler.publish(
+    //     // @ts-ignore
+    //     window.phaserIframeElement,
+    //     {
+    //       data: this.gameId,
+    //       eventName: EventNames.phaserWrap_gameId
+    //     }
+    //   );
+    // }, EventNames.phaserWrap_gameId);
   }
 
   /**

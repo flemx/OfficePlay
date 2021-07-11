@@ -54,6 +54,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   public create(): void {
+    console.log('Load Game Scene');
     this.createPlayer();
     this.createNPC();
     this.createCat();

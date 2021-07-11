@@ -19,7 +19,6 @@ export default class NewGameScene extends Phaser.Scene {
 
 
   constructor() {
-    console.log('Load NewGame Scene');
     super('NewGame');
     this.playerName = undefined; 
     this.chosenCharacter = spritesDef.players.p1.idle;
@@ -31,6 +30,7 @@ export default class NewGameScene extends Phaser.Scene {
   }
 
   public create(): void {
+    console.log('Load NewGame Scene');
     this.createButtons();
     this.createCharacters();
     this.publishScene();
