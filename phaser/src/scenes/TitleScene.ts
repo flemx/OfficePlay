@@ -1,8 +1,9 @@
 import * as Phaser from 'phaser';
 import UiButton from '../objects/UiButton';
-import {imageDef} from '../models/data'
+import {imageDef, spritesDef} from '../models/data'
 import PubSubChild from '../utils/PubSubChild';
 import {EventName, scenes} from '../models/enums';
+import { CharSprite } from '../models/types';
 
 /**
  * TitleScene
@@ -11,21 +12,26 @@ import {EventName, scenes} from '../models/enums';
 
 export default class TitleScene extends Phaser.Scene {
   private commHandler: PubSubChild;
-
+  private playerSprite: CharSprite;
+  private playerName: string | undefined;
 
   constructor() {
     super('Title');
     this.commHandler = new PubSubChild();
-
-    this.commHandler.subscribe((e: MessageEvent)=>{
-      //this.testEvent
-      console.log('TitleScene received titleScene_playerDetail event', e);
-    }, EventName.titleScene_playerDetail);
+    this.playerSprite = spritesDef.players.p1;
+    this.playerName = undefined;
+    console.log('TitleScene subscribes to', EventName.titleScene_playerDetail);
+    this.commHandler.subscribe(this.existingPlayer.bind(this), EventName.titleScene_playerDetail);
 
   }
 
-  testEvent(e: MessageEvent){
-    console.log('ID Received from LWC: '+ e);
+  private existingPlayer(e: any): void{
+    console.log('Player Received from LWC: ',  e);
+    console.log('Player Received from LWC: ',  e.Character__c);
+    e.Character__c === 'p2' ? this.playerSprite = spritesDef.players.p2 : null ;
+    e.Character__c === 'p3' ? this.playerSprite = spritesDef.players.p3 : null ;
+    this.playerName = e.Name;
+    this.createContinueButton();
   }
 
   public create(): void {
@@ -75,18 +81,38 @@ export default class TitleScene extends Phaser.Scene {
       'button1',
       'button2',
       'Start new game',
-      this.startScene.bind(this, 'NewGame'),
+      this.startNewGame.bind(this, 'NewGame'),
     );
   }
 
-  private createContinueButton():void{
-    // >>>> add code
+  private createContinueButton(): void{
+    const titleImage = this.add.image(
+      this.scale.width / 2,
+      this.scale.height / 2.5,
+      imageDef.branding.title_logo
+    );
+
+
+    titleImage.setScale(1);
+
+    const continueGameButton = new UiButton(
+      this,
+      this.scale.width / 2,
+      this.scale.height * 0.80,
+      'button1',
+      'button2',
+      'Continue Game',
+      this.continueGame.bind(this, 'Game'),
+    );
   }
 
 
 
-
-  private startScene( targetScene: string): void {
+  private startNewGame( targetScene: string): void {
     this.scene.start(targetScene);
+  }
+
+  private continueGame( targetScene: string): void {
+    this.scene.start(targetScene, {name: this.playerName, playerSprite: JSON.stringify(this.playerSprite)});
   }
 }

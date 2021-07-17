@@ -8,14 +8,14 @@ public with sharing class PlayerUtility {
   /**
    * Return player details if exists
    */
-  @AuraEnabled(cacheable=true)
+  @AuraEnabled(cacheable=false)
   public static Player__c getPlayer(String gameId) {
     String userId = UserInfo.getUserId();
     Player__c player = new Player__c();
     Player playerReturn = new Player(false);
     try {
       player = [
-        SELECT Id, Name
+        SELECT Id, Name, Character__c
         FROM Player__c
         WHERE User__c = :userId AND Office_Play_Config__c = :gameId
       ];

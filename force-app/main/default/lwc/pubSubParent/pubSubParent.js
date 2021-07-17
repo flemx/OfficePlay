@@ -23,6 +23,7 @@ export default class PubSubParent {
    * @return {void}
    */
   subscribe(callback, eventName) {
+    //console.log('PubSubParent subscribing to: ',eventName);
     if (!this.callbacks[eventName]) {
       this.callbacks[eventName] = new Set();
     }
@@ -68,6 +69,7 @@ export default class PubSubParent {
    * @return {void}
    */
   publish(ifameElement, message) {
+    //console.log('PubSubParent publishing to: ', message.eventName);
     if (ifameElement) {
       // @ts-ignore
       ifameElement.contentWindow.postMessage(message, "*");

@@ -91,10 +91,10 @@ export default class PhaserWrap extends LightningElement {
    *  Set all Event Listeners after elements are rendered
    */
   renderedCallback() {
+    // @ts-ignore
+    window.phaserIframeElement = this.template.querySelector("iframe");
     if (!this.rendered) {
       this.rendered = true;
-      // @ts-ignore
-      window.phaserIframeElement = this.template.querySelector("iframe");
     }
   }
 

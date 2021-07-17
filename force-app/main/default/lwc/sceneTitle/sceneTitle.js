@@ -11,7 +11,7 @@ export default class SceneTitle extends LightningElement {
   gameIdVal;
 
   @api set gameId(val) {
-    console.log(val);
+    console.log("Setting gameID: " + val);
     this.gameIdVal = val;
     this.commHandler.subscribe(() => {
       this.getPlayer(val);
@@ -29,12 +29,23 @@ export default class SceneTitle extends LightningElement {
     this.isRendered = false;
   }
 
+  testEvent() {
+    this.commHandler.publish(
+      // @ts-ignore
+      window.phaserIframeElement,
+      {
+        data: "YOHOEEE!",
+        eventName: EventNames.titleScene_playerDetail
+      }
+    );
+  }
+
   /**
    *  Get player from DB and publish the player data to phaser
    * @param {*} gameId
    */
   getPlayer(gameId) {
-    console.log("execute getPlayer");
+    console.log("execute getPlayer with gameId: " + gameId);
     findPlayer({ gameId: gameId })
       .then((result) => {
         console.log("getPlayer() result from lwc:", result);

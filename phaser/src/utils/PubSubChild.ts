@@ -23,6 +23,7 @@ export default class PubSubChild {
    * @param eventName 
    */
   public subscribe(callback: Function, nameEvent: EventName): void{
+    //console.log('PubSubChild subscribing to: ',EventName[nameEvent]);
     const eventName: string = EventName[nameEvent];
     if (!this.callbacks[eventName]) {
       this.callbacks[eventName] = new Set();
@@ -34,6 +35,7 @@ export default class PubSubChild {
    * Send messages to the parent Lightning Web Component
    */
   public publish(message: EventMessage): void{     
+    //console.log('PubSubChild publishing to: ', message.eventName);
     window.parent.postMessage( message, '*' );
   }
   
