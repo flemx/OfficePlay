@@ -70,7 +70,8 @@ export type MapConfig = {
  * Used by PubSub Class to publish EventMessage data
  */
 export type EventMessage =  {
-    data: {}, eventName : EventName
+    data: {}, 
+    eventName : EventName
 }
 
 /**

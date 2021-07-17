@@ -34,7 +34,7 @@ public with sharing class PlayerUtility {
    * Create new player
    */
   @AuraEnabled(cacheable=true)
-  public static Player createPlayer(
+  public static Player__c createPlayer(
     String Name,
     String character,
     String gameId
@@ -47,9 +47,9 @@ public with sharing class PlayerUtility {
       User__c = userId
     );
     insert player;
-    Player newPlayer = new Player(true);
-    newPlayer.player = player;
-    return newPlayer;
+    // Player newPlayer = new Player(true);
+    // newPlayer.player = player;
+    return player;
   }
 
   /**

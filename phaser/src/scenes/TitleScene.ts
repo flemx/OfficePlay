@@ -47,6 +47,7 @@ export default class TitleScene extends Phaser.Scene {
   }
 
   private publishScene(): void{
+  console.log('Publish Title Scene start');
     this.commHandler.publish({
       data: scenes.TitleScene,
       eventName : EventName.startScene

@@ -36,7 +36,7 @@ export default class PubSubParent {
    */
   callbackHandler() {
     window.addEventListener("message", (e) => {
-      if (this.callbacks[e.data.eventName]) {
+      if (this.callbacks[e.data.eventName] && e.data.isChild) {
         this.callbacks[e.data.eventName].forEach((callback) => {
           try {
             callback(e.data.data);
@@ -72,7 +72,10 @@ export default class PubSubParent {
     //console.log('PubSubParent publishing to: ', message.eventName);
     if (ifameElement) {
       // @ts-ignore
-      ifameElement.contentWindow.postMessage(message, "*");
+      ifameElement.contentWindow.postMessage(
+        { ...message, ...{ isChild: false } },
+        "*"
+      );
     }
   }
 
@@ -83,7 +86,7 @@ export default class PubSubParent {
    * @return {void}
    */
   publishInternal(message) {
-    console.log("message: ", message);
+    console.log("message: ", { ...message, ...{ isChild: true } });
     /// @ts-ignore
     window.postMessage(message);
   }

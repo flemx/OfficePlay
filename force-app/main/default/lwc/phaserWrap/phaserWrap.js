@@ -67,7 +67,7 @@ export default class PhaserWrap extends LightningElement {
     this.scale = 0.8; // set scale of canvas relative to banner
     this.windowHeight = 650;
     this.bannerHeightNumber = 0;
-    this.devMode = false;
+    this.devMode = false; // USE TO TOGGLE IFRAME TO LOCALHOST FOR LOCALSERVER TESTING
     this.mousedown = false;
     this.m_pos = 0;
     this.commHandler = new PubSubParent();

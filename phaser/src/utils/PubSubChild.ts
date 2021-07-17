@@ -36,7 +36,8 @@ export default class PubSubChild {
    */
   public publish(message: EventMessage): void{     
     //console.log('PubSubChild publishing to: ', message.eventName);
-    window.parent.postMessage( message, '*' );
+    let object = {...message, ...{isChild: true}};
+    window.parent.postMessage( object, '*' );
   }
   
   /**
@@ -44,7 +45,7 @@ export default class PubSubChild {
    */
   private callbackHandler(): void{
     window.addEventListener("message", (e)=>{
-      if(this.callbacks[e.data.eventName]){
+      if(this.callbacks[e.data.eventName] && !e.data.isChild){
         this.callbacks[e.data.eventName].forEach(callback => {
           try {
             callback(e.data.data);
