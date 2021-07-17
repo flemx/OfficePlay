@@ -33,20 +33,23 @@ public with sharing class PlayerUtility {
   /**
    * Create new player
    */
-  @AuraEnabled(cacheable=true)
+  @AuraEnabled(cacheable=false)
   public static Player__c createPlayer(
     String Name,
     String character,
     String gameId
   ) {
     String userId = UserInfo.getUserId();
+    User user = [SELECT Email FROM User WHERE Id = :userId];
     Player__c player = new Player__c(
       Name = name,
       Character__c = character,
       Office_Play_Config__c = gameId,
-      User__c = userId
+      User__c = userId,
+      Player_ID__c = user.Email
     );
-    insert player;
+
+    upsert player Player_ID__c;
     // Player newPlayer = new Player(true);
     // newPlayer.player = player;
     return player;
