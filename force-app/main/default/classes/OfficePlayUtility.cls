@@ -5,6 +5,16 @@
  *******************************************************************************************/
 
 public with sharing class OfficePlayUtility {
-  public OfficePlayUtility() {
+  /**
+   * Return the Office Play Games list
+   */
+  @AuraEnabled(cacheable=true)
+  public static List<Office_Play_config__c> getGames() {
+    List<Office_Play_config__c> games = [
+      SELECT Id, Name, map_image__c
+      FROM Office_Play_config__c
+    ];
+    System.debug(games);
+    return games;
   }
 }

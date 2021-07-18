@@ -8,7 +8,7 @@ public with sharing class PlayerUtility {
   /**
    * Return player details or null if no player exists
    */
-  @AuraEnabled(cacheable=false)
+  @AuraEnabled(cacheable=true)
   public static Player__c getPlayer(String gameId) {
     String userId = UserInfo.getUserId();
     Player__c player = new Player__c();
