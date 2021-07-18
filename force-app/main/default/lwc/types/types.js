@@ -18,6 +18,7 @@ let eventName;
 const EventNames = {
   eventTest: "eventTest", // Used for testing
   startGame_playerName: "startGame_playerName",
+  startGame_createPlayer: "startGame_createPlayer", // Upsert Player__c
   startScene: "startScene", //StartGame Scene starts
   titleScene_playerDetail: "titleScene_playerDetail", // Details of player
   gameScene_playerName: "gameScene_playerName", // send playername

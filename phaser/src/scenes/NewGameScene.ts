@@ -15,6 +15,7 @@ export default class NewGameScene extends Phaser.Scene {
     private commHandler: PubSubChild;
     private playerName: string | undefined;
     private chosenCharacter: string;
+    private charType: string;
     private characters!: Record<string, NPC>;
 
 
@@ -22,11 +23,13 @@ export default class NewGameScene extends Phaser.Scene {
     super('NewGame');
     this.playerName = undefined; 
     this.chosenCharacter = spritesDef.players.p1.idle;
+    this.charType = 'p1';
     this.commHandler = new PubSubChild();
     this.characters = {};
     this.commHandler.subscribe((name: string)=>{
         this.playerName = name;
     }, EventName.startGame_playerName);
+    this.commHandler.subscribe(this.startScene.bind(this), EventName.startGame_createPlayer);
   }
 
   public create(): void {
@@ -56,7 +59,7 @@ export default class NewGameScene extends Phaser.Scene {
         },
       );
       titleText.setOrigin(0.5);
-        // console.log(titleText);
+      // console.log(titleText);
       const startGameButton = new UiButton(
         this,
         this.scale.width / 2,
@@ -64,7 +67,7 @@ export default class NewGameScene extends Phaser.Scene {
         'button1',
         'button2',
         'Submit',
-        this.startScene.bind(this, 'Game'),
+        this.createPlayer.bind(this),
       );
   }
 
@@ -80,17 +83,27 @@ export default class NewGameScene extends Phaser.Scene {
   // Create characters player can select
   this.characters[spritesDef.players.p1.idle] = new NPC((this as Phaser.Scene), this.scale.width / 3, this.scale.height * 0.42, spritesDef.players.p1, 6, ()=> {
     this.selectChar(spritesDef.players.p1.idle);
+    this.charType = 'p1';
   });
   this.characters[spritesDef.players.p2.idle] = new NPC((this as Phaser.Scene), this.scale.width / 2, this.scale.height * 0.42, spritesDef.players.p2, 5, ()=> {
     this.selectChar(spritesDef.players.p2.idle);
+    this.charType = 'p2';
   });
   this.characters[spritesDef.players.p3.idle] = new NPC((this as Phaser.Scene), this.scale.width / 1.5, this.scale.height * 0.42, spritesDef.players.p3, 7, ()=> {
     this.selectChar(spritesDef.players.p3.idle);
+    this.charType = 'p3';
   });
   
   // Select First Characted by default
   this.characters[spritesDef.players.p1.idle].setHoverEffect(true);
 
+  }
+
+  createPlayer(){
+    this.commHandler.publish({
+      data: {name: this.playerName, character: this.charType},
+      eventName : EventName.startGame_createPlayer
+    });
   }
   
 
@@ -103,7 +116,7 @@ export default class NewGameScene extends Phaser.Scene {
   }
 
 
-  private startScene( targetScene: string): void {
-    this.scene.start(targetScene, {name: this.playerName, playerSprite: JSON.stringify(this.characters[this.chosenCharacter].getCharSpite())});
+  private startScene(): void {
+    this.scene.start('Game', {name: this.playerName, playerSprite: JSON.stringify(this.characters[this.chosenCharacter].getCharSpite())});
   }
 }

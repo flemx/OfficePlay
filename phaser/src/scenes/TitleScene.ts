@@ -20,14 +20,12 @@ export default class TitleScene extends Phaser.Scene {
     this.commHandler = new PubSubChild();
     this.playerSprite = spritesDef.players.p1;
     this.playerName = undefined;
-    console.log('TitleScene subscribes to', EventName.titleScene_playerDetail);
+    // console.log('TitleScene subscribes to', EventName.titleScene_playerDetail);
     this.commHandler.subscribe(this.existingPlayer.bind(this), EventName.titleScene_playerDetail);
 
   }
 
   private existingPlayer(e: any): void{
-    console.log('Player Received from LWC: ',  e);
-    console.log('Player Received from LWC: ',  e.Character__c);
     e.Character__c === 'p2' ? this.playerSprite = spritesDef.players.p2 : null ;
     e.Character__c === 'p3' ? this.playerSprite = spritesDef.players.p3 : null ;
     this.playerName = e.Name;

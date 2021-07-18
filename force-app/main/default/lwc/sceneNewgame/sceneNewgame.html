@@ -1,4 +1,12 @@
 <template>
+  <template if:true={isLoading}>
+    <lightning-spinner
+      alternative-text="Loading"
+      size="large"
+      class="spinner"
+    ></lightning-spinner>
+  </template>
+
   <lightning-input
     class="avatar-name"
     type="text"

@@ -6,7 +6,9 @@
 
 public with sharing class PlayerTriggerHandler implements triggerHandler {
   public void bulkBefore() {
-    // Add Email from User__r.Email upon insert
+    /**
+     * Add Email from User__r.Email upon insert
+     */
     if (Trigger.isInsert) {
       List<Player__c> newPlayers = Trigger.new;
       Map<Id, String> userEmails = new Map<Id, String>();

@@ -1,6 +1,6 @@
 .avatar-name {
   position: absolute;
-  z-index: 9999;
+  z-index: 8888;
   top: 60%;
   left: 50%;
   transform: translate(-50%, -50%);

@@ -10,6 +10,11 @@ export default class SceneTitle extends LightningElement {
   /** @type any */
   gameIdVal;
 
+  /** #@type string */
+  get gameId() {
+    return this.gameIdVal;
+  }
+
   @api set gameId(val) {
     console.log("Setting gameID: " + val);
     this.gameIdVal = val;
@@ -18,26 +23,10 @@ export default class SceneTitle extends LightningElement {
     }, EventNames.titleScene_playerDetail);
   }
 
-  /** #@type string */
-  get gameId() {
-    return this.gameIdVal;
-  }
-
   constructor() {
     super();
     this.commHandler = new PubSubParent();
     this.isRendered = false;
-  }
-
-  testEvent() {
-    this.commHandler.publish(
-      // @ts-ignore
-      window.phaserIframeElement,
-      {
-        data: "YOHOEEE!",
-        eventName: EventNames.titleScene_playerDetail
-      }
-    );
   }
 
   /**
@@ -45,12 +34,9 @@ export default class SceneTitle extends LightningElement {
    * @param {*} gameId
    */
   getPlayer(gameId) {
-    console.log("execute getPlayer with gameId: " + gameId);
     findPlayer({ gameId: gameId })
       .then((result) => {
-        console.log("getPlayer() result from lwc:", result);
         if (result) {
-          console.log("publish titleScene_playerDetail");
           this.commHandler.publish(
             // @ts-ignore
             window.phaserIframeElement,
@@ -64,14 +50,5 @@ export default class SceneTitle extends LightningElement {
       .catch((error) => {
         console.log("ERROR executing findPlayer: ", error);
       });
-
-    // this.commHandler.publish(
-    //     // @ts-ignore
-    //     window.phaserIframeElement,
-    //     {
-    //       data: this.gameId,
-    //       eventName: EventNames.titleScene_playerDetail
-    //     }
-    //   );
   }
 }

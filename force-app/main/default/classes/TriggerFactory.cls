@@ -1,15 +1,17 @@
 /*******************************************************************************************
  * @Name         TriggerFactory
  * @Author       Damien Fleminks
- * @Description  Using Trigger Factory design pattern to manage all trigger handlers
+ * @Description  Using Trigger Factory design pattern to execute appropriate trigger handler
  *******************************************************************************************/
 public with sharing class TriggerFactory {
   public virtual class TriggerHandlerException extends Exception {
   }
 
+  /**
+   * Find the correct trigger handler class and execute
+   */
   public static void createTriggerHandler(Schema.sObjectType soType) {
     TriggerHandler triggerHandler = getTriggerHandler(soType);
-
     if (triggerHandler == null) {
       throw new TriggerHandlerException(
         'Trigger handler invalid for type: ' + soType
@@ -18,6 +20,9 @@ public with sharing class TriggerFactory {
     execute(triggerHandler);
   }
 
+  /**
+   *  Ececute choosen Trigger Handler Class
+   */
   private static void execute(TriggerHandler triggerHandler) {
     if (Trigger.isBefore) {
       triggerHandler.bulkBefore();
