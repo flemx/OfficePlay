@@ -7,18 +7,15 @@ export default class EventTile extends NavigationMixin(LightningElement) {
   @api image; //The Rich Text content to display as image
   @track recordPageUrl;
 
-  //Callback fires when component is added to DOM
+  /**
+   * Bubble up Start_OfficePlay record ID and start the game session
+   */
   onClick() {
-    // console.log(this.recordId);
-    // // Generate a URL to the record page
-    // this[NavigationMixin.Navigate]({
-    //   type: "standard__recordPage",
-    //   attributes: {
-    //     recordId: this.recordId,
-    //     objectApiName: "Office_Play_config__c",
-    //     actionName: "view"
-    //   }
-    // });
+    // @ts-ignore
+    this.dispatchEvent(
+      // Default values for bubbles and composed are false.
+      new CustomEvent("startgamesession", { detail: this.recordId })
+    );
   }
 
   get sessionpic() {

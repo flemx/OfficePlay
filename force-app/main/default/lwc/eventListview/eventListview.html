@@ -5,10 +5,10 @@
       title="Back"
       icon-name="utility:chevronleft"
       icon-position="left"
-      onclick={toggleGame}
+      onclick={stopGame}
       style="margin-left: 15px"
     ></lightning-button>
-    <c-phaser-wrap game-id={testId}> </c-phaser-wrap>
+    <c-phaser-wrap game-id={activeGameId}> </c-phaser-wrap>
   </template>
 
   <template if:false={startGame}>
@@ -31,25 +31,23 @@
       >
         <lightning-accordion-section name="A" label="Active">
           <lightning-layout multiple-rows="true" class="upcomginCon">
-            <lightning-layout multiple-rows="true" class="upcomginCon">
-              <template for:each={data} for:item="f">
-                <lightning-layout-item
-                  size="12"
-                  small-device-size="6"
-                  medium-device-size="4"
-                  large-device-size="3"
-                  class="slds-p-bottom_large slds-p-left_small slds-p-right_small"
-                  key={f.id}
-                >
-                  <c-event-tile
-                    record-id={f.id}
-                    name={f.Name}
-                    image={f.Image__c}
-                    onclick={toggleGame}
-                  ></c-event-tile>
-                </lightning-layout-item>
-              </template>
-            </lightning-layout>
+            <template for:each={data} for:item="f">
+              <lightning-layout-item
+                size="12"
+                small-device-size="6"
+                medium-device-size="4"
+                large-device-size="3"
+                class="slds-p-bottom_large"
+                key={f.id}
+              >
+                <c-event-tile
+                  record-id={f.id}
+                  name={f.Name}
+                  image={f.Image__c}
+                  onstartgamesession={startGameSession}
+                ></c-event-tile>
+              </lightning-layout-item>
+            </template>
           </lightning-layout>
         </lightning-accordion-section>
 

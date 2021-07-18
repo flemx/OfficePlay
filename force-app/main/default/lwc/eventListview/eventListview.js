@@ -3,12 +3,13 @@ import { LightningElement, track } from "lwc";
 export default class EventListview extends LightningElement {
   startGame = false;
 
-  testId = "a019E00000BnD6KQAV";
+  /** @type string */
+  activeGameId;
 
   @track data = [
     {
-      id: this.testId,
-      Name: "Classic Office",
+      id: "a013N000002bbeXQAQ",
+      Name: "Classic Office2",
       Image__c: "https://i.imgur.com/FtmSkvc.jpg"
     },
     {
@@ -20,14 +21,27 @@ export default class EventListview extends LightningElement {
       id: "3",
       Name: "Farm Office",
       Image__c: "https://i.imgur.com/q3wwUF2.jpg"
+    },
+    {
+      id: "4",
+      Name: "Farm Office",
+      Image__c: "https://i.imgur.com/q3wwUF2.jpg"
     }
   ];
 
   activeSections = "A";
   activeSectionsMessage = "";
 
-  toggleGame() {
-    this.startGame = !this.startGame;
+  startGameSession(e) {
+    console.log("Starting game:", e);
+
+    this.activeGameId = e.detail;
+    console.log("this.activeGameId: ", this.activeGameId);
+    this.startGame = true;
+  }
+
+  stopGame() {
+    this.startGame = false;
   }
 
   handleSectionToggle(event) {
