@@ -1,9 +1,15 @@
 import { LightningElement, track } from "lwc";
+import PubSubParent from "c/pubSubParent";
+import { eventName, EventNames } from "c/types";
 
 export default class EventListview extends LightningElement {
-  startGame = false;
+  /** @type  PubSubParent */
+  commHandler;
 
-  /** @type string */
+  /** @type boolean */
+  startGame;
+
+  /** @type string | null */
   activeGameId;
 
   @track data = [
@@ -13,7 +19,7 @@ export default class EventListview extends LightningElement {
       Image__c: "https://i.imgur.com/FtmSkvc.jpg"
     },
     {
-      id: "2",
+      id: "a013N000002bbhbQAA",
       Name: "Beach Office",
       Image__c: "https://i.imgur.com/HGOR06S.png"
     },
@@ -32,6 +38,13 @@ export default class EventListview extends LightningElement {
   activeSections = "A";
   activeSectionsMessage = "";
 
+  constructor() {
+    super();
+    this.commHandler = new PubSubParent();
+    this.startGame = false;
+    this.activeGameId = null;
+  }
+
   startGameSession(e) {
     console.log("Starting game:", e);
 
@@ -41,9 +54,19 @@ export default class EventListview extends LightningElement {
   }
 
   stopGame() {
+    location.reload();
+  }
+
+  unsubscribeAll() {
+    this.commHandler.unsubscribeAll();
+    console.log("Check calbacks from lwc: ", this.commHandler);
     this.startGame = false;
   }
 
+  /**
+   *
+   * @param {*} event
+   */
   handleSectionToggle(event) {
     const openSections = event.detail.openSections;
 

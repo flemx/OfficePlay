@@ -22,7 +22,6 @@ export default class TitleScene extends Phaser.Scene {
     this.playerName = undefined;
     // console.log('TitleScene subscribes to', EventName.titleScene_playerDetail);
     this.commHandler.subscribe(this.existingPlayer.bind(this), EventName.titleScene_playerDetail);
-
   }
 
   private existingPlayer(e: any): void{
@@ -31,6 +30,7 @@ export default class TitleScene extends Phaser.Scene {
     this.playerName = e.Name;
     this.createContinueButton();
   }
+
 
   public create(): void {
     console.log('Load TitleScene');

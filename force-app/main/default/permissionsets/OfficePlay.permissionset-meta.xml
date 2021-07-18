@@ -31,22 +31,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Office_Play_config__c.Allow_Guest_Players__c</field>
+        <field>Office_Play_config__c.Map__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Office_Play_config__c.Image__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Office_Play_config__c.Office_Map__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Office_Play_config__c.Player_Limit__c</field>
+        <editable>false</editable>
+        <field>Office_Play_config__c.map_image__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

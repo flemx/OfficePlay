@@ -11,30 +11,36 @@ export default class SceneTitle extends LightningElement {
   gameIdVal;
 
   /** #@type string */
-  get gameId() {
-    return this.gameIdVal;
-  }
+  @api gameId;
+  // get gameId() {
+  //   return this.gameIdVal;
+  // }
 
-  @api set gameId(val) {
-    console.log("Setting gameID: " + val);
-    this.gameIdVal = val;
-    this.commHandler.subscribe(() => {
-      this.getPlayer(val);
-    }, EventNames.titleScene_playerDetail);
-  }
+  // @api set gameId(val) {
+  //   console.log('this.playerRetrieved = ', this.playerRetrieved);
+  //   if(!this.playerRetrieved){
+  //     console.log("Setting gameID: " + val);
+  //     this.gameIdVal = val;
+
+  //   }
+  // }
 
   constructor() {
     super();
     this.commHandler = new PubSubParent();
     this.isRendered = false;
+    this.commHandler.subscribe(
+      this.getPlayer.bind(this),
+      EventNames.titleScene_playerDetail
+    );
   }
 
   /**
    *  Get player from DB and publish the player data to phaser
-   * @param {*} gameId
    */
-  getPlayer(gameId) {
-    findPlayer({ gameId: gameId })
+  getPlayer() {
+    console.log("execute getPlayer with gameId:" + this.gameId);
+    findPlayer({ gameId: this.gameId })
       .then((result) => {
         if (result) {
           this.commHandler.publish(

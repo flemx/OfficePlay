@@ -23,7 +23,8 @@ const EventNames = {
   titleScene_playerDetail: "titleScene_playerDetail", // Details of player
   gameScene_playerName: "gameScene_playerName", // send playername
   gameScene_botMsg: "gameScene_botMsg", // chat message from bot
-  phaserWrap_gameId: "phaserWrap_gameId" // game record ID
+  phaserWrap_gameId: "phaserWrap_gameId", // game record ID
+  unsubscribe_all: "unsubscribe_all" // unsubscibe all event callbacks in phaser
 };
 Object.freeze(EventNames);
 

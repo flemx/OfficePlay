@@ -10,7 +10,8 @@ export enum EventName {
     startGame_createPlayer = 'startGame_createPlayer', // Create or update player in New game scene
     gameScene_playerName = 'gameScene_playerName',  // Retrieve playername for Game Scene UI
     gameScene_botMsg = 'gameScene_botMsg',  // Trigger NPC chat in Game Scene
-    phaserWrap_gameId =  'phaserWrap_gameId' // game record ID 
+    phaserWrap_gameId =  'phaserWrap_gameId', // game record ID 
+    unsubscribe_all = 'unsubscribe_all' // Stop game, unsubscibe all events
 }
 
 
