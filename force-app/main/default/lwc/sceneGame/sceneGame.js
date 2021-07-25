@@ -51,26 +51,6 @@ export default class SceneGame extends LightningElement {
 
   @api gameId;
 
-  // // @ts-ignore
-  // @api get gameId() {
-  //   return this.gameIdVal;
-  // }
-
-  // set gameId(val) {
-  //   this.gameIdVal = val;
-  //   subscribe(this.channelName, -1, this.playerEventCallback).then(
-  //     (response) => {
-  //       // Response contains the subscription information on subscribe call
-  //       console.log(
-  //         "Subscription request sent to: ",
-  //         JSON.stringify(response.channel)
-  //       );
-  //       this.subscription = response;
-  //       console.log("this.subscription:", this.subscription);
-  //     }
-  //   );
-  // }
-
   constructor() {
     super();
     this.channelName = "/event/office_player__e";
@@ -87,18 +67,21 @@ export default class SceneGame extends LightningElement {
 
   playerEventCallback(response) {
     let player = JSON.stringify(response.data.payload);
-    console.log("Event received: ", JSON.parse(player));
-    console.log("Event office_id__c: ", JSON.parse(player).office_id__c);
-    console.log("gameId: ", this.playerRecord.Office_Play_Config__c);
-    // if(JSON.parse(player).office_id__c === this.gameId){
-    //   console.log("Event received: ", JSON.parse(player));
-    // }
+    // console.log("Event received: ", JSON.parse(player));
+    // console.log("Event office_id__c: ", JSON.parse(player).office_id__c);
+    // console.log("gameId: ", this.playerRecord.Office_Play_Config__c);
+    if (
+      JSON.parse(player).office_id__c ===
+      this.playerRecord.Office_Play_Config__c
+    ) {
+      console.log("Event received: ", JSON.parse(player));
+    }
 
     //console.log('New platform event received: ', response);
   }
 
   subscribePlayer() {
-    subscribe(this.channelName, -1, this.playerEventCallback).then(
+    subscribe(this.channelName, -1, this.playerEventCallback.bind(this)).then(
       (response) => {
         // Response contains the subscription information on subscribe call
         console.log(
