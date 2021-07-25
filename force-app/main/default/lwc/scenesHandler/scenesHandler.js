@@ -25,7 +25,7 @@ export default class ScenesHandler extends LightningElement {
   /** @type boolean*/
   isRendered;
 
-  /** @type Object */
+  /** @type any */
   playerRecord;
 
   // @ts-ignore
@@ -52,7 +52,7 @@ export default class ScenesHandler extends LightningElement {
     Object.freeze(this.scenes);
     // Enable the first scene to render
     this.enabledScene = this.scenes.None;
-    this.playerRecord = {};
+    this.playerRecord = null;
 
     // will display the scene component based on the scene the event send through
     this.commHandler.subscribe((/** @type string **/ scene) => {

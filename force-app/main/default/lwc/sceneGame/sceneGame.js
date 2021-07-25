@@ -2,13 +2,7 @@ import { LightningElement, api } from "lwc";
 import PubSubParent from "c/pubSubParent";
 import { EventNames } from "c/types";
 import uId from "@salesforce/user/Id";
-import {
-  subscribe,
-  unsubscribe,
-  onError,
-  setDebugFlag,
-  isEmpEnabled
-} from "lightning/empApi";
+import { subscribe } from "lightning/empApi";
 import pubPlayer from "@salesforce/apex/PlayerEvent.publishPlayer";
 export default class SceneGame extends LightningElement {
   /** @type string */
@@ -37,27 +31,45 @@ export default class SceneGame extends LightningElement {
   subscription;
 
   /** @type any */
-  @api playerRecord;
+  player;
 
-  // @ts-ignore
-  get gameId() {
-    return this.gameIdVal;
+  playerPublished = false;
+
+  /** @type any */
+  @api get playerRecord() {
+    return this.player;
   }
 
-  @api set gameId(val) {
-    this.gameIdVal = val;
-    subscribe(this.channelName, -1, this.playerEventCallback).then(
-      (response) => {
-        // Response contains the subscription information on subscribe call
-        console.log(
-          "Subscription request sent to: ",
-          JSON.stringify(response.channel)
-        );
-        this.subscription = response;
-        console.log("this.subscription:", this.subscription);
-      }
-    );
+  set playerRecord(val) {
+    if (val.Id && !this.playerPublished) {
+      this.playerPublished = true;
+      this.player = val;
+      this.subscribePlayer();
+      this.publishPlayer(val.Id, false, "", val.Office_Play_Config__c);
+    }
   }
+
+  @api gameId;
+
+  // // @ts-ignore
+  // @api get gameId() {
+  //   return this.gameIdVal;
+  // }
+
+  // set gameId(val) {
+  //   this.gameIdVal = val;
+  //   subscribe(this.channelName, -1, this.playerEventCallback).then(
+  //     (response) => {
+  //       // Response contains the subscription information on subscribe call
+  //       console.log(
+  //         "Subscription request sent to: ",
+  //         JSON.stringify(response.channel)
+  //       );
+  //       this.subscription = response;
+  //       console.log("this.subscription:", this.subscription);
+  //     }
+  //   );
+  // }
 
   constructor() {
     super();
@@ -76,16 +88,43 @@ export default class SceneGame extends LightningElement {
   playerEventCallback(response) {
     let player = JSON.stringify(response.data.payload);
     console.log("Event received: ", JSON.parse(player));
+    console.log("Event office_id__c: ", JSON.parse(player).office_id__c);
+    console.log("gameId: ", this.playerRecord.Office_Play_Config__c);
+    // if(JSON.parse(player).office_id__c === this.gameId){
+    //   console.log("Event received: ", JSON.parse(player));
+    // }
+
     //console.log('New platform event received: ', response);
   }
 
-  testEvent() {
+  subscribePlayer() {
+    subscribe(this.channelName, -1, this.playerEventCallback).then(
+      (response) => {
+        // Response contains the subscription information on subscribe call
+        console.log(
+          "Subscription request sent to: ",
+          JSON.stringify(response.channel)
+        );
+        this.subscription = response;
+        console.log("this.subscription:", this.subscription);
+      }
+    );
+  }
+
+  /**
+   *
+   * @param {string} playerId
+   * @param {boolean} isMove
+   * @param {string} coord
+   * @param {string} gameId
+   */
+  publishPlayer(playerId, isMove, coord, gameId) {
     let player = {
       sobjectType: "office_player__e",
-      moveSignal__c: false,
-      move_coord__c: "",
-      office_id__c: this.gameId,
-      playerId__c: this.playerRecord.Id
+      moveSignal__c: isMove,
+      move_coord__c: coord,
+      office_id__c: gameId,
+      playerId__c: playerId
     };
 
     pubPlayer({ playerEvent: player })
