@@ -29,9 +29,9 @@ export default class SceneNewgame extends LightningElement {
     this.commHandler = new PubSubParent();
     this.gameId = null;
     this.isLoading = false;
-    this.commHandler.subscribe((/** @type {player} */ player) => {
-      this.createPlayer(player);
-    }, EventNames.startGame_createPlayer);
+    // this.commHandler.subscribe((/** @type {player} */ player) => {
+    //   this.createPlayer(player);
+    // }, EventNames.startGame_createPlayer);
   }
 
   renderedCallback() {
@@ -57,6 +57,12 @@ export default class SceneNewgame extends LightningElement {
       .then((result) => {
         // console.log("createPlayer() result from lwc:", result);
         if (result) {
+          // this.commHandler.publishInternal(
+          //   {
+          //     data: result,
+          //     eventName: EventNames.startGame_createPlayer
+          //   }
+          // );
           this.commHandler.publish(
             // @ts-ignore
             window.phaserIframeElement,

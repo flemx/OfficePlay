@@ -34,16 +34,30 @@ public with sharing class PlayerUtility {
     String character,
     String gameId
   ) {
+    Player__c player = PlayerUtility.getPlayer(gameId);
     String userId = UserInfo.getUserId();
-    User user = [SELECT Email FROM User WHERE Id = :userId];
-    Player__c player = new Player__c(
-      Name = name,
-      Character__c = character,
-      Office_Play_Config__c = gameId,
-      User__c = userId,
-      Player_ID__c = user.Email
-    );
-    upsert player Player_ID__c;
+    if (player == null) {
+      player = new Player__c(
+        Name = name,
+        Character__c = character,
+        Office_Play_Config__c = gameId,
+        User__c = userId
+      );
+      insert player;
+    } else {
+      player.Character__c = character;
+      player.Name = name;
+      update player;
+    }
+
+    // //User user = [SELECT Email FROM User WHERE Id = :userId];
+    // Player__c player = new Player__c(
+    //   Name = name,
+    //   Character__c = character,
+    //   Office_Play_Config__c = gameId,
+    //   User__c = userId
+    // );
+    // upsert player Player_ID__c;
     return player;
   }
 }

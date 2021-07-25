@@ -21,6 +21,7 @@ public with sharing class PlayerTriggerHandler implements triggerHandler {
         userEmails.put(u.Id, u.Email);
       }
       for (Player__c p : newPlayers) {
+        System.debug('Add EMAIL: ' + userEmails.get(p.User__c));
         p.Player_ID__c = userEmails.get(p.User__c);
       }
     } else if (Trigger.isUpdate) {
