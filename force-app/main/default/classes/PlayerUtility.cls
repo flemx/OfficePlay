@@ -14,7 +14,7 @@ public with sharing class PlayerUtility {
     Player__c player = new Player__c();
     try {
       player = [
-        SELECT Id, Name, Character__c
+        SELECT Id, Name, Character__c, Office_Play_Config__c
         FROM Player__c
         WHERE User__c = :userId AND Office_Play_Config__c = :gameId
       ];

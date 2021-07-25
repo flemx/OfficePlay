@@ -26,6 +26,8 @@ export default class GameScene extends Phaser.Scene {
   private commHandler: PubSubChild;
   private playerName: string;
   private playerSprite: CharSprite;
+  private playerId: string;
+  private officeId: string;
   private cat!: Cat;
   private coffee!: Coffee;
 
@@ -40,6 +42,8 @@ export default class GameScene extends Phaser.Scene {
     this.commHandler.subscribe(this.testEvent, EventName.eventTest);
     this.playerName = 'Player';
     this.playerSprite = spritesDef.players.p1;
+    this.playerId = '';
+    this.officeId = '';
   }
 
   testEvent(e: MessageEvent){
@@ -51,6 +55,8 @@ export default class GameScene extends Phaser.Scene {
     let sprite = JSON.parse(data.playerSprite);
     this.playerName = data.name;
     this.playerSprite = sprite;
+    this.playerId = data.playerId;
+    this.officeId = data.officeId;
   }
 
   public create(): void {
@@ -96,7 +102,7 @@ export default class GameScene extends Phaser.Scene {
   private createPlayer(): void {
     // Spawn player at location 216,216
     // this.player = new Player(this,216,216,"atlas", "misa-front");
-    this.player = new Player(this, 216, 216, this.playerSprite);
+    this.player = new Player(this, 216, 216, this.playerSprite, this.playerId, this.playerName, this.officeId);
   }
 
   private createInput(): void {

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>map_image__c</fullName>
+    <fullName>Selected_Map__c</fullName>
     <externalId>false</externalId>
-    <formula
-  >IF(  TEXT( Map__c ) = &apos;classic&apos;  , &apos;/resource/remoteOfficeAssets/assets/images/ui/gameTile_classic.jpg&apos; , &apos;/resource/remoteOfficeAssets/assets/images/ui/gameTile_classic.jpg&apos; )</formula>
+    <formula>IMAGE( map_image__c ,&apos;Map Image&apos; , 190, 230)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-    <label>map image url</label>
+    <label>Selected Map</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Text</type>

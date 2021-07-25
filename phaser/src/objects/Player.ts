@@ -13,12 +13,18 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   private _nextCoord: Coordinate | undefined; // Keep track of next coord to move to
   private _body: Phaser.Physics.Arcade.Body;
   private spriteKey: {idle : string, walk : string};
+  private playerId: string;
+  private playerName: string;
+  private officeId: string;
 
   constructor(
       scene: Phaser.Scene, // the scene this container will be added to
       x: number,  // the start x position of the player
       y: number,  // the start y position of the player
-      key: {idle : string, walk : string}  // player spritesheet
+      key: {idle : string, walk : string},  // player spritesheet
+      playerId: string,  // Record Id of Player record
+      playerName: string,  // Username of player
+      officeId: string  // Record Id of Office_Play_Config__cs
     ){
     super(scene, x, y, key.idle);
     // Enable physics
@@ -31,6 +37,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this._nextCoord = {x:x,y:y};
     this._body = this.body as Phaser.Physics.Arcade.Body;
     this.spriteKey = key;
+    this.playerId = playerId;
+    this.playerName = playerName;
+    this.officeId = officeId;
     // Setup all player animations
     this.setPlayerAnims();
     // Scale our player
@@ -43,6 +52,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.scene.cameras.main.startFollow(this);
     // Make sure player is visible by putting layer on top
     this.setDepth(5);
+    console.log(`New player online, Name: ${this.playerName}, ID: ${this.playerId}, OfficeId: ${this.officeId}`);
   }
 
   /**

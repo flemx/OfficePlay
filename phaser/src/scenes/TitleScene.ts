@@ -14,20 +14,27 @@ export default class TitleScene extends Phaser.Scene {
   private commHandler: PubSubChild;
   private playerSprite: CharSprite;
   private playerName: string | undefined;
+  private playerId: string;
+  private officeId: string;
 
   constructor() {
     super('Title');
     this.commHandler = new PubSubChild();
     this.playerSprite = spritesDef.players.p1;
     this.playerName = undefined;
+    this.playerId = '';
+    this.officeId = '';
     // console.log('TitleScene subscribes to', EventName.titleScene_playerDetail);
     this.commHandler.subscribe(this.existingPlayer.bind(this), EventName.titleScene_playerDetail);
   }
 
   private existingPlayer(e: any): void{
+    console.log('existingPlayer: ', e);
     e.Character__c === 'p2' ? this.playerSprite = spritesDef.players.p2 : null ;
     e.Character__c === 'p3' ? this.playerSprite = spritesDef.players.p3 : null ;
     this.playerName = e.Name;
+    this.playerId = e.Id;
+    this.officeId = e.Office_Play_Config__c;
     this.createContinueButton();
   }
 
@@ -112,6 +119,11 @@ export default class TitleScene extends Phaser.Scene {
   }
 
   private continueGame( targetScene: string): void {
-    this.scene.start(targetScene, {name: this.playerName, playerSprite: JSON.stringify(this.playerSprite)});
+    this.scene.start(targetScene, {
+      name: this.playerName, 
+      playerSprite: JSON.stringify(this.playerSprite),
+      playerId : this.playerId,
+      officeId : this.officeId
+    });
   }
 }

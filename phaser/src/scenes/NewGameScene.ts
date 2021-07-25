@@ -116,7 +116,13 @@ export default class NewGameScene extends Phaser.Scene {
   }
 
 
-  private startScene(): void {
-    this.scene.start('Game', {name: this.playerName, playerSprite: JSON.stringify(this.characters[this.chosenCharacter].getCharSpite())});
+  private startScene(e: any): void {
+    // console.log('startScene newgame, player data:', e);
+    this.scene.start('Game', {
+      name: this.playerName, 
+      playerSprite: JSON.stringify(this.characters[this.chosenCharacter].getCharSpite()),
+      playerId: e.Id,
+      officeId: e.Office_Play_Config__c
+    });
   }
 }
