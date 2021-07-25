@@ -31,6 +31,8 @@ export default class GameScene extends Phaser.Scene {
   private cat!: Cat;
   private coffee!: Coffee;
 
+  private players: Array<Player>;
+
   constructor() {
     super('Game');
     this.lockMovement = false;
@@ -44,6 +46,10 @@ export default class GameScene extends Phaser.Scene {
     this.playerSprite = spritesDef.players.p1;
     this.playerId = '';
     this.officeId = '';
+    this.players = new Array<Player>();
+
+    // Subsribe to player ping 
+    this.commHandler.subscribe(this.updatePlayerStatus.bind(this), EventName.gameScene_playerPing);
   }
 
   testEvent(e: MessageEvent){
@@ -197,4 +203,36 @@ export default class GameScene extends Phaser.Scene {
     // create map
     this.gamemap = new GameMap(this, mapDef.office1.name, mapDef.office1.config);
   }
+
+
+  private updatePlayerStatus(playerDetail: {playerId: string, sprite: string, name: string, office: string}){
+    //playerId: string, sprite: string, name: string, office: string)
+    let newPlayer = true;
+    for(let player of this.players){
+      if(player.Id === playerDetail.playerId){
+          console.log('Update player ping time...');
+          newPlayer = false;
+      }
+    }
+    if(newPlayer){
+      let charsprite: CharSprite = spritesDef.players.p1;
+      playerDetail.sprite === 'p2' ? charsprite = spritesDef.players.p2 : null;
+      playerDetail.sprite === 'p3' ? charsprite = spritesDef.players.p3 : null;
+      let addPlayer =  new Player(this, 216, 216, charsprite, playerDetail.playerId, playerDetail.name, playerDetail.office);
+    }
+  } 
+
+
+  /**
+   * Recursive function to check if all players are online every 5 seconds
+   */
+  private checkPlayers(): void{
+    //players
+    setTimeout( ()=> {
+      console.log('Checking players...', this.players);
+      this.checkPlayers();
+    }, 5000);
+  }
+
+
 }
