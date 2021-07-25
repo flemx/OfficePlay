@@ -29,7 +29,6 @@ export default class TitleScene extends Phaser.Scene {
   }
 
   private existingPlayer(e: any): void{
-    console.log('existingPlayer: ', e);
     e.Character__c === 'p2' ? this.playerSprite = spritesDef.players.p2 : null ;
     e.Character__c === 'p3' ? this.playerSprite = spritesDef.players.p3 : null ;
     this.playerName = e.Name;

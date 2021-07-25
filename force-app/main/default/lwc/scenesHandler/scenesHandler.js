@@ -1,6 +1,7 @@
 import { LightningElement, api } from "lwc";
 import PubSubParent from "c/pubSubParent";
 import { EventNames } from "c/types";
+import findPlayer from "@salesforce/apex/PlayerUtility.getPlayer";
 
 /**
  * SceneHandler
@@ -24,7 +25,10 @@ export default class ScenesHandler extends LightningElement {
   /** @type boolean*/
   isRendered;
 
-  /** @type string */
+  /** @type Object */
+  playerRecord;
+
+  // @ts-ignore
   @api gameId;
 
   /** @type scenesEnabled */
@@ -48,13 +52,44 @@ export default class ScenesHandler extends LightningElement {
     Object.freeze(this.scenes);
     // Enable the first scene to render
     this.enabledScene = this.scenes.None;
+    this.playerRecord = {};
 
+    // will display the scene component based on the scene the event send through
     this.commHandler.subscribe((/** @type string **/ scene) => {
       console.log("EVENT RECEIVED", scene);
       this.enabledScene = scene;
     }, EventNames.startScene);
+
+    // subscribe and retrieve player data on event
+    this.commHandler.subscribe(
+      this.getPlayer.bind(this),
+      EventNames.titleScene_playerDetail
+    );
   }
 
+  /**
+   *  Get player from DB and publish the player data to phaser
+   */
+  getPlayer() {
+    console.log("execute getPlayer with gameId:" + this.gameId);
+    findPlayer({ gameId: this.gameId })
+      .then((result) => {
+        if (result) {
+          this.playerRecord = result;
+          this.commHandler.publish(
+            // @ts-ignore
+            window.phaserIframeElement,
+            {
+              data: result,
+              eventName: EventNames.titleScene_playerDetail
+            }
+          );
+        }
+      })
+      .catch((error) => {
+        console.log("ERROR executing findPlayer: ", error);
+      });
+  }
   // renderedCallback(){
   //   if(!this.isRendered){
   //     this.commHandler.subscribe((/** @type string **/ scene)=>{

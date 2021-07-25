@@ -2,5 +2,10 @@
   "orgName": "dfleminks company",
   "edition": "Enterprise",
   "features": [],
-  "settings": {}
+  "settings": {
+    "orgPreferenceSettings": {
+      "enableS1EncryptedStoragePref2": false,
+      "enableS1DesktopEnabled": true
+    }
+  }
 }
