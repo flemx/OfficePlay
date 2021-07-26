@@ -4,7 +4,7 @@ import NPC from '../objects/NPC';
 import Player from '../objects/Player';
 import GameMap from '../objects/GameMap';
 import PubSubChild from '../utils/PubSubChild';
-import { Coordinate, EventMessage, CharSprite } from '../models/types';
+import { Coordinate, EventMessage, CharSprite, playerEvent } from '../models/types';
 import {EventName, scenes} from '../models/enums';
 import {spritesDef, mapDef} from '../models/data'
 import Cat from '../objects/Cat';
@@ -108,7 +108,7 @@ export default class GameScene extends Phaser.Scene {
   private createPlayer(): void {
     // Spawn player at location 216,216
     // this.player = new Player(this,216,216,"atlas", "misa-front");
-    this.player = new Player(this, 216, 216, this.playerSprite, this.playerId, this.playerName, this.officeId);
+    this.player = new Player(this, 216, 216, this.playerSprite, this.playerId, this.playerName, this.officeId, true);
   }
 
   private createInput(): void {
@@ -205,20 +205,24 @@ export default class GameScene extends Phaser.Scene {
   }
 
 
-  private updatePlayerStatus(playerDetail: {playerId: string, sprite: string, name: string, office: string}){
+  private updatePlayerStatus(playerDetail: playerEvent){
     //playerId: string, sprite: string, name: string, office: string)
+    console.log('Phaser Game received new event:', playerDetail);
     let newPlayer = true;
     for(let player of this.players){
-      if(player.Id === playerDetail.playerId){
+      if(player.Id === playerDetail.playerId__c){
           console.log('Update player ping time...');
           newPlayer = false;
       }
     }
     if(newPlayer){
       let charsprite: CharSprite = spritesDef.players.p1;
-      playerDetail.sprite === 'p2' ? charsprite = spritesDef.players.p2 : null;
-      playerDetail.sprite === 'p3' ? charsprite = spritesDef.players.p3 : null;
-      let addPlayer =  new Player(this, 216, 216, charsprite, playerDetail.playerId, playerDetail.name, playerDetail.office);
+      playerDetail.character__c === 'p2' ? charsprite = spritesDef.players.p2 : null;
+      playerDetail.character__c === 'p3' ? charsprite = spritesDef.players.p3 : null;
+      let addPlayer =  new Player(this, 216, 216, charsprite, playerDetail.playerId__c, playerDetail.username__c, playerDetail.office_id__c, false);
+      addPlayer.setTexture(charsprite.idle);
+      this.players.push(addPlayer);
+      console.log('All other player: ', this.players);
     }
   } 
 

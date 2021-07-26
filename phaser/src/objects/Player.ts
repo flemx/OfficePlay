@@ -1,5 +1,5 @@
 import * as Phaser from 'phaser';
-import { Coordinate } from '../models/types';
+import { Coordinate, CharSprite} from '../models/types';
 /**
  * Player
  * @ Damien Fleminks
@@ -25,10 +25,11 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       scene: Phaser.Scene, // the scene this container will be added to
       x: number,  // the start x position of the player
       y: number,  // the start y position of the player
-      key: {idle : string, walk : string},  // player spritesheet
+      key: CharSprite,  // player spritesheet
       playerId: string,  // Record Id of Player record
       playerName: string,  // Username of player
-      officeId: string  // Record Id of Office_Play_Config__cs
+      officeId: string,  // Record Id of Office_Play_Config__cs
+      currentUser: boolean
     ){
     super(scene, x, y, key.idle);
     // Enable physics
@@ -52,11 +53,17 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.setCollideWorldBounds(true);
     // Add the player to our existing scene
     this.scene.add.existing(this);
-    // have the camera follow the player
-    this.scene.cameras.main.startFollow(this);
+    if(currentUser){
+      // have the camera follow the player if it is current users player
+      this.scene.cameras.main.startFollow(this);
+    }
+    
     // Make sure player is visible by putting layer on top
     this.setDepth(5);
-    console.log(`New player online, Name: ${this.playerName}, ID: ${this.playerId}, OfficeId: ${this.officeId}`);
+    console.log('Sprite; ', key);
+    console.log('Sprite texture; ', this.texture.key);
+    //this.setTexture(key.idle);
+    console.log(`New player online, Name: ${this.playerName}, ID: ${this.playerId}, OfficeId: ${this.officeId}, sprite: ${key.idle}`);
   }
 
   /**

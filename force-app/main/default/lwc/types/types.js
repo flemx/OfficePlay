@@ -23,6 +23,7 @@ const EventNames = {
   titleScene_playerDetail: "titleScene_playerDetail", // Details of player
   gameScene_playerName: "gameScene_playerName", // send playername
   gameScene_botMsg: "gameScene_botMsg", // chat message from bot
+  gameScene_playerPing: "gameScene_playerPing", // Ping player status to other players
   phaserWrap_gameId: "phaserWrap_gameId", // game record ID
   unsubscribe_all: "unsubscribe_all" // unsubscibe all event callbacks in phaser
 };

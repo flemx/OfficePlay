@@ -4,6 +4,26 @@ import { EventNames } from "c/types";
 import uId from "@salesforce/user/Id";
 import { subscribe } from "lightning/empApi";
 import pubPlayer from "@salesforce/apex/PlayerEvent.publishPlayer";
+
+/**
+ *  @typedef {{
+ *      sobjectType: string,
+ *      moveSignal__c: boolean,
+ *      move_coord__c: string,
+ *      office_id__c: string,
+ *      playerId__c: string,
+ *      character__c: string,
+ *      username__c: string}
+ * } playerEvent
+ *
+ *  @typedef {{
+ *      Id: string,
+ *      Name: string,
+ *      Office_Play_Config__c: string,
+ *      User__c: string,
+ *      Character__c: string }
+ * } playerRecord
+ */
 export default class SceneGame extends LightningElement {
   /** @type string */
   channelName;
@@ -30,22 +50,33 @@ export default class SceneGame extends LightningElement {
   /** @type Object */
   subscription;
 
-  /** @type any */
+  /** @type playerRecord */
+  // @ts-ignore
   player;
 
   playerPublished = false;
 
-  /** @type any */
   @api get playerRecord() {
     return this.player;
   }
 
   set playerRecord(val) {
     if (val.Id && !this.playerPublished) {
+      console.log("Player Record is: ", JSON.parse(JSON.stringify(val)));
       this.playerPublished = true;
       this.player = val;
       this.subscribePlayer();
-      this.publishPlayer(val.Id, false, "", val.Office_Play_Config__c);
+      /** @type playerEvent */
+      let event = {
+        sobjectType: "office_player__e",
+        moveSignal__c: false,
+        move_coord__c: "",
+        office_id__c: val.Office_Play_Config__c,
+        playerId__c: val.Id,
+        character__c: val.Character__c,
+        username__c: val.Name
+      };
+      this.publishPlayer(event);
     }
   }
 
@@ -59,22 +90,32 @@ export default class SceneGame extends LightningElement {
     this.playerName = "Player";
     this.userId = uId;
     this.subscription = {};
-    this.playerRecord = {};
+
     this.commHandler.subscribe((/** @type string **/ name) => {
       this.playerName = name;
     }, EventNames.gameScene_playerName);
   }
 
+  /**
+   *
+   * @param {*} response
+   */
   playerEventCallback(response) {
-    let player = JSON.stringify(response.data.payload);
-    // console.log("Event received: ", JSON.parse(player));
-    // console.log("Event office_id__c: ", JSON.parse(player).office_id__c);
-    // console.log("gameId: ", this.playerRecord.Office_Play_Config__c);
+    /** @type playerEvent */
+    let player = response.data.payload;
     if (
-      JSON.parse(player).office_id__c ===
-      this.playerRecord.Office_Play_Config__c
+      player.office_id__c === this.playerRecord.Office_Play_Config__c &&
+      player.playerId__c !== this.playerRecord.Id
     ) {
-      console.log("Event received: ", JSON.parse(player));
+      console.log("Event received: ", JSON.parse(JSON.stringify(player)));
+      this.commHandler.publish(
+        // @ts-ignore
+        window.phaserIframeElement,
+        {
+          data: player,
+          eventName: EventNames.gameScene_playerPing
+        }
+      );
     }
 
     //console.log('New platform event received: ', response);
@@ -89,31 +130,23 @@ export default class SceneGame extends LightningElement {
           JSON.stringify(response.channel)
         );
         this.subscription = response;
-        console.log("this.subscription:", this.subscription);
+        console.log(
+          "this.subscription:",
+          JSON.parse(JSON.stringify(this.subscription))
+        );
       }
     );
   }
 
   /**
    *
-   * @param {string} playerId
-   * @param {boolean} isMove
-   * @param {string} coord
-   * @param {string} gameId
+   * @param {playerEvent} event
    */
-  publishPlayer(playerId, isMove, coord, gameId) {
-    let player = {
-      sobjectType: "office_player__e",
-      moveSignal__c: isMove,
-      move_coord__c: coord,
-      office_id__c: gameId,
-      playerId__c: playerId
-    };
-
-    pubPlayer({ playerEvent: player })
+  publishPlayer(event) {
+    pubPlayer({ playerEvent: event })
       .then((result) => {
         if (result) {
-          console.log("Published player: ", player);
+          console.log("Published player: ", event);
         }
       })
       .catch((error) => {

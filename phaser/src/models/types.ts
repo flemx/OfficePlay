@@ -78,3 +78,17 @@ export type EventMessage =  {
  *  Usde to genrate player sprite animations
  */
 export type CharSprite = {idle : string, walk : string}
+
+
+/**
+ *  Platform Event for office_player__e
+ */
+export type playerEvent = {
+    // sobjectType: string;
+    moveSignal__c: boolean;
+    move_coord__c: string;
+    office_id__c: string;
+    playerId__c: string;
+    character__c: string;
+    username__c: string;
+}
