@@ -100,6 +100,10 @@ export default class GameScene extends Phaser.Scene {
   public update(): void {
     // this.player.update(this.cursors,this.walkTest);
     this.player.update();
+
+    for(let player of this.players){
+      player.update();
+    }
   }
 
 
@@ -121,6 +125,7 @@ export default class GameScene extends Phaser.Scene {
       if(!this.lockMovement && this.gamemap.isValidPath({x: pointer.worldX, y: pointer.worldY})){
         const destination: Coordinate = this.gamemap.getNodeKey({x: pointer.worldX, y: pointer.worldY});
         const startPoint: Coordinate = this.gamemap.getNodeKey({x: this.player.x, y: this.player.y});
+        this.publishPlayerStatus(true,destination);
         // get optimnal path 
         const path = this.gamemap.getPath(startPoint,destination);;
         //console.log('The shortest path is: ', path);
@@ -217,6 +222,25 @@ export default class GameScene extends Phaser.Scene {
       if(this.players[i].Id === playerDetail.playerId__c){
           //console.log('Update player ping time...');
           this.players[i].sessionTime = new Date();
+          if(playerDetail.moveSignal__c){
+
+            const destination: Coordinate = JSON.parse(playerDetail.move_coord__c);
+            const startPoint: Coordinate = this.gamemap.getNodeKey({x: this.players[i].x, y: this.players[i].y});
+            // get optimnal path 
+            const path = this.gamemap.getPath(startPoint,destination);;
+
+            // // get optimnal path 
+            // const path = JSON.parse(playerDetail.move_coord__c);
+            //console.log('The shortest path is: ', path);
+            // Make sure the current path of the player is reset 
+            this.players[i].resetPath();
+            // Add the new coordinates to the players path
+            for (const coord of path) {
+              this.players[i].addCoord(this.gamemap.getPixelCoord(coord));
+            }
+            // Set the first coordinate of player to trigger the player movement
+            this.players[i].nextCoord();
+          }
           newPlayer = false;
       }
     }
@@ -225,11 +249,12 @@ export default class GameScene extends Phaser.Scene {
       playerDetail.character__c === 'p2' ? charsprite = spritesDef.players.p2 : null;
       playerDetail.character__c === 'p3' ? charsprite = spritesDef.players.p3 : null;
 
+      let startCoord = this.gamemap.getPixelCoord(JSON.parse(playerDetail.move_coord__c))
       //playerTest
 
       // Spawn NPC with idle standing animation
       //this.playerTest = new Player(this, 216, 216, charsprite, playerDetail.playerId__c, playerDetail.username__c, playerDetail.office_id__c, false);
-      let addPlayer =  new Player(this, 216, 216, charsprite, playerDetail.playerId__c, playerDetail.username__c, playerDetail.office_id__c, false);
+      let addPlayer =  new Player(this, startCoord.x, startCoord.y, charsprite, playerDetail.playerId__c, playerDetail.username__c, playerDetail.office_id__c, false);
       addPlayer.setTexture(charsprite.idle);
       this.players.push(addPlayer);
       //console.log('All other player: ', this.players);
@@ -263,7 +288,8 @@ export default class GameScene extends Phaser.Scene {
    */
   private pingSession(){ 
     setTimeout( ()=> {
-      this.publishPlayerStatus(false,{x:0,y:0});
+      const playerCoord: Coordinate = this.gamemap.getNodeKey({x: this.player.x, y: this.player.y});
+      this.publishPlayerStatus(false,playerCoord);
       this.pingSession();
     }, 2000);
   }
@@ -278,6 +304,7 @@ export default class GameScene extends Phaser.Scene {
     let event: playerEvent = {
       sobjectType: 'office_player__e',
       moveSignal__c: move,
+      // move_coord__c: JSON.stringify(coord, null, 2),
       move_coord__c: JSON.stringify(coord),
       office_id__c: this.officeId,
       playerId__c: this.playerId,

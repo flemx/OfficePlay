@@ -66,17 +66,17 @@ export default class SceneGame extends LightningElement {
       this.playerPublished = true;
       this.player = val;
       this.subscribePlayer();
-      /** @type playerEvent */
-      let event = {
-        sobjectType: "office_player__e",
-        moveSignal__c: false,
-        move_coord__c: "",
-        office_id__c: val.Office_Play_Config__c,
-        playerId__c: val.Id,
-        character__c: val.Character__c,
-        username__c: val.Name
-      };
-      this.publishPlayer(event);
+      // /** @type playerEvent */
+      // let event = {
+      //   sobjectType: "office_player__e",
+      //   moveSignal__c: false,
+      //   move_coord__c: "",
+      //   office_id__c: val.Office_Play_Config__c,
+      //   playerId__c: val.Id,
+      //   character__c: val.Character__c,
+      //   username__c: val.Name
+      // };
+      // this.publishPlayer(event);
     }
   }
 
