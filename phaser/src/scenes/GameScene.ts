@@ -31,6 +31,8 @@ export default class GameScene extends Phaser.Scene {
   private cat!: Cat;
   private coffee!: Coffee;
 
+  private playerTest!: Player;
+
   private players: Array<Player>;
 
   constructor() {
@@ -77,6 +79,7 @@ export default class GameScene extends Phaser.Scene {
     this.createInput();
     this.publishScene();
     this.publishPlayer();
+    this.checkPlayers();
   }
 
   private publishScene(): void{
@@ -219,10 +222,17 @@ export default class GameScene extends Phaser.Scene {
       let charsprite: CharSprite = spritesDef.players.p1;
       playerDetail.character__c === 'p2' ? charsprite = spritesDef.players.p2 : null;
       playerDetail.character__c === 'p3' ? charsprite = spritesDef.players.p3 : null;
+
+      //playerTest
+
+      // Spawn NPC with idle standing animation
+      //this.playerTest = new Player(this, 216, 216, charsprite, playerDetail.playerId__c, playerDetail.username__c, playerDetail.office_id__c, false);
       let addPlayer =  new Player(this, 216, 216, charsprite, playerDetail.playerId__c, playerDetail.username__c, playerDetail.office_id__c, false);
       addPlayer.setTexture(charsprite.idle);
       this.players.push(addPlayer);
       console.log('All other player: ', this.players);
+
+
     }
   } 
 
@@ -234,6 +244,14 @@ export default class GameScene extends Phaser.Scene {
     //players
     setTimeout( ()=> {
       console.log('Checking players...', this.players);
+      for(let i = 0; i < this.players.length; i++){
+        console.log(`Time difference: ${(new Date().getTime() -  this.players[i].sessionTime.getTime()) / 1000}`);
+        if(((new Date().getTime() -  this.players[i].sessionTime.getTime()) / 1000) > 4.5 ){
+            console.log(`Player ${this.players[i].Id} is inactive, logging out player..`);
+            this.players[i].destroy();
+            this.players.splice(i, 1);
+        }
+      }
       this.checkPlayers();
     }, 5000);
   }

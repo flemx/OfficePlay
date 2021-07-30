@@ -16,6 +16,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   private playerId: string;
   private playerName: string;
   private officeId: string;
+  public sessionTime: Date;
 
   get Id(){
     return this.playerId;
@@ -45,6 +46,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.playerId = playerId;
     this.playerName = playerName;
     this.officeId = officeId;
+    this.sessionTime = new Date();
     // Setup all player animations
     this.setPlayerAnims();
     // Scale our player
@@ -96,55 +98,55 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     const anims = this.scene.anims;
     // Walk animation
     anims.create({
-      key: 'player-left-walk',
+      key: this.playerId+'-left-walk',
       frames: this.scene.anims.generateFrameNumbers(this.spriteKey.walk, { start: 12, end: 17 }),
       frameRate: 6,
       repeat: -1,
     });
     anims.create({
-      key: 'player-right-walk',
+      key: this.playerId+'-right-walk',
       frames: this.scene.anims.generateFrameNumbers(this.spriteKey.walk, { start: 0, end: 5 }),
       frameRate: 10,
       repeat: -1,
     });
     anims.create({
-      key: 'player-front-walk',
+      key: this.playerId+'-front-walk',
       frames: this.scene.anims.generateFrameNumbers(this.spriteKey.walk, { start: 18, end: 23 }),
       frameRate: 10,
       repeat: -1,
     });
     anims.create({
-      key: 'player-back-walk',
+      key: this.playerId+'-back-walk',
       frames: this.scene.anims.generateFrameNumbers(this.spriteKey.walk, { start: 6, end: 12 }),
       frameRate: 10,
       repeat: -1,
     });
     // Idle animation
     anims.create({
-      key: 'player-left-idle',
+      key: this.playerId+'-left-idle',
       frames: this.scene.anims.generateFrameNumbers(this.spriteKey.idle, { start: 12, end: 17 }),
       frameRate: 8,
       repeat: -1,
     });
     anims.create({
-      key: 'player-right-idle',
+      key: this.playerId+'-right-idle',
       frames: this.scene.anims.generateFrameNumbers(this.spriteKey.idle, { start: 0, end: 5 }),
       frameRate: 8,
       repeat: -1,
     });
     anims.create({
-      key: 'player-front-idle',
+      key: this.playerId+'-front-idle',
       frames: this.scene.anims.generateFrameNumbers(this.spriteKey.idle, { start: 18, end: 23 }),
       frameRate: 8,
       repeat: -1,
     });
     anims.create({
-      key: 'player-back-idle',
+      key: this.playerId+'-back-idle',
       frames: this.scene.anims.generateFrameNumbers(this.spriteKey.idle, { start: 6, end: 11 }),
       frameRate: 8,
       repeat: -1,
     });
-    this.anims.play('player-front-idle', true);
+    this.anims.play(this.playerId+'-front-idle', true);
   }
 
   /**
@@ -216,30 +218,30 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.body.velocity.normalize().scale(this.speed);
     // Update the animation last and give left/right animations precedence over up/down animations
     if (moveState.left.isDown) {
-      this.anims.play('player-left-walk', true);
+      this.anims.play(this.playerId+'-left-walk', true);
       this.lastMove = 'left';
     } else if (moveState.right.isDown) {
-      this.anims.play('player-right-walk', true);
+      this.anims.play(this.playerId+'-right-walk', true);
       this.lastMove = 'right';
     } else if (moveState.up.isDown) {
-      this.anims.play('player-back-walk', true);
+      this.anims.play(this.playerId+'-back-walk', true);
       this.lastMove = 'back';
     } else if (moveState.down.isDown) {
-      this.anims.play('player-front-walk', true);
+      this.anims.play(this.playerId+'-front-walk', true);
       this.lastMove = 'front';
     } else {
       // this.anims.stop();
       if (this.lastMove === 'left') {
-        this.anims.play('player-left-idle', true);
+        this.anims.play(this.playerId+'-left-idle', true);
       }
       if (this.lastMove === 'right') {
-        this.anims.play('player-right-idle', true);
+        this.anims.play(this.playerId+'-right-idle', true);
       }
       if (this.lastMove === 'front') {
-        this.anims.play('player-front-idle', true);
+        this.anims.play(this.playerId+'-front-idle', true);
       }
       if (this.lastMove === 'back') {
-        this.anims.play('player-back-idle', true);
+        this.anims.play(this.playerId+'-back-idle', true);
       }
     }
   }
