@@ -62,7 +62,7 @@ export default class SceneGame extends LightningElement {
 
   set playerRecord(val) {
     if (val.Id && !this.playerPublished) {
-      console.log("Player Record is: ", JSON.parse(JSON.stringify(val)));
+      //console.log("Player Record is: ", JSON.parse(JSON.stringify(val)));
       this.playerPublished = true;
       this.player = val;
       this.subscribePlayer();
@@ -94,6 +94,11 @@ export default class SceneGame extends LightningElement {
     this.commHandler.subscribe((/** @type string **/ name) => {
       this.playerName = name;
     }, EventNames.gameScene_playerName);
+
+    this.commHandler.subscribe(
+      this.publishPlayer.bind(this),
+      EventNames.gameScene_playerPing
+    );
   }
 
   /**
@@ -107,7 +112,7 @@ export default class SceneGame extends LightningElement {
       player.office_id__c === this.playerRecord.Office_Play_Config__c &&
       player.playerId__c !== this.playerRecord.Id
     ) {
-      console.log("Event received: ", JSON.parse(JSON.stringify(player)));
+      //console.log("Event received: ", JSON.parse(JSON.stringify(player)));
       this.commHandler.publish(
         // @ts-ignore
         window.phaserIframeElement,
@@ -125,15 +130,15 @@ export default class SceneGame extends LightningElement {
     subscribe(this.channelName, -1, this.playerEventCallback.bind(this)).then(
       (response) => {
         // Response contains the subscription information on subscribe call
-        console.log(
-          "Subscription request sent to: ",
-          JSON.stringify(response.channel)
-        );
+        // console.log(
+        //   "Subscription request sent to: ",
+        //   JSON.stringify(response.channel)
+        // );
         this.subscription = response;
-        console.log(
-          "this.subscription:",
-          JSON.parse(JSON.stringify(this.subscription))
-        );
+        // console.log(
+        //   "this.subscription:",
+        //   JSON.parse(JSON.stringify(this.subscription))
+        // );
       }
     );
   }
@@ -146,7 +151,7 @@ export default class SceneGame extends LightningElement {
     pubPlayer({ playerEvent: event })
       .then((result) => {
         if (result) {
-          console.log("Published player: ", event);
+          //console.log("Published player: ", event);
         }
       })
       .catch((error) => {

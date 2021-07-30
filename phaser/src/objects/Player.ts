@@ -22,6 +22,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     return this.playerId;
   }
 
+  get Name(){
+    return this.playerName;
+  }
+
   constructor(
       scene: Phaser.Scene, // the scene this container will be added to
       x: number,  // the start x position of the player

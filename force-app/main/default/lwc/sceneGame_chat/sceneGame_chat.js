@@ -71,10 +71,12 @@ export default class SceneGame_chat extends LightningElement {
         <div class="timestamp">${time}</div>
        </div>`;
     if (this.chatCollapsed) this.toggleChat();
-    this.template
+
+    let pEl = this.template
       // @ts-ignore
-      .querySelector(".mCSB_container")
-      .appendChild(template.content);
+      .querySelector(".mCSB_container");
+
+    pEl.insertBefore(template.content, pEl.firstChild);
   }
 
   /**
@@ -86,10 +88,9 @@ export default class SceneGame_chat extends LightningElement {
     if (inputEl.value !== "") {
       let template = document.createElement("template");
       template.innerHTML = `<div class="message message-personal new"> ${inputEl.value}</div>`;
-      this.template
-        // @ts-ignore
-        .querySelector(".mCSB_container")
-        .appendChild(template.content);
+      let pEl = this.template.querySelector(".mCSB_container");
+      pEl.insertBefore(template.content, pEl.firstChild);
+
       inputEl.value = "";
     }
   }

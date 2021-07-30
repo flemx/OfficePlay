@@ -80,6 +80,7 @@ export default class GameScene extends Phaser.Scene {
     this.publishScene();
     this.publishPlayer();
     this.checkPlayers();
+    this.pingSession();
   }
 
   private publishScene(): void{
@@ -210,11 +211,12 @@ export default class GameScene extends Phaser.Scene {
 
   private updatePlayerStatus(playerDetail: playerEvent){
     //playerId: string, sprite: string, name: string, office: string)
-    console.log('Phaser Game received new event:', playerDetail);
+    //console.log('Phaser Game received new event:', playerDetail);
     let newPlayer = true;
-    for(let player of this.players){
-      if(player.Id === playerDetail.playerId__c){
-          console.log('Update player ping time...');
+    for(let i = 0; i < this.players.length; i++){
+      if(this.players[i].Id === playerDetail.playerId__c){
+          //console.log('Update player ping time...');
+          this.players[i].sessionTime = new Date();
           newPlayer = false;
       }
     }
@@ -230,7 +232,7 @@ export default class GameScene extends Phaser.Scene {
       let addPlayer =  new Player(this, 216, 216, charsprite, playerDetail.playerId__c, playerDetail.username__c, playerDetail.office_id__c, false);
       addPlayer.setTexture(charsprite.idle);
       this.players.push(addPlayer);
-      console.log('All other player: ', this.players);
+      //console.log('All other player: ', this.players);
 
 
     }
@@ -243,9 +245,9 @@ export default class GameScene extends Phaser.Scene {
   private checkPlayers(): void{
     //players
     setTimeout( ()=> {
-      console.log('Checking players...', this.players);
+      //console.log('Checking players...', this.players);
       for(let i = 0; i < this.players.length; i++){
-        console.log(`Time difference: ${(new Date().getTime() -  this.players[i].sessionTime.getTime()) / 1000}`);
+        //console.log(`Time difference: ${(new Date().getTime() -  this.players[i].sessionTime.getTime()) / 1000}`);
         if(((new Date().getTime() -  this.players[i].sessionTime.getTime()) / 1000) > 4.5 ){
             console.log(`Player ${this.players[i].Id} is inactive, logging out player..`);
             this.players[i].destroy();
@@ -253,7 +255,40 @@ export default class GameScene extends Phaser.Scene {
         }
       }
       this.checkPlayers();
-    }, 5000);
+    }, 6000);
+  }
+
+  /**
+   * Publish status every 2 seconds to keep session alive 
+   */
+  private pingSession(){ 
+    setTimeout( ()=> {
+      this.publishPlayerStatus(false,{x:0,y:0});
+      this.pingSession();
+    }, 2000);
+  }
+
+
+  private publishPlayerStatus(move: boolean, coord: Coordinate){
+
+    let charKey = 'p1';
+    spritesDef.players.p2.idle === this.playerSprite.idle? charKey = 'p2' : 'p1';
+    spritesDef.players.p3.idle === this.playerSprite.idle? charKey = 'p3' : 'p1';
+    
+    let event: playerEvent = {
+      sobjectType: 'office_player__e',
+      moveSignal__c: move,
+      move_coord__c: JSON.stringify(coord),
+      office_id__c: this.officeId,
+      playerId__c: this.playerId,
+      character__c: charKey,
+      username__c: this.playerName,
+    }
+    this.commHandler.publish({
+      data: event,
+      eventName : EventName.gameScene_playerPing
+    });
+    
   }
 
 
