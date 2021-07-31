@@ -57,6 +57,7 @@ export default class SceneGame_chat extends LightningElement {
       //console.log("Player Record is: ", JSON.parse(JSON.stringify(val)));
       this.playerPublished = true;
       this.player = val;
+      this.subscribePlayer();
     }
   }
 
@@ -91,11 +92,26 @@ export default class SceneGame_chat extends LightningElement {
         EventNames.gameScene_botMsg
       );
       this.isRendered = true;
+
+      // @ts-ignore
+      this.template
+        .querySelector(".message-input")
+        .addEventListener("keyup", (event) => {
+          if (event.keyCode === 13) {
+            this.insertMessage();
+            return false;
+          }
+        });
     }
   }
 
   subscribePlayer() {
-    subscribe(this.channelName, -1, this.botMessage.bind(this));
+    subscribe(this.channelName, -1, this.chatEventCallback.bind(this)).then(
+      (response) => {
+        // Response contains the subscription information on subscribe call
+        console.log("Subscribed to: :", JSON.parse(JSON.stringify(response)));
+      }
+    );
   }
 
   /**
@@ -140,10 +156,11 @@ export default class SceneGame_chat extends LightningElement {
       event.office_id__c === this.playerRecord.Office_Play_Config__c &&
       event.playerId__c !== this.playerRecord.Id
     ) {
+      console.log(
+        `Chat event received from player: ${event.username__c}, message: ${event.message__c}`
+      );
       this.botMessage(event);
     }
-
-    //console.log('New platform event received: ', response);
   }
 
   /**
@@ -179,7 +196,7 @@ export default class SceneGame_chat extends LightningElement {
    * @param {chatEvent} eventData
    */
   publishChatEvent(eventData) {
-    pubChat({ chatEvent: c })
+    pubChat({ chatEvent: eventData })
       .then((result) => {
         if (result) {
           console.log("Published chat message: ", eventData);

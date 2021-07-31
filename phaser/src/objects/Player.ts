@@ -66,9 +66,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     
     // Make sure player is visible by putting layer on top
     this.setDepth(5);
-    console.log('Sprite; ', key);
-    console.log('Sprite texture; ', this.texture.key);
-    //this.setTexture(key.idle);
     console.log(`New player online, Name: ${this.playerName}, ID: ${this.playerId}, OfficeId: ${this.officeId}, sprite: ${key.idle}`);
   }
 

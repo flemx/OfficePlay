@@ -87,20 +87,20 @@ export default class ScenesHandler extends LightningElement {
 
     console.log(JSON.stringify(isEmpEnabled));
 
-    // Callback invoked whenever a new event message is received
-    const messageCallback = function (response) {
-      console.log("New PE received: ", JSON.stringify(response));
-      // Response contains the payload of the new message received
-    };
+    // // Callback invoked whenever a new event message is received
+    // const messageCallback = function (response) {
+    //   console.log("New PE received: ", JSON.stringify(response));
+    //   // Response contains the payload of the new message received
+    // };
 
-    // Invoke subscribe method of empApi. Pass reference to messageCallback
-    subscribe(this.channelName, -1, messageCallback).then((response) => {
-      // Response contains the subscription information on subscribe call
-      console.log(
-        "Subscription request sent to: ",
-        JSON.stringify(response.channel)
-      );
-    });
+    // // Invoke subscribe method of empApi. Pass reference to messageCallback
+    // subscribe(this.channelName, -1, messageCallback).then((response) => {
+    //   // Response contains the subscription information on subscribe call
+    //   console.log(
+    //     "Subscription request sent to: ",
+    //     JSON.stringify(response.channel)
+    //   );
+    // });
   }
 
   /**

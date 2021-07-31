@@ -49,15 +49,6 @@ public with sharing class PlayerUtility {
       player.Name = name;
       update player;
     }
-
-    // //User user = [SELECT Email FROM User WHERE Id = :userId];
-    // Player__c player = new Player__c(
-    //   Name = name,
-    //   Character__c = character,
-    //   Office_Play_Config__c = gameId,
-    //   User__c = userId
-    // );
-    // upsert player Player_ID__c;
     return player;
   }
 }

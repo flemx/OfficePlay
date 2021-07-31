@@ -95,15 +95,13 @@ export default class SceneGame extends LightningElement {
    * @param {*} response
    */
   playerEventCallback(response) {
-    console.log("Event received: ", JSON.parse(JSON.stringify(response)));
     /** @type playerEvent */
     let player = response.data.payload;
-    console.log("Event received: ", JSON.parse(JSON.stringify(player)));
     if (
       player.office_id__c === this.playerRecord.Office_Play_Config__c &&
       player.playerId__c !== this.playerRecord.Id
     ) {
-      //console.log("Event received: ", JSON.parse(JSON.stringify(player)));
+      console.log(`Ping received from player: ${player.username__c}`);
       this.commHandler.publish(
         // @ts-ignore
         window.phaserIframeElement,
@@ -137,7 +135,7 @@ export default class SceneGame extends LightningElement {
   publishPlayer(event) {
     pubPlayer({ playerEvent: event })
       .then((result) => {
-        console.log(`Published player: ${event.username__c}`);
+        //console.log(`Published player: ${event.username__c}`);
       })
       .catch((error) => {
         console.log("ERROR executing pubPlayer: ", error);

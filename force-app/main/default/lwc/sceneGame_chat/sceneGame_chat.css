@@ -114,6 +114,7 @@
   bottom: -15px;
   font-size: 9px;
   color: rgba(255, 255, 255, 0.3);
+  width: 200px;
 }
 .messages .message::before {
   content: "";

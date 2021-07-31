@@ -1,3 +1,9 @@
+/*******************************************************************************************
+ * @Name         PlayerEvent
+ * @Author       Damien Fleminks
+ * @Description  Contanins methods to publish platform events from the player
+ *******************************************************************************************/
+
 public with sharing class PlayerEvent {
   @AuraEnabled(cacheable=false)
   public static void publishPlayer(office_player__e playerEvent) {
@@ -8,13 +14,4 @@ public with sharing class PlayerEvent {
   public static void publishChat(office_chat__e chatEvent) {
     EventBus.publish(chatEvent);
   }
-
-  // @AuraEnabled(cacheable=false)
-  // public static void publishPlayer(boolean isMove, string playerId, string gameId, string coord){
-
-  //     office_player__e playerEvent = new office_player__e(
-
-  //     );
-
-  // }
 }
