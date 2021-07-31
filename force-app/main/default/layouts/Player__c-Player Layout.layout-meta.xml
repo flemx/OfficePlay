@@ -27,10 +27,6 @@
                 <behavior>Readonly</behavior>
                 <field>Character_Image__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Player_ID__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

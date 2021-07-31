@@ -40,13 +40,6 @@ export default class SceneGame extends LightningElement {
   /** @type string */
   userId;
 
-  // // @ts-ignore
-  // @api gameId;
-
-  /** @type string */
-  // @ts-ignore
-  gameIdVal;
-
   /** @type Object */
   subscription;
 
@@ -68,8 +61,6 @@ export default class SceneGame extends LightningElement {
       this.subscribePlayer();
     }
   }
-
-  @api gameId;
 
   constructor() {
     super();
