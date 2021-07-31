@@ -4,6 +4,11 @@ public with sharing class PlayerEvent {
     EventBus.publish(playerEvent);
   }
 
+  @AuraEnabled(cacheable=false)
+  public static void publishChat(office_chat__e chatEvent) {
+    EventBus.publish(chatEvent);
+  }
+
   // @AuraEnabled(cacheable=false)
   // public static void publishPlayer(boolean isMove, string playerId, string gameId, string coord){
 

@@ -4,7 +4,7 @@ import NPC from '../objects/NPC';
 import Player from '../objects/Player';
 import GameMap from '../objects/GameMap';
 import PubSubChild from '../utils/PubSubChild';
-import { Coordinate, EventMessage, CharSprite, playerEvent } from '../models/types';
+import { Coordinate, EventMessage, CharSprite, playerEvent, chatEvent } from '../models/types';
 import {EventName, scenes} from '../models/enums';
 import {spritesDef, mapDef} from '../models/data'
 import Cat from '../objects/Cat';
@@ -145,11 +145,16 @@ export default class GameScene extends Phaser.Scene {
   }
 
   private createNPC(): void {
+    let eventData: chatEvent = {
+      sobjectType: 'office_chat__e',
+      message__c : `Welcome ${this.playerName} to OfficePlay!`,
+      office_id__c: this.officeId,
+      playerId__c: this.playerId,
+      character__c: 'npc',
+      username__c: 'Office Manager',
+    };
     const message: EventMessage = {
-      data: {
-        message:  `Welcome ${this.playerName} to OfficePlay!`,
-        img : 'npc'
-      },
+      data: eventData,
       eventName: EventName.gameScene_botMsg
   }
     // Spawn NPC with idle standing animation
@@ -162,11 +167,16 @@ export default class GameScene extends Phaser.Scene {
   }
 
   private createCat(): void {
+    let eventData: chatEvent = {
+      sobjectType: 'office_chat__e',
+      message__c : `meow meow!`,
+      office_id__c: this.officeId,
+      playerId__c: this.playerId,
+      character__c: 'cat',
+      username__c: 'Office Cat',
+    };
     const message: EventMessage = {
-      data: {
-        message:  `meow meow!`,
-        img : 'cat'
-      },
+      data: eventData,
       eventName: EventName.gameScene_botMsg
     }
     // Spawn NPC with idle standing animation

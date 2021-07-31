@@ -66,17 +66,6 @@ export default class SceneGame extends LightningElement {
       this.playerPublished = true;
       this.player = val;
       this.subscribePlayer();
-      // /** @type playerEvent */
-      // let event = {
-      //   sobjectType: "office_player__e",
-      //   moveSignal__c: false,
-      //   move_coord__c: "",
-      //   office_id__c: val.Office_Play_Config__c,
-      //   playerId__c: val.Id,
-      //   character__c: val.Character__c,
-      //   username__c: val.Name
-      // };
-      // this.publishPlayer(event);
     }
   }
 
@@ -106,8 +95,10 @@ export default class SceneGame extends LightningElement {
    * @param {*} response
    */
   playerEventCallback(response) {
+    console.log("Event received: ", JSON.parse(JSON.stringify(response)));
     /** @type playerEvent */
     let player = response.data.payload;
+    console.log("Event received: ", JSON.parse(JSON.stringify(player)));
     if (
       player.office_id__c === this.playerRecord.Office_Play_Config__c &&
       player.playerId__c !== this.playerRecord.Id
@@ -130,15 +121,11 @@ export default class SceneGame extends LightningElement {
     subscribe(this.channelName, -1, this.playerEventCallback.bind(this)).then(
       (response) => {
         // Response contains the subscription information on subscribe call
-        // console.log(
-        //   "Subscription request sent to: ",
-        //   JSON.stringify(response.channel)
-        // );
         this.subscription = response;
-        // console.log(
-        //   "this.subscription:",
-        //   JSON.parse(JSON.stringify(this.subscription))
-        // );
+        console.log(
+          "this.subscription:",
+          JSON.parse(JSON.stringify(this.subscription))
+        );
       }
     );
   }
@@ -150,9 +137,7 @@ export default class SceneGame extends LightningElement {
   publishPlayer(event) {
     pubPlayer({ playerEvent: event })
       .then((result) => {
-        if (result) {
-          //console.log("Published player: ", event);
-        }
+        console.log(`Published player: ${event.username__c}`);
       })
       .catch((error) => {
         console.log("ERROR executing pubPlayer: ", error);

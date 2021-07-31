@@ -92,3 +92,15 @@ export type playerEvent = {
     character__c: string;
     username__c: string;
 }
+
+/**
+ *  Platform Event for office_chat__e
+ */
+export type  chatEvent = {
+    sobjectType: string;
+    message__c: string;
+    office_id__c: string;
+    playerId__c: string;
+    character__c: string;
+    username__c: string;
+}

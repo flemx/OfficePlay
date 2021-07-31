@@ -1,8 +1,32 @@
-import { LightningElement } from "lwc";
+import { LightningElement, api } from "lwc";
 import PubSubParent from "c/pubSubParent";
 import { EventNames } from "c/types";
 import ASSETS from "@salesforce/resourceUrl/remoteOfficeAssets";
+import { subscribe } from "lightning/empApi";
+import pubChat from "@salesforce/apex/PlayerEvent.publishChat";
+
+/**
+ *  @typedef {{
+ *      sobjectType: string,
+ *      message__c: string,
+ *      office_id__c: string,
+ *      playerId__c: string,
+ *      character__c: string,
+ *      username__c: string}
+ * } chatEvent
+ *
+ *  @typedef {{
+ *      Id: string,
+ *      Name: string,
+ *      Office_Play_Config__c: string,
+ *      User__c: string,
+ *      Character__c: string }
+ * } playerRecord
+ */
 export default class SceneGame_chat extends LightningElement {
+  /** @type string */
+  channelName;
+
   /** @type boolean */
   chatCollapsed;
 
@@ -18,6 +42,24 @@ export default class SceneGame_chat extends LightningElement {
   /** @type Record<string, string> */
   botImages;
 
+  /** @type playerRecord */
+  // @ts-ignore
+  player;
+
+  playerPublished = false;
+
+  @api get playerRecord() {
+    return this.player;
+  }
+
+  set playerRecord(val) {
+    if (val.Id && !this.playerPublished) {
+      //console.log("Player Record is: ", JSON.parse(JSON.stringify(val)));
+      this.playerPublished = true;
+      this.player = val;
+    }
+  }
+
   /** @type string */
   get chatHeight() {
     let style = "height: 280px; bottom: -117px; left: 170px;";
@@ -27,13 +69,17 @@ export default class SceneGame_chat extends LightningElement {
 
   constructor() {
     super();
+    this.channelName = "/event/office_chat__e";
     this.chatCollapsed = true;
     this.npcChat = ASSETS + "/assets/images/characters/ui/npc-chat.png";
     this.isRendered = false;
     this.commHandler = new PubSubParent();
     this.botImages = {
       npc: ASSETS + "/assets/images/characters/ui/npc-chat.png",
-      cat: ASSETS + "/assets/images/characters/ui/cat-chat.png"
+      cat: ASSETS + "/assets/images/characters/ui/cat-chat.png",
+      p1: ASSETS + "/assets/images/characters/ui/p1.png",
+      p2: ASSETS + "/assets/images/characters/ui/p2.png",
+      p3: ASSETS + "/assets/images/characters/ui/p3.png"
     };
     Object.freeze(this.botImages);
   }
@@ -48,6 +94,10 @@ export default class SceneGame_chat extends LightningElement {
     }
   }
 
+  subscribePlayer() {
+    subscribe(this.channelName, -1, this.botMessage.bind(this));
+  }
+
   /**
    *  Toggle chat window collapse
    */
@@ -57,18 +107,18 @@ export default class SceneGame_chat extends LightningElement {
 
   /**
    * Insert message from bot
-   * @param {{message:string,img:string}} data
+   * @param {chatEvent} data
    */
   botMessage(data) {
     let today = new Date();
     let time = today.getHours() + ":" + today.getMinutes();
     let template = document.createElement("template");
-    let botImg = this.botImages[data.img];
+    let botImg = this.botImages[data.character__c];
     template.innerHTML = `
       <div class="message new">
         <figure class="avatar"><img src=${botImg} /></figure>
-            ${data.message} 
-        <div class="timestamp">${time}</div>
+            ${data.message__c} 
+        <div class="timestamp">${time} , ${data.username__c}</div>
        </div>`;
     if (this.chatCollapsed) this.toggleChat();
 
@@ -77,6 +127,23 @@ export default class SceneGame_chat extends LightningElement {
       .querySelector(".mCSB_container");
 
     pEl.insertBefore(template.content, pEl.firstChild);
+  }
+
+  /**
+   *
+   * @param {*} response
+   */
+  chatEventCallback(response) {
+    /** @type chatEvent */
+    let event = response.data.payload;
+    if (
+      event.office_id__c === this.playerRecord.Office_Play_Config__c &&
+      event.playerId__c !== this.playerRecord.Id
+    ) {
+      this.botMessage(event);
+    }
+
+    //console.log('New platform event received: ', response);
   }
 
   /**
@@ -91,18 +158,35 @@ export default class SceneGame_chat extends LightningElement {
       let pEl = this.template.querySelector(".mCSB_container");
       pEl.insertBefore(template.content, pEl.firstChild);
 
+      /** @type chatEvent */
+      let eventData = {
+        sobjectType: "office_chat__e",
+        message__c: inputEl.value,
+        office_id__c: this.playerRecord.Office_Play_Config__c,
+        playerId__c: this.playerRecord.Id,
+        character__c: this.playerRecord.Character__c,
+        username__c: this.playerRecord.Name
+      };
+
+      this.publishChatEvent(eventData);
+
       inputEl.value = "";
     }
   }
 
-  // /**
-  //  * @param {string} msg representing a single element
-  //  * @return {ChildNode | null}
-  //  */
-  //  getMessageHtml(msg) {
-  //   let template = document.createElement('template');
-  //   html = html.trim(); // Never return a text node of whitespace as the result
-  //   template.innerHTML = html;
-  //   return template.content.firstChild;
-  // }
+  /**
+   *
+   * @param {chatEvent} eventData
+   */
+  publishChatEvent(eventData) {
+    pubChat({ chatEvent: c })
+      .then((result) => {
+        if (result) {
+          console.log("Published chat message: ", eventData);
+        }
+      })
+      .catch((error) => {
+        console.log("ERROR executing publishChatEvent: ", error);
+      });
+  }
 }
