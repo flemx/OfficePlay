@@ -1,8 +1,8 @@
-# OfficePlay App
+# OfficePlay Salesforce App
 
 <img  src="github_files/OfficePlay_laptop.png" />
 
-This guide helps Salesforce developers who are new to Visual Studio Code go from zero to a deployed app using Salesforce Extensions for VS Code and Salesforce CLI.
+OfficePlay offers a virtual office experience for employees working from home who can meet up in the virtual world and walk around, talk and collaborate with each other. The solution is build completely on the Salesforce platform with Lightning Web Components.
 
 **ℹ️&nbsp;&nbsp;Disclaimers:**
 
@@ -10,4 +10,4 @@ This guide helps Salesforce developers who are new to Visual Studio Code go from
 
 ## Instructions
 
-T
+
