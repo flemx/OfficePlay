@@ -49,11 +49,11 @@ OfficePlay offers a virtual office experience for employees working from home wh
 
 1. In the app launcher open the app 'OfficePlay' and under 'Office Play Configs' create a new record, this will be a virtual office invironment users can login to
 
-<img src="github_files/newgame.jpg" />
+<img src="github_files/newgame.jpg" style="max-width:550px;"/>
 
 1. Under the 'Start OfficePlay' you can now access the Game session previously cerated and create a chracter, multiple users can create a charcter and play together
 
-<img src="github_files/newchar.jpg" />
+<img src="github_files/newchar.jpg" style="max-width:550px;" />
 
 
 
