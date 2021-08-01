@@ -6,12 +6,14 @@
 
 public with sharing class PlayerEvent {
   @AuraEnabled(cacheable=false)
-  public static void publishPlayer(office_player__e playerEvent) {
+  public static boolean publishPlayer(office_player__e playerEvent) {
     EventBus.publish(playerEvent);
+    return true;
   }
 
   @AuraEnabled(cacheable=false)
-  public static void publishChat(office_chat__e chatEvent) {
+  public static boolean publishChat(office_chat__e chatEvent) {
     EventBus.publish(chatEvent);
+    return true;
   }
 }
