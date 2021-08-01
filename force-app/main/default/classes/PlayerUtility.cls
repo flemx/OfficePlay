@@ -14,12 +14,12 @@ public with sharing class PlayerUtility {
     Player__c player = new Player__c();
     try {
       player = [
-        SELECT Id, Name, Character__c, Office_Play_Config__c
+        SELECT Id, Name, Character__c, Office_Play_Config__c, User__c
         FROM Player__c
         WHERE User__c = :userId AND Office_Play_Config__c = :gameId
       ];
-    } catch (QueryException e) {
-      System.debug('NO PLAYER FOUND');
+    } catch (Exception e) {
+      System.debug('NO PLAYER FOUND, due to error: ' + e.getMessage());
       return null;
     }
     return player;
