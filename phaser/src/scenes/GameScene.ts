@@ -114,8 +114,6 @@ export default class GameScene extends Phaser.Scene {
   }
 
   private createPlayer(): void {
-    // Spawn player at location 216,216
-    // this.player = new Player(this,216,216,"atlas", "misa-front");
     this.player = new Player(this, 216, 216, this.playerSprite, this.playerId, this.playerName, this.officeId, true);
   }
 
@@ -191,9 +189,6 @@ export default class GameScene extends Phaser.Scene {
   private createCoffee(): void {
     // Spawn NPC with idle standing animation
     this.coffee = new Coffee(this as Phaser.Scene, 888, 200, spritesDef.objects.coffee);
-    // this.cat.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
-    //   this.lockMovement = true;
-    // });   
   }
 
   private createFridges(): void {
@@ -206,12 +201,6 @@ export default class GameScene extends Phaser.Scene {
     fridge2.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
       this.lockMovement = true;
     });  
-    // let fridge1 = new Cat(this as Phaser.Scene, 1128, 100, spritesDef.npc.cat, 6, ()=> {
-    //   console.log('MEOW');
-    // });
-    // this.cat.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
-    //   this.lockMovement = true;
-    // });   
   }
 
   
@@ -225,7 +214,6 @@ export default class GameScene extends Phaser.Scene {
 
 
   private updatePlayerStatus(playerDetail: playerEvent){
-    //playerId: string, sprite: string, name: string, office: string)
     //console.log('Phaser Game received new event:', playerDetail);
     let newPlayer = true;
     for(let i = 0; i < this.players.length; i++){
@@ -238,10 +226,6 @@ export default class GameScene extends Phaser.Scene {
             const startPoint: Coordinate = this.gamemap.getNodeKey({x: this.players[i].x, y: this.players[i].y});
             // get optimnal path 
             const path = this.gamemap.getPath(startPoint,destination);;
-
-            // // get optimnal path 
-            // const path = JSON.parse(playerDetail.move_coord__c);
-            //console.log('The shortest path is: ', path);
             // Make sure the current path of the player is reset 
             this.players[i].resetPath();
             // Add the new coordinates to the players path
@@ -263,7 +247,6 @@ export default class GameScene extends Phaser.Scene {
       //playerTest
 
       // Spawn NPC with idle standing animation
-      //this.playerTest = new Player(this, 216, 216, charsprite, playerDetail.playerId__c, playerDetail.username__c, playerDetail.office_id__c, false);
       let addPlayer =  new Player(this, startCoord.x, startCoord.y, charsprite, playerDetail.playerId__c, playerDetail.username__c, playerDetail.office_id__c, false);
       addPlayer.setTexture(charsprite.idle);
       this.players.push(addPlayer);
@@ -314,7 +297,6 @@ export default class GameScene extends Phaser.Scene {
     let event: playerEvent = {
       sobjectType: 'office_player__e',
       moveSignal__c: move,
-      // move_coord__c: JSON.stringify(coord, null, 2),
       move_coord__c: JSON.stringify(coord),
       office_id__c: this.officeId,
       playerId__c: this.playerId,

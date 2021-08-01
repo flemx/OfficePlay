@@ -6,6 +6,9 @@ import { subscribe } from "lightning/empApi";
 import pubChat from "@salesforce/apex/PlayerEvent.publishChat";
 
 /**
+ *
+ * SceneGame_chat is a sub component from SceneGame to manage the chat interactions between players
+ *
  *  @typedef {{
  *      sobjectType: string,
  *      message__c: string,
@@ -122,7 +125,7 @@ export default class SceneGame_chat extends LightningElement {
   }
 
   /**
-   * Insert message from bot
+   * Insert message from bot or player
    * @param {chatEvent} data
    */
   botMessage(data) {

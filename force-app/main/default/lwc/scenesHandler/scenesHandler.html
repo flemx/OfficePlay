@@ -1,9 +1,4 @@
 <template>
-  <!--  Start Scene : TitleScene  -->
-  <template if:true={enabledScenes.TitleScene}>
-    <c-scene-title game-id={gameId}> </c-scene-title>
-  </template>
-
   <!--  Character creation Scene : NewGame  -->
   <template if:true={enabledScenes.NewGame}>
     <c-scene-newgame game-id={gameId}> </c-scene-newgame>

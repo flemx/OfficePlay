@@ -3,14 +3,6 @@ import * as Phaser from 'phaser';
  * UiButton
  * @ Damien Fleminks
  */
-
-/**
-  * Extend  Phaser.GameObjects.Container as UI component is made of different
-  * game object of different types, the container will allow to add the different
-  * objects inside the container and they will be made children of the container,
-  * when you move container all child objects will move along
- */
-
 export default class UiButton extends Phaser.GameObjects.Container {
 
   private targetCallback: (targetScene: String) => any;

@@ -4,15 +4,11 @@ import { EventNames } from "c/types";
 import insertPlayer from "@salesforce/apex/PlayerUtility.createPlayer";
 
 /**
+ *  The SceneNewgame component handles creating new players ion the new game title scene
+ *
  * @typedef {{name: String, character: String}} player
  */
 export default class SceneNewgame extends LightningElement {
-  // /** @type HTMLElement */
-  // iframeElement;
-
-  /** @type boolean */
-  isRendered;
-
   /** @type  PubSubParent */
   commHandler;
 
@@ -24,23 +20,9 @@ export default class SceneNewgame extends LightningElement {
 
   constructor() {
     super();
-    // this.iframeElement = document.createElement("iframe");
-    this.isRendered = false;
     this.commHandler = new PubSubParent();
     this.gameId = null;
     this.isLoading = false;
-    // this.commHandler.subscribe((/** @type {player} */ player) => {
-    //   this.createPlayer(player);
-    // }, EventNames.startGame_createPlayer);
-  }
-
-  renderedCallback() {
-    if (!this.isRendered) {
-      // this.commHandler.subscribe((/** @type {HTMLElement} */ iframe)=>{
-      //         this.iframeElement = iframe;
-      //         console.log('Receieved event',iframe);
-      //     }, EventNames.iframeElSend);
-    }
   }
 
   /**
@@ -57,12 +39,6 @@ export default class SceneNewgame extends LightningElement {
       .then((result) => {
         // console.log("createPlayer() result from lwc:", result);
         if (result) {
-          // this.commHandler.publishInternal(
-          //   {
-          //     data: result,
-          //     eventName: EventNames.startGame_createPlayer
-          //   }
-          // );
           this.commHandler.publish(
             // @ts-ignore
             window.phaserIframeElement,

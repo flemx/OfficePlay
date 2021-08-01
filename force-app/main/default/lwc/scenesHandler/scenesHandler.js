@@ -3,19 +3,10 @@ import PubSubParent from "c/pubSubParent";
 import { EventNames } from "c/types";
 import findPlayer from "@salesforce/apex/PlayerUtility.getPlayer";
 import insertPlayer from "@salesforce/apex/PlayerUtility.createPlayer";
-import {
-  subscribe,
-  unsubscribe,
-  onError,
-  setDebugFlag,
-  isEmpEnabled
-} from "lightning/empApi";
 
 /**
- * SceneHandler
- * @description Handles the visibility of UI elements to render in a Phaser scene,
+ * Handles the visibility of UI elements to render in a Phaser scene,
  * Subscribes to PubSub Class to handle visibility
- * @author Damien Fleminks
  *
  * @typedef {Record<string, boolean>} scenesEnabled
  * @typedef {Record<string,string>} scenes
@@ -55,7 +46,6 @@ export default class ScenesHandler extends LightningElement {
     this.isRendered = false;
     // Define object to restrict scenes to use
     this.scenes = {
-      TitleScene: "TitleScene",
       NewGame: "NewGame",
       GameScene: "GameScene",
       None: "None"
@@ -75,32 +65,11 @@ export default class ScenesHandler extends LightningElement {
       this.createPlayer(player);
     }, EventNames.startGame_createPlayer);
 
-    // this.commHandler.subscribe((/** @type {any} */ player) => {
-    //   this.playerRecord = player;
-    // }, EventNames.startGame_createPlayer);
-
     // subscribe and retrieve player data on event
     this.commHandler.subscribe(
       this.getPlayer.bind(this),
       EventNames.titleScene_playerDetail
     );
-
-    console.log(JSON.stringify(isEmpEnabled));
-
-    // // Callback invoked whenever a new event message is received
-    // const messageCallback = function (response) {
-    //   console.log("New PE received: ", JSON.stringify(response));
-    //   // Response contains the payload of the new message received
-    // };
-
-    // // Invoke subscribe method of empApi. Pass reference to messageCallback
-    // subscribe(this.channelName, -1, messageCallback).then((response) => {
-    //   // Response contains the subscription information on subscribe call
-    //   console.log(
-    //     "Subscription request sent to: ",
-    //     JSON.stringify(response.channel)
-    //   );
-    // });
   }
 
   /**
@@ -159,15 +128,6 @@ export default class ScenesHandler extends LightningElement {
         this.isLoading = false;
       });
   }
-
-  // renderedCallback(){
-  //   if(!this.isRendered){
-  //     this.commHandler.subscribe((/** @type string **/ scene)=>{
-  //       console.log('EVENT RECEIVED', scene);
-  //         this.enabledScene = scene;
-  //     }, EventNames.scene_startGame);
-  //   }
-  // }
 
   /**
    * Returns an object with keys from all scenes

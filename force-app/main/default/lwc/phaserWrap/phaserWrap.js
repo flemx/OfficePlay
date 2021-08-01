@@ -1,7 +1,11 @@
 import { LightningElement, api } from "lwc";
 import ASSETS from "@salesforce/resourceUrl/remoteOfficeAssets";
 import PubSubParent from "c/pubSubParent";
-import { EventNames, EventMessage } from "c/types";
+
+/**
+ *  The PhaserWrap component wraps the phaser game instance as iframe child
+ *  It also contains the ScenesHandler class which manages all game scenes
+ */
 export default class PhaserWrap extends LightningElement {
   /** @type number */
   windowHeight;
@@ -72,19 +76,6 @@ export default class PhaserWrap extends LightningElement {
     this.m_pos = 0;
     this.commHandler = new PubSubParent();
     this.rendered = false;
-    //console.log(new CrossCommHandler().testFun());
-
-    // Send the game config details to phaser when receiving the event
-    // this.commHandler.subscribe(() => {
-    //   this.commHandler.publish(
-    //     // @ts-ignore
-    //     window.phaserIframeElement,
-    //     {
-    //       data: this.gameId,
-    //       eventName: EventNames.phaserWrap_gameId
-    //     }
-    //   );
-    // }, EventNames.phaserWrap_gameId);
   }
 
   /**

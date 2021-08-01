@@ -1,21 +1,4 @@
 <template>
-  <!-- <div class="container"> -->
-  <!-- <div class="banner" style={bannerHeight}>
-      <lightning-input
-        class="banner-items"
-        type="toggle"
-        label="Dev Mode"
-        onchange={handleToggleChange}
-        checked
-      >
-      </lightning-input>
-      <lightning-button
-        class="banner-items"
-        label="send event"
-        onclick={sendEvent}
-      >
-      </lightning-button>
-    </div> -->
   <div class="canvasCon slds-box" style={containerHeigh}>
     <template if:true={rendered}>
       <template if:true={devMode}>
@@ -40,7 +23,5 @@
       </template>
       <c-scenes-handler game-id={gameId}> </c-scenes-handler>
     </template>
-    <!-- <div class="resize"></div> -->
   </div>
-  <!-- </div> -->
 </template>

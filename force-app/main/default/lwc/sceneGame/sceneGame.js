@@ -6,6 +6,9 @@ import { subscribe } from "lightning/empApi";
 import pubPlayer from "@salesforce/apex/PlayerEvent.publishPlayer";
 
 /**
+ *
+ *  The SceneGame component handles the communication to the child iframe and keeps track of online players and movement
+ *
  *  @typedef {{
  *      sobjectType: string,
  *      moveSignal__c: boolean,
@@ -82,7 +85,7 @@ export default class SceneGame extends LightningElement {
   }
 
   /**
-   *
+   * Called when platform event office_player__e is received to ping player status and movement
    * @param {*} response
    */
   playerEventCallback(response) {
@@ -102,10 +105,11 @@ export default class SceneGame extends LightningElement {
         }
       );
     }
-
-    //console.log('New platform event received: ', response);
   }
 
+  /**
+   * Subscribes the player to platform event channel office_player__e
+   */
   subscribePlayer() {
     subscribe(this.channelName, -1, this.playerEventCallback.bind(this)).then(
       (response) => {
@@ -121,6 +125,7 @@ export default class SceneGame extends LightningElement {
 
   /**
    *
+   * Publishes office_player__e platform event
    * @param {playerEvent} event
    */
   publishPlayer(event) {

@@ -64,19 +64,6 @@ export default class TitleScene extends Phaser.Scene {
       this.scale.height / 2.5,
       imageDef.branding.title_logo
     );
-
-    // // Create title text
-    // const titleText = this.add.text(
-    //   this.scale.width / 2,
-    //   this.scale.height / 2,
-    //   'Virtual Office',
-    //   {
-    //     fontSize: '64px',
-    //     color: '#fff',
-    //   },
-    // );
-    // titleText.setOrigin(0.5);
-
     titleImage.setScale(1);
 
     const startGameButton = new UiButton(

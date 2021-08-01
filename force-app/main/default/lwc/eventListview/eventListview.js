@@ -1,8 +1,10 @@
 import { LightningElement, track, wire } from "lwc";
 import PubSubParent from "c/pubSubParent";
 import gameList from "@salesforce/apex/OfficePlayUtility.getGames";
-// import { eventName, EventNames } from "c/types";
 
+/**
+ *  The EventListview component provides an overview of all the available game sessions which are activated
+ */
 export default class EventListview extends LightningElement {
   /** @type  PubSubParent */
   commHandler;
@@ -14,29 +16,6 @@ export default class EventListview extends LightningElement {
   activeGameId;
 
   @wire(gameList) data;
-  // @track data = [
-  //   {
-  //     id: "a013N000002bbeXQAQ",
-  //     Name: "Classic Office2",
-  //     Image__c: "https://i.imgur.com/FtmSkvc.jpg"
-  //   },
-  //   {
-  //     id: "a013N000002bbhbQAA",
-  //     Name: "Beach Office",
-  //     Image__c: "https://i.imgur.com/HGOR06S.png"
-  //   },
-  //   {
-  //     id: "3",
-  //     Name: "Farm Office",
-  //     Image__c: "https://i.imgur.com/q3wwUF2.jpg"
-  //   },
-  //   {
-  //     id: "4",
-  //     Name: "Farm Office",
-  //     Image__c: "https://i.imgur.com/q3wwUF2.jpg"
-  //   }
-  // ];
-
   activeSections = "A";
   activeSectionsMessage = "";
 

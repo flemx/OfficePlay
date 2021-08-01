@@ -1,6 +1,9 @@
 import { LightningElement, api, track } from "lwc";
 import { NavigationMixin } from "lightning/navigation";
 
+/**
+ * Child component used by EventListview
+ */
 export default class EventTile extends NavigationMixin(LightningElement) {
   @api recordId;
   @api name; //The Name displayed of each tile
