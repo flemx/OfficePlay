@@ -1,3 +1,9 @@
+/*******************************************************************************************
+ * @Name         PlayerEventTest
+ * @Author       Damien Fleminks
+ * @Description  Test class to evaluate the outcomes og the methods in the PlayerEvent class
+ *******************************************************************************************/
+
 @isTest
 private class PlayerEventTest {
   @isTest

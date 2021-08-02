@@ -1,3 +1,8 @@
+/*******************************************************************************************
+ * @Name         OfficePlayUtilityTest
+ * @Author       Damien Fleminks
+ * @Description  Test class to evaluate the outcomes og the methods in the OfficePlayUtility class
+ *******************************************************************************************/
 @isTest
 private class OfficePlayUtilityTest {
   @testSetup

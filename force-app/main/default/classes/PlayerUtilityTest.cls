@@ -1,5 +1,15 @@
+/*******************************************************************************************
+ * @Name         PlayerUtilityTest
+ * @Author       Damien Fleminks
+ * @Description  Test class to evaluate the outcomes og the methods in the PlayerUtility class
+ *******************************************************************************************/
+
 @isTest
 private class PlayerUtilityTest {
+  /**
+   *  A testSetup method to setup test data that will be reused by multiple test methods
+   *  We will test one Office_Play_Config__c record with and one without a player
+   */
   @testSetup
   static void setup() {
     String userId = UserInfo.getUserId();
@@ -18,7 +28,9 @@ private class PlayerUtilityTest {
     );
     insert player;
   }
-
+  /**
+   *  This method tests the different outcomes for the getPlayer() method
+   */
   @isTest
   static void getPlayerTest() {
     String userId = UserInfo.getUserId();
